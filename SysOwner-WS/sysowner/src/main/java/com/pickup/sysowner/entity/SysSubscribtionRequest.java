@@ -16,60 +16,63 @@ import javax.persistence.Table;
 import com.pickup.sysowner.entity.shared.WhoColumn;
 
 @Entity()
-@Table(name="sys_subscription_request")
+@Table(name = "sys_subscription_request")
 public class SysSubscribtionRequest implements Serializable {
 
 	private static final long serialVersionUID = -619721346466722043L;
-	
+
+	public SysSubscribtionRequest() {
+	}
+
 	@Id
-	@Column(name="id")
-	@GeneratedValue(strategy= GenerationType.IDENTITY)
+	@Column(name = "id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	
+
 	@ManyToOne()
-	@JoinColumn(name="owner_id")
+	@JoinColumn(name = "owner_id")
 	private SysOwner sysOwner;
-	
+
 	@ManyToOne()
-	@JoinColumn(name="country_id")
+	@JoinColumn(name = "country_id")
 	private GnCountry gnCountry;
-	
-	@Column(name="req_serial")
+
+	@Column(name = "req_serial")
 	private Integer reqSerial;
-	
-	@Column(name="req_year")
+
+	@Column(name = "req_year")
 	private Integer reqYear;
-	
-	@Column(name="req_date")
+
+	@Column(name = "req_date")
 	private Date reqDate;
-	
-	@Column(name="requester_type")
+
+	@Column(name = "requester_type")
 	private String requesterType;
-	
-	@Column(name="company_name_ar")
+
+	@Column(name = "company_name_ar")
 	private String companyNameAr;
-	
-	@Column(name="company_name_en")
+
+	@Column(name = "company_name_en")
 	private String companyNameEn;
-	
-	@Column(name="contact_person_name")
+
+	@Column(name = "contact_person_name")
 	private String contactPersonName;
-	
-	@Column(name="contact_person_phone")
+
+	@Column(name = "contact_person_phone")
 	private String contactPersonPhone;
-	
-	@Column(name="contact_person_email")
+
+	@Column(name = "contact_person_email")
 	private String contactPersonEmail;
-	
-	@Column(name="comm_number")
+
+	@Column(name = "comm_number")
 	private String commNumber;
-	
-	@Column(name="address")
+
+	@Column(name = "address")
 	private String address;
-	
-	@Column(name="status")
+
+	@Column(name = "status")
 	private String status;
-	
+
 	@Embedded
 	private WhoColumn whoColumn;
 
@@ -232,9 +235,5 @@ public class SysSubscribtionRequest implements Serializable {
 		this.status = status;
 		this.whoColumn = whoColumn;
 	}
-	
-	
-	
-	
 
 }

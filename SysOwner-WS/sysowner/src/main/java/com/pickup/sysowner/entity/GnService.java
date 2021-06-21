@@ -17,6 +17,11 @@ import com.pickup.sysowner.entity.shared.WhoColumn;
 public class GnService implements Serializable {
 
 	private static final long serialVersionUID = -5603730410552163709L;
+
+	public GnService() {
+
+	}
+
 	@Id
 	@Column(name = "id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -46,7 +46,8 @@ public class GnCountryServiceImpl implements GnCountryService {
 	}
 
 	@Override
-	public GnCountry update(GnCountry gnCountry) {
+	public GnCountry update(GnCountry gnCountry, Integer id) {
+		gnCountry.setId(id);
 		return this.repos.save(gnCountry);
 	}
 

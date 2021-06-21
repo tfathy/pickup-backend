@@ -17,7 +17,9 @@ import com.pickup.sysowner.entity.shared.WhoColumn;
 public class GnUom implements Serializable{
 
 	private static final long serialVersionUID = -2317733531772215379L;
-	
+	public GnUom() {
+		
+	}
 	@Id
 	@Column(name="id")
 	@GeneratedValue(strategy= GenerationType.IDENTITY)

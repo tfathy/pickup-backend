@@ -13,25 +13,29 @@ import javax.persistence.Table;
 import com.pickup.sysowner.entity.shared.WhoColumn;
 
 @Entity()
-@Table(name="gn_vehicle_size")
-public class GnVehicleSize implements Serializable{
+@Table(name = "gn_vehicle_size")
+public class GnVehicleSize implements Serializable {
 
 	private static final long serialVersionUID = -1409481260794132802L;
 
+	public GnVehicleSize() {
+
+	}
+
 	@Id
-	@Column(name="id")
-	@GeneratedValue(strategy= GenerationType.IDENTITY)
+	@Column(name = "id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	
-	@Column(name="desc_ar")
+
+	@Column(name = "desc_ar")
 	private String descAr;
-	
-	@Column(name="desc_en")
+
+	@Column(name = "desc_en")
 	private String descEn;
-	
-	@Column(name="active_flag")
+
+	@Column(name = "active_flag")
 	private String activeFlag;
-	
+
 	@Embedded
 	private WhoColumn whoColumn;
 
@@ -88,6 +92,5 @@ public class GnVehicleSize implements Serializable{
 		this.activeFlag = activeFlag;
 		this.whoColumn = whoColumn;
 	}
-	
-	
+
 }

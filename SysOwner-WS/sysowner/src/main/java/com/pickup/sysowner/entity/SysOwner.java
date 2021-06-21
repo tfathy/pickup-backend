@@ -16,32 +16,36 @@ import javax.persistence.Table;
 import com.pickup.sysowner.entity.shared.WhoColumn;
 
 @Entity()
-@Table(name="sys_owner")
-public class SysOwner implements Serializable{
+@Table(name = "sys_owner")
+public class SysOwner implements Serializable {
 
 	private static final long serialVersionUID = 257073723465208324L;
+
+	public SysOwner() {
+	}
+
 	@Id
-	@Column(name="id")
+	@Column(name = "id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	
+
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name="country_id")
+	@JoinColumn(name = "country_id")
 	private GnCountry gnCountry;
-	
-	@Column(name="desc_ar")
+
+	@Column(name = "desc_ar")
 	private String descAr;
-	@Column(name="desc_en")
+	@Column(name = "desc_en")
 	private String descEn;
-	@Column(name="address")
+	@Column(name = "address")
 	private String address;
-	@Column(name="notes")
+	@Column(name = "notes")
 	private String notes;
-	@Column(name="short_name_ar")
+	@Column(name = "short_name_ar")
 	private String shortNameAr;
-	@Column(name="short_name_en")
+	@Column(name = "short_name_en")
 	private String shortNameEn;
-	
+
 	@Embedded
 	private WhoColumn whoColumn;
 

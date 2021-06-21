@@ -10,7 +10,7 @@ public interface GnCountryService {
 	public GnCountry findById(Integer id);
 	
 	public GnCountry create(GnCountry gnCountry);
-	public GnCountry update(GnCountry gnCountry);
+	public GnCountry update(GnCountry gnCountry, Integer id);
 	public String delete(Integer id);
 	
 

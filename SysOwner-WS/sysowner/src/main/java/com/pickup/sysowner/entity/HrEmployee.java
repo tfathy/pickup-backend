@@ -20,6 +20,10 @@ import com.pickup.sysowner.entity.shared.WhoColumn;
 public class HrEmployee implements Serializable {
 
 	private static final long serialVersionUID = -1223095303965578710L;
+
+	public HrEmployee() {
+	}
+
 	@Id
 	@Column(name = "id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,16 +32,16 @@ public class HrEmployee implements Serializable {
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "owner_id")
 	private SysOwner sysOwner;
-	
+
 	@Column(name = "full_name_ar")
 	private String fullNameAr;
-	
+
 	@Column(name = "full_name_en")
 	private String fullNameEn;
-	
+
 	@Column(name = "notes")
 	private String notes;
-	
+
 	@Embedded
 	private WhoColumn whoColumn;
 

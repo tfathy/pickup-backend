@@ -17,6 +17,9 @@ public class GnCurrency implements Serializable{
 
 
 	private static final long serialVersionUID = -8730358661997968536L;
+	public GnCurrency() {
+		
+	}
 	@Id
 	@Column(name="id")
 	@GeneratedValue(strategy= GenerationType.IDENTITY)
