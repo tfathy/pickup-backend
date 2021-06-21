@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.pickup.sysowner.entity.GnCountry;
+import com.pickup.sysowner.entity.GnCurrency;
 import com.pickup.sysowner.repos.GnCountryRepos;
 import com.pickup.sysowner.service.GnCountryService;
 
@@ -47,6 +48,10 @@ public class GnCountryServiceImpl implements GnCountryService {
 
 	@Override
 	public GnCountry update(GnCountry gnCountry, Integer id) {
+		GnCountry recordFound =findById(id);	
+		if(recordFound== null) {
+			throw new RuntimeException("The Country of id " + id + " is not found-Update Faild");
+		}
 		gnCountry.setId(id);
 		return this.repos.save(gnCountry);
 	}

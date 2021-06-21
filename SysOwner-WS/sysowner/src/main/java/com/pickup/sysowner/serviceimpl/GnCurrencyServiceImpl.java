@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 
 import com.pickup.sysowner.entity.GnCurrency;
+import com.pickup.sysowner.entity.GnItem;
 import com.pickup.sysowner.repos.GnCurrencyRepos;
 import com.pickup.sysowner.service.GnCurrencyService;
 
@@ -48,6 +49,10 @@ public class GnCurrencyServiceImpl implements GnCurrencyService {
 
 	@Override
 	public GnCurrency update(GnCurrency gnCurrency, Integer id) {
+		GnCurrency recordFound =findById(id);	
+		if(recordFound== null) {
+			throw new RuntimeException("The Currency of id " + id + " is not found-Update Faild");
+		}
 		gnCurrency.setId(id);
 		return this.repos.save(gnCurrency);
 	}
