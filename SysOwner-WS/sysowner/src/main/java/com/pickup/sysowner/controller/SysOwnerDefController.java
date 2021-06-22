@@ -24,6 +24,9 @@ import com.pickup.sysowner.entity.GnItemCategory;
 import com.pickup.sysowner.entity.GnLocationType;
 import com.pickup.sysowner.entity.GnPayMethod;
 import com.pickup.sysowner.entity.GnService;
+import com.pickup.sysowner.entity.GnUom;
+import com.pickup.sysowner.entity.GnVehicleSize;
+import com.pickup.sysowner.entity.HrEmployee;
 import com.pickup.sysowner.service.GnCountryService;
 import com.pickup.sysowner.service.GnCurrencyService;
 import com.pickup.sysowner.service.GnItemCategoryService;
@@ -32,9 +35,12 @@ import com.pickup.sysowner.service.GnItemServiceService;
 import com.pickup.sysowner.service.GnLocationTypeService;
 import com.pickup.sysowner.service.GnPayMethodService;
 import com.pickup.sysowner.service.GnServiceService;
+import com.pickup.sysowner.service.GnUomService;
+import com.pickup.sysowner.service.GnVehicleSizeService;
+import com.pickup.sysowner.service.HrEmployeeService;
 
 @RestController
-@RequestMapping("/sys-owner/def")
+@RequestMapping("/def")
 public class SysOwnerDefController {
 
 	final Logger logger = LoggerFactory.getLogger(SysOwnerDefController.class);
@@ -59,9 +65,18 @@ public class SysOwnerDefController {
 
 	@Autowired
 	private GnPayMethodService gnPayMethodService;
-	
+
 	@Autowired
 	private GnServiceService gnServiceService;
+
+	@Autowired
+	private GnUomService gnUomService;
+
+	@Autowired
+	private GnVehicleSizeService gnVehicleSizeService;
+
+	@Autowired
+	private HrEmployeeService hrEmployeeService;
 
 	/***********************************************
 	 * Country API
@@ -366,6 +381,7 @@ public class SysOwnerDefController {
 		String result = this.gnPayMethodService.delete(id);
 		return ResponseEntity.status(HttpStatus.OK).body(result);
 	}
+
 	/***********************************************
 	 * Service definition API
 	 ******************************************************************/
@@ -407,4 +423,126 @@ public class SysOwnerDefController {
 		return ResponseEntity.status(HttpStatus.OK).body(result);
 	}
 
+	/***********************************************
+	 * UOM Unit of measuring API
+	 ******************************************************************/
+	@GetMapping(value = "/uom", produces = { MediaType.APPLICATION_JSON_VALUE })
+	public ResponseEntity<List<GnUom>> findAllUom() {
+		List<GnUom> lst = this.gnUomService.findAll();
+		if (lst == null) {
+			return ResponseEntity.status(HttpStatus.NO_CONTENT).body(lst);
+		}
+		return ResponseEntity.status(HttpStatus.OK).body(lst);
+	}
+
+	@GetMapping(value = "/uom/{id}", produces = { MediaType.APPLICATION_JSON_VALUE })
+	public ResponseEntity<GnUom> findByIdUom(@PathVariable Integer id) {
+		GnUom body = this.gnUomService.findById(id);
+		if (body == null) {
+			return ResponseEntity.status(HttpStatus.NO_CONTENT).body(body);
+		}
+		return ResponseEntity.status(HttpStatus.OK).body(body);
+	}
+
+	@PostMapping(value = "/uom", produces = { MediaType.APPLICATION_JSON_VALUE }, consumes = {
+			MediaType.APPLICATION_JSON_VALUE })
+	public ResponseEntity<GnUom> createUom(@RequestBody GnUom body) {
+		GnUom entity = this.gnUomService.create(body);
+		return ResponseEntity.status(HttpStatus.CREATED).body(entity);
+	}
+
+	@PutMapping(value = "/uom/{id}", produces = { MediaType.APPLICATION_JSON_VALUE }, consumes = {
+			MediaType.APPLICATION_JSON_VALUE })
+	public ResponseEntity<GnUom> updateService(@RequestBody GnUom body, @PathVariable Integer id) {
+		GnUom entity = this.gnUomService.update(body, id);
+		return ResponseEntity.status(HttpStatus.OK).body(entity);
+	}
+
+	@DeleteMapping(value = "/uom/{id}")
+	public ResponseEntity<String> deleteUom(@PathVariable Integer id) {
+		String result = this.gnUomService.delete(id);
+		return ResponseEntity.status(HttpStatus.OK).body(result);
+	}
+
+	/***********************************************
+	 * Vehicle size API
+	 ******************************************************************/
+	@GetMapping(value = "/vehicle-size", produces = { MediaType.APPLICATION_JSON_VALUE })
+	public ResponseEntity<List<GnVehicleSize>> findAllVehicleSize() {
+		List<GnVehicleSize> lst = this.gnVehicleSizeService.findAll();
+		if (lst == null) {
+			return ResponseEntity.status(HttpStatus.NO_CONTENT).body(lst);
+		}
+		return ResponseEntity.status(HttpStatus.OK).body(lst);
+	}
+
+	@GetMapping(value = "/vehicle-size/{id}", produces = { MediaType.APPLICATION_JSON_VALUE })
+	public ResponseEntity<GnVehicleSize> findByIdVehicleSize(@PathVariable Integer id) {
+		GnVehicleSize body = this.gnVehicleSizeService.findById(id);
+		if (body == null) {
+			return ResponseEntity.status(HttpStatus.NO_CONTENT).body(body);
+		}
+		return ResponseEntity.status(HttpStatus.OK).body(body);
+	}
+
+	@PostMapping(value = "/vehicle-size", produces = { MediaType.APPLICATION_JSON_VALUE }, consumes = {
+			MediaType.APPLICATION_JSON_VALUE })
+	public ResponseEntity<GnVehicleSize> createVehicleSize(@RequestBody GnVehicleSize body) {
+		GnVehicleSize entity = this.gnVehicleSizeService.create(body);
+		return ResponseEntity.status(HttpStatus.CREATED).body(entity);
+	}
+
+	@PutMapping(value = "/vehicle-size/{id}", produces = { MediaType.APPLICATION_JSON_VALUE }, consumes = {
+			MediaType.APPLICATION_JSON_VALUE })
+	public ResponseEntity<GnVehicleSize> updateVehicleSize(@RequestBody GnVehicleSize body, @PathVariable Integer id) {
+		GnVehicleSize entity = this.gnVehicleSizeService.update(body, id);
+		return ResponseEntity.status(HttpStatus.OK).body(entity);
+	}
+
+	@DeleteMapping(value = "/vehicle-size/{id}")
+	public ResponseEntity<String> deleteVehicleSize(@PathVariable Integer id) {
+		String result = this.gnVehicleSizeService.delete(id);
+		return ResponseEntity.status(HttpStatus.OK).body(result);
+	}
+
+	/***********************************************
+	 * HR Employee API
+	 ******************************************************************/
+	@GetMapping(value = "/employee", produces = { MediaType.APPLICATION_JSON_VALUE })
+	public ResponseEntity<List<HrEmployee>> findAllEmployee() {
+		List<HrEmployee> lst = this.hrEmployeeService.findAll();
+		if (lst == null) {
+			return ResponseEntity.status(HttpStatus.NO_CONTENT).body(lst);
+		}
+		return ResponseEntity.status(HttpStatus.OK).body(lst);
+	}
+
+	@GetMapping(value = "/employee/{id}", produces = { MediaType.APPLICATION_JSON_VALUE })
+	public ResponseEntity<HrEmployee> findByIdEmployee(@PathVariable Integer id) {
+		HrEmployee body = this.hrEmployeeService.findById(id);
+		if (body == null) {
+			return ResponseEntity.status(HttpStatus.NO_CONTENT).body(body);
+		}
+		return ResponseEntity.status(HttpStatus.OK).body(body);
+	}
+
+	@PostMapping(value = "/employee", produces = { MediaType.APPLICATION_JSON_VALUE }, consumes = {
+			MediaType.APPLICATION_JSON_VALUE })
+	public ResponseEntity<HrEmployee> createEmployee(@RequestBody HrEmployee body) {
+		HrEmployee entity = this.hrEmployeeService.create(body);
+		return ResponseEntity.status(HttpStatus.CREATED).body(entity);
+	}
+
+	@PutMapping(value = "/employee/{id}", produces = { MediaType.APPLICATION_JSON_VALUE }, consumes = {
+			MediaType.APPLICATION_JSON_VALUE })
+	public ResponseEntity<HrEmployee> updateEmployee(@RequestBody HrEmployee body, @PathVariable Integer id) {
+		HrEmployee entity = this.hrEmployeeService.update(body, id);
+		return ResponseEntity.status(HttpStatus.OK).body(entity);
+	}
+
+	@DeleteMapping(value = "/employee/{id}")
+	public ResponseEntity<String> deleteEmployee(@PathVariable Integer id) {
+		String result = this.hrEmployeeService.delete(id);
+		return ResponseEntity.status(HttpStatus.OK).body(result);
+	}
 }
