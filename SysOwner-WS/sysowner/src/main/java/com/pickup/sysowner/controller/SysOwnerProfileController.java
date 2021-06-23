@@ -13,9 +13,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.pickup.sysowner.entity.GnCountry;
 import com.pickup.sysowner.entity.SysOwner;
 import com.pickup.sysowner.service.SysOwnerService;
+
+import io.swagger.annotations.ApiOperation;
 
 @RestController
 @RequestMapping("/profile")
@@ -26,6 +27,9 @@ public class SysOwnerProfileController {
 	private SysOwnerService sysOwnerService;
 	
 	@GetMapping(value = "/{id}", produces = { MediaType.APPLICATION_JSON_VALUE })
+	@ApiOperation(value = "Returns the System Owner Information"
+	,notes="You have to specify the id of the system owner vefore calling thi api"
+	,response=SysOwner.class)
 	public ResponseEntity<SysOwner> findByIdCountry(@PathVariable Integer id) {
 		SysOwner entity = this.sysOwnerService.findById(id);
 		if (entity == null) {

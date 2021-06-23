@@ -39,6 +39,9 @@ import com.pickup.sysowner.service.GnUomService;
 import com.pickup.sysowner.service.GnVehicleSizeService;
 import com.pickup.sysowner.service.HrEmployeeService;
 
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+
 @RestController
 @RequestMapping("/def")
 public class SysOwnerDefController {
@@ -83,6 +86,7 @@ public class SysOwnerDefController {
 	 ******************************************************************/
 
 	@GetMapping(value = "/country", produces = { MediaType.APPLICATION_JSON_VALUE })
+	@ApiOperation(value = "List of countries", notes = "The Api Returns List of Countries", response = GnCountry.class)
 	public ResponseEntity<List<GnCountry>> findAllCountry() {
 		List<GnCountry> lst = this.countryService.findAll();
 		if (lst == null) {
@@ -93,7 +97,9 @@ public class SysOwnerDefController {
 	}
 
 	@GetMapping(value = "/country/{id}", produces = { MediaType.APPLICATION_JSON_VALUE })
-	public ResponseEntity<GnCountry> findByIdCountry(@PathVariable Integer id) {
+	@ApiOperation(value = "Country", notes = "The Api Returns a country object of id", response = GnCountry.class)
+	public ResponseEntity<GnCountry> findByIdCountry(@ApiParam(value="Country Id",required=true)
+			@PathVariable Integer id) {
 		GnCountry entity = this.countryService.findById(id);
 		if (entity == null) {
 			logger.warn("Record Not Found");

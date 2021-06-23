@@ -15,8 +15,12 @@ import javax.persistence.Table;
 
 import com.pickup.sysowner.entity.shared.WhoColumn;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 @Entity()
 @Table(name = "sys_subscription_request")
+@ApiModel(description = "The Subscribtion request Object. The Service provider has to ,firstly, send a subscribtion request to subscribe for the service")
 public class SysSubscribtionRequest implements Serializable {
 
 	private static final long serialVersionUID = -619721346466722043L;
@@ -35,8 +39,10 @@ public class SysSubscribtionRequest implements Serializable {
 
 	@ManyToOne()
 	@JoinColumn(name = "country_id")
+	@ApiModelProperty(value = "Which Country does the subscriber's company belongs to.")
+	
 	private GnCountry gnCountry;
-
+	@ApiModelProperty(value = "This is an auto-generated serial number.It is unique for each year.")
 	@Column(name = "req_serial")
 	private Integer reqSerial;
 

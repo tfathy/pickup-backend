@@ -14,8 +14,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @SpringBootApplication
 @EnableDiscoveryClient
-//@EnableFeignClients
-@EnableSwagger2
+@EnableFeignClients
 public class SysownerApplication {
 
 	public static void main(String[] args) {
@@ -26,7 +25,7 @@ public class SysownerApplication {
     public Docket api() {
         return new Docket(DocumentationType.SWAGGER_2)  
           .select()                                  
-          .apis(RequestHandlerSelectors.any())              
+          .apis(RequestHandlerSelectors.basePackage("com.pickup.sysowner.controller"))              
           .paths(PathSelectors.any())                          
           .build();                                           
     }
