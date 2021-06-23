@@ -48,10 +48,6 @@ public class GnCountryServiceImpl implements GnCountryService {
 
 	@Override
 	public GnCountry update(GnCountry gnCountry, Integer id) {
-		GnCountry recordFound =findById(id);	
-		if(recordFound== null) {
-			throw new RuntimeException("The Country of id " + id + " is not found-Update Faild");
-		}
 		gnCountry.setId(id);
 		return this.repos.save(gnCountry);
 	}

@@ -35,7 +35,7 @@ public class SpServicProvider implements Serializable {
 	private SysOwner sysOwner;
 
 	@OneToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "subscribtion_request_id")
+	@JoinColumn(name = "subscription_request_id")
 	private SysSubscribtionRequest subscribtionRequest;
 
 	@Column(name = "desc_ar")

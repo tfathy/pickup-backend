@@ -118,13 +118,9 @@ public class SysOwnerDefController {
 	@PutMapping(value = "/country/{id}", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
 			MediaType.APPLICATION_JSON_VALUE })
 	public ResponseEntity<GnCountry> updateCountry(@RequestBody GnCountry body, @PathVariable Integer id) {
-		GnCountry country = this.countryService.findById(id);
-		if (country == null) {
-			logger.warn("Cannot update.Record Not Found");
-			return ResponseEntity.status(HttpStatus.NO_CONTENT).body(country);
-		}
-		this.countryService.update(country, id);
-		return ResponseEntity.status(HttpStatus.OK).body(country);
+		body.setId(id);
+		this.countryService.update(body, id);
+		return ResponseEntity.status(HttpStatus.OK).body(body);
 	}
 
 	@DeleteMapping(value = "/country/{id}")
