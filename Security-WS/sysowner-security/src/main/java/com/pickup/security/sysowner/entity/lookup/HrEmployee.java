@@ -27,5 +27,45 @@ public class HrEmployee implements Serializable{
 	@Column(name = "notes")
 	private String notes;
 
+	@Override
+	public String toString() {
+		return "HrEmployee [id=" + id + ", fullNameAr=" + fullNameAr + ", fullNameEn=" + fullNameEn + ", notes=" + notes
+				+ "]";
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public String getFullNameAr() {
+		return fullNameAr;
+	}
+
+	public void setFullNameAr(String fullNameAr) {
+		this.fullNameAr = fullNameAr;
+	}
+
+	public String getFullNameEn() {
+		return fullNameEn;
+	}
+
+	public void setFullNameEn(String fullNameEn) {
+		this.fullNameEn = fullNameEn;
+	}
+
+	public String getNotes() {
+		return notes;
+	}
+
+	public void setNotes(String notes) {
+		this.notes = notes;
+	}
+	
+	
+
 
 }
