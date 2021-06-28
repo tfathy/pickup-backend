@@ -70,13 +70,14 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
                 .setExpiration(new Date(System.currentTimeMillis() + Long.parseLong(environment.getProperty("token.expiration_time"))))
                 .signWith(SignatureAlgorithm.HS512, environment.getProperty("token.secret") )
                 .compact();
-        
+        response.addHeader("email", userDetails.getEmail());
         response.addHeader("token", token);
         response.addHeader("userId",String.valueOf( userDetails.getUserId()));       
         response.addHeader("userType",String.valueOf( userDetails.getUserType()));
+        response.addHeader("accountStatus", userDetails.getAccountStatus());
         if(userDetails.getHrEmployee()!=null) {
-        	 response.addHeader("employeeNameE",String.valueOf( userDetails.getHrEmployee().getFullNameEn()));
-             response.addHeader("employeeNameA",String.valueOf( userDetails.getHrEmployee().getFullNameAr()));
+        	 response.addHeader("employeeNameEn",String.valueOf( userDetails.getHrEmployee().getFullNameEn()));
+             response.addHeader("employeeNameAr",String.valueOf( userDetails.getHrEmployee().getFullNameAr()));
         }
 
 	}
