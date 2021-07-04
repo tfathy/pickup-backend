@@ -1,6 +1,7 @@
 package com.pickup.sysowner.entity;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Embedded;
@@ -11,6 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.pickup.sysowner.entity.shared.WhoColumn;
@@ -47,6 +49,9 @@ public class GnItem implements Serializable{
 	
 	@Column(name="active_flag")
 	private String activeFlag;
+	
+	@OneToMany(mappedBy="gnItem" ,fetch= FetchType.LAZY)	
+	private List<GnItemService> gnItemService;
 	
 	@Embedded
 	private WhoColumn whoColumn;
@@ -115,23 +120,44 @@ public class GnItem implements Serializable{
 		this.whoColumn = whoColumn;
 	}
 
-	@Override
-	public String toString() {
-		return "GnItem [id=" + id + ", gnItemCategory=" + gnItemCategory + ", gnuom=" + gnUom + ", itemCode=" + itemCode
-				+ ", descEn=" + descEn + ", descAr=" + descAr + ", activeFlag=" + activeFlag + ", whoColumn="
-				+ whoColumn + "]";
-	}
+	
 
-	public GnItem(GnItemCategory gnItemCategory, GnUom gnuom, String itemCode, String descEn, String descAr,
-			String activeFlag, WhoColumn whoColumn) {
+	public GnItem(GnItemCategory gnItemCategory, GnUom gnUom, String itemCode, String descEn, String descAr,
+			String activeFlag, List<GnItemService> gnItemService, WhoColumn whoColumn) {
 		super();
 		this.gnItemCategory = gnItemCategory;
-		this.gnUom = gnuom;
+		this.gnUom = gnUom;
 		this.itemCode = itemCode;
 		this.descEn = descEn;
 		this.descAr = descAr;
 		this.activeFlag = activeFlag;
+		this.gnItemService = gnItemService;
 		this.whoColumn = whoColumn;
 	}
+
+	@Override
+	public String toString() {
+		return "GnItem [id=" + id + ", gnItemCategory=" + gnItemCategory + ", gnUom=" + gnUom + ", itemCode=" + itemCode
+				+ ", descEn=" + descEn + ", descAr=" + descAr + ", activeFlag=" + activeFlag + ", gnItemService="
+				+ gnItemService + ", whoColumn=" + whoColumn + "]";
+	}
+
+	public GnUom getGnUom() {
+		return gnUom;
+	}
+
+	public void setGnUom(GnUom gnUom) {
+		this.gnUom = gnUom;
+	}
+
+	public List<GnItemService> getGnItemService() {
+		return gnItemService;
+	}
+
+	public void setGnItemService(List<GnItemService> gnItemService) {
+		this.gnItemService = gnItemService;
+	}
+	
+	
 
 }

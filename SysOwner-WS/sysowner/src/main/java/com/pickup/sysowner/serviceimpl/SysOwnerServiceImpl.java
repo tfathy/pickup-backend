@@ -39,12 +39,7 @@ public class SysOwnerServiceImpl implements SysOwnerService {
 	}
 
 	@Override
-	public SysOwner update(SysOwner body, Integer id) {
-		SysOwner oldEntity = findById(id);
-		if (oldEntity == null) {
-			throw new RuntimeException("The owner id " + id + " is not found-Update Faild");
-		}
-		
+	public SysOwner update(SysOwner body, Integer id) {		
 		try {
 			body.setId(id);
 			repos.save(body);

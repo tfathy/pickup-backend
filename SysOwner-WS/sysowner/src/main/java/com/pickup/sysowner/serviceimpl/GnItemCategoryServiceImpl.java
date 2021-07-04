@@ -17,15 +17,15 @@ import com.pickup.sysowner.service.GnItemCategoryService;
 public class GnItemCategoryServiceImpl implements GnItemCategoryService {
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 	private GnItemCategoryRepos repos;
-	
+
 	@Autowired
 	public GnItemCategoryServiceImpl(GnItemCategoryRepos catRepo) {
 		this.repos = catRepo;
 	}
-	
+
 	@Override
 	public List<GnItemCategory> findAll() {
-		
+
 		List<GnItemCategory> body = null;
 		try {
 			body = this.repos.findAll();
@@ -41,9 +41,9 @@ public class GnItemCategoryServiceImpl implements GnItemCategoryService {
 		GnItemCategory cat = null;
 		try {
 			result = this.repos.findById(id);
-			if(result.isPresent()) {
+			if (result.isPresent()) {
 				cat = result.get();
-			}else {
+			} else {
 				throw new RuntimeException("The Item Category of id " + id + " is not found");
 			}
 		} catch (Exception e) {
@@ -65,18 +65,9 @@ public class GnItemCategoryServiceImpl implements GnItemCategoryService {
 
 	@Override
 	public GnItemCategory update(GnItemCategory category, Integer id) {
-		GnItemCategory cat =findById(id);	
-		if(cat== null) {
-			throw new RuntimeException("The Item category of id " + id + " is not found-Update Faild");
-		}
-		GnItemCategory newCat = null;
-		try {
-			cat.setId(id);
-			newCat = repos.save(cat);
-		} catch (Exception e) {
-			logger.error(e.getLocalizedMessage());
-		}
-		return newCat;
+		category.setId(id);
+		repos.save(category);
+		return category;
 	}
 
 	@Override
