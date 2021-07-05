@@ -29,9 +29,9 @@ public class GnItemService implements Serializable{
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
 	
-	@ManyToOne(fetch=FetchType.EAGER)
-	@JoinColumn(name="item_id")
-	private GnItem gnItem;
+
+	@Column(name="item_id")
+	private Integer itemId;
 	
 	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="service_id")
@@ -51,13 +51,7 @@ public class GnItemService implements Serializable{
 		this.id = id;
 	}
 
-	public GnItem getGnItem() {
-		return gnItem;
-	}
-
-	public void setGnItem(GnItem gnItem) {
-		this.gnItem = gnItem;
-	}
+	
 
 	public GnService getGnService() {
 		return gnService;
@@ -85,17 +79,27 @@ public class GnItemService implements Serializable{
 
 	@Override
 	public String toString() {
-		return "GnItemService [id=" + id + ", gnItem=" + gnItem + ", gnService=" + gnService + ", activeFlag="
+		return "GnItemService [id=" + id + ", itemId=" + itemId + ", gnService=" + gnService + ", activeFlag="
 				+ activeFlag + ", whoColumn=" + whoColumn + "]";
 	}
 
-	public GnItemService(GnItem gnItem, GnService gnService, String activeFlag, WhoColumn whoColumn) {
+	public Integer getItemId() {
+		return itemId;
+	}
+
+	public void setItemId(Integer itemId) {
+		this.itemId = itemId;
+	}
+
+	public GnItemService(Integer itemId, GnService gnService, String activeFlag, WhoColumn whoColumn) {
 		super();
-		this.gnItem = gnItem;
+		this.itemId = itemId;
 		this.gnService = gnService;
 		this.activeFlag = activeFlag;
 		this.whoColumn = whoColumn;
 	}
+
+
 	
 	
 	

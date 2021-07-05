@@ -3,6 +3,7 @@ package com.pickup.sysowner.entity;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
@@ -50,7 +51,8 @@ public class GnItem implements Serializable{
 	@Column(name="active_flag")
 	private String activeFlag;
 	
-	@OneToMany(mappedBy="gnItem" ,fetch= FetchType.LAZY)	
+	@OneToMany(cascade= CascadeType.ALL)	
+	@JoinColumn(name="item_id")
 	private List<GnItemService> gnItemService;
 	
 	@Embedded
