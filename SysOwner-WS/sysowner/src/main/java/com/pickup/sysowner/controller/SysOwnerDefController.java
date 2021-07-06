@@ -269,6 +269,15 @@ public class SysOwnerDefController {
 		}
 		return ResponseEntity.status(HttpStatus.OK).body(lst);
 	}
+	@GetMapping(value = "/item-service/item/{itemId}", produces = { MediaType.APPLICATION_JSON_VALUE })
+	public ResponseEntity<List<com.pickup.sysowner.entity.GnItemService>> findItemServiceByItemId(@PathVariable Integer itemId) {
+		List<com.pickup.sysowner.entity.GnItemService> lst = this.gnItemServiceService.findByItemId(itemId);
+		if (lst == null) {
+			return ResponseEntity.status(HttpStatus.NO_CONTENT).body(lst);
+		}
+		return ResponseEntity.status(HttpStatus.OK).body(lst);
+	}
+
 
 	@GetMapping(value = "/item-service/{id}", produces = { MediaType.APPLICATION_JSON_VALUE })
 	public ResponseEntity<com.pickup.sysowner.entity.GnItemService> findByIdItemService(@PathVariable Integer id) {

@@ -8,8 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-
-
+import com.pickup.sysowner.entity.GnItemService;
 import com.pickup.sysowner.repos.GnItemServiceRepos;
 import com.pickup.sysowner.service.GnItemServiceService;
 @Service
@@ -88,6 +87,12 @@ public class GnItemServiceServiceImpl implements GnItemServiceService {
 		}
 		this.repos.delete(item);
 		return "One Record Deleted";
+	}
+
+	@Override
+	public List<GnItemService> findByItemId(Integer itemId) {
+		
+		return this.repos.findByItenId(itemId);
 	}
 
 }
