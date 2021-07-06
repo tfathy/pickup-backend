@@ -196,6 +196,16 @@ public class SysOwnerDefController {
 		return ResponseEntity.status(HttpStatus.OK).body(body);
 	}
 
+	@GetMapping(value = "/item/cat/{catId}", produces = { MediaType.APPLICATION_JSON_VALUE })
+	public ResponseEntity <List<GnItem>> findByIdItemCatId(@PathVariable Integer catId) {
+		List<GnItem> body = this.gnItemService.findByCatId(catId);
+		if (body == null) {
+			return ResponseEntity.status(HttpStatus.NO_CONTENT).body(body);
+		}
+		return ResponseEntity.status(HttpStatus.OK).body(body);
+	}
+
+	
 	@PostMapping(value = "/item", produces = { MediaType.APPLICATION_JSON_VALUE }, consumes = {
 			MediaType.APPLICATION_JSON_VALUE })
 	public ResponseEntity<GnItem> createItem(@RequestBody GnItem body) {

@@ -3,6 +3,9 @@ package com.pickup.sysowner.serviceimpl;
 import java.util.List;
 import java.util.Optional;
 
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,10 +20,12 @@ import com.pickup.sysowner.service.GnItemService;
 public class GnItemServiceImpl implements GnItemService {
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 	private GnItemRepos repos;
+	private EntityManager em;
 
 	@Autowired
-	public GnItemServiceImpl(GnItemRepos itemRepos) {
+	public GnItemServiceImpl(GnItemRepos itemRepos, EntityManager e) {
 		this.repos = itemRepos;
+		this.em = e;
 	}
 
 	@Override
@@ -91,6 +96,14 @@ public class GnItemServiceImpl implements GnItemService {
 	@Override
 	public List<GnItem> findByGnItemCategory(GnItemCategory gnItemCategory) {
 		return this.repos.findByGnItemCategory(gnItemCategory);
+	}
+
+	@Override
+	public List<GnItem> findByCatId(Integer catId) {
+		Query query = em.createNamedQuery("findByCatId");
+		query.setParameter(1, catId);
+		List<GnItem> entityList = query.getResultList();
+		return entityList;
 	}
 
 	

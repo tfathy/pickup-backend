@@ -13,6 +13,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -20,6 +21,7 @@ import com.pickup.sysowner.entity.shared.WhoColumn;
 
 @Entity()
 @Table(name="gn_item")
+@NamedQuery(name="findByCatId",query="SELECT e FROM GnItem e WHERE e.gnItemCategory.id=?1 ")
 public class GnItem implements Serializable{
 
 	private static final long serialVersionUID = 5051926435662842176L;

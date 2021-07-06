@@ -92,7 +92,7 @@ public class GnItemServiceServiceImpl implements GnItemServiceService {
 	@Override
 	public List<GnItemService> findByItemId(Integer itemId) {
 		
-		return this.repos.findByItenId(itemId);
+		return this.repos.findByItemId(itemId);
 	}
 
 }

@@ -15,4 +15,5 @@ public interface GnItemService {
 	public GnItem create(GnItem item);
 	public GnItem update(GnItem item, Integer id);
 	public String delete(Integer id);
+	public List<GnItem> findByCatId(Integer catId);
 }
