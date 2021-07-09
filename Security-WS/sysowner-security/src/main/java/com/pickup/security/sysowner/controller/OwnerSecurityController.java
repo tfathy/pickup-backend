@@ -1,9 +1,10 @@
 package com.pickup.security.sysowner.controller;
 
+import java.util.List;
+
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.pickup.security.sysowner.entity.SysOwnerUser;
 import com.pickup.security.sysowner.entity.shared.UserDto;
 import com.pickup.security.sysowner.model.CreateUserRequestModel;
 import com.pickup.security.sysowner.model.CreateUserResponseModel;
@@ -23,16 +25,9 @@ import com.pickup.security.sysowner.service.IUserAccount;
 @RestController
 @RequestMapping("/owner-auth")
 public class OwnerSecurityController {
-	@Autowired
-	private Environment env;
 
 	@Autowired
 	private IUserAccount userAccountServices;
-	
-	@GetMapping("/status")
-	public String checkStatus() {
-		return "/owner-auth i working on port"+env.getProperty("server.port");
-	}
 
 	@PostMapping(consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE })
 	public ResponseEntity<CreateUserResponseModel> createUser(@RequestBody CreateUserRequestModel userDetails) {
@@ -55,6 +50,15 @@ public class OwnerSecurityController {
 		UserResponseModel returnValue = new ModelMapper().map(userDto, UserResponseModel.class);
 
 		return ResponseEntity.status(HttpStatus.OK).body(returnValue);
+	}
+
+	@GetMapping(produces = { MediaType.APPLICATION_JSON_VALUE })
+	public ResponseEntity<List<SysOwnerUser>> findAll() {
+		List<SysOwnerUser> list = userAccountServices.findAll();
+		if (list == null) {
+			return ResponseEntity.status(HttpStatus.NO_CONTENT).body(list);
+		}
+		return ResponseEntity.status(HttpStatus.OK).body(list);
 	}
 
 }
