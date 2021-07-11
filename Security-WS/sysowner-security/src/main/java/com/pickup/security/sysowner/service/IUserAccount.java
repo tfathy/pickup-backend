@@ -12,4 +12,5 @@ public interface IUserAccount extends UserDetailsService {
 	public UserDto getUserDetailsByEmail(String email);
 	public UserDto getUserByUserId(String userId);
 	public List<SysOwnerUser> findAll();
+	public SysOwnerUser changePassword(String email,String oldpassword,String newpassword);
 }

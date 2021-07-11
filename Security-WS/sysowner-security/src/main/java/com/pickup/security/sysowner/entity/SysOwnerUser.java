@@ -11,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 import com.pickup.security.sysowner.entity.lookup.HrEmployee;
@@ -21,6 +22,7 @@ import io.swagger.annotations.ApiModelProperty;
 
 @Entity()
 @Table(name = "sys_user")
+@NamedQuery(name="QueryByUsernamePw",query=" Select e From SysOwnerUser e where e.email=?1 and e.encryptedPassword=?2")
 @ApiModel(value = "This object stores data for System Owner user account- It is based on sys-user table with only attributes related to sys-owner")
 public class SysOwnerUser implements Serializable {
 

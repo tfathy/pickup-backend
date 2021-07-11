@@ -1,14 +1,11 @@
 package com.pickup.security.sysowner.service;
 
-
 import java.util.ArrayList;
-
 import java.util.List;
-
 import java.util.UUID;
 
-
-
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
 
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
@@ -28,6 +25,8 @@ import com.pickup.security.sysowner.entity.SysOwnerUser;
 import com.pickup.security.sysowner.entity.shared.UserDto;
 import com.pickup.security.sysowner.repos.UserRepos;
 
+import error.InvalidOldPasswordException;
+
 @Service
 public class UserAccountService implements IUserAccount {
 	Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -35,6 +34,7 @@ public class UserAccountService implements IUserAccount {
 	UserRepos userRepos;
 	private JavaMailSender emailSender;
 	private Environment env;
+	private EntityManager em;
 
 	public UserAccountService() {
 
@@ -42,11 +42,12 @@ public class UserAccountService implements IUserAccount {
 
 	@Autowired
 	public UserAccountService(UserRepos repos, BCryptPasswordEncoder encoder, JavaMailSender emailSender,
-			Environment env) {
+			Environment env, EntityManager em) {
 		this.encoder = encoder;
 		this.userRepos = repos;
 		this.emailSender = emailSender;
 		this.env = env;
+		this.em = em;
 	}
 
 	@Override
@@ -70,8 +71,9 @@ public class UserAccountService implements IUserAccount {
 	public UserDto createUser(UserDto userDetails) {
 		userDetails.setUserId(UUID.randomUUID().toString());
 		userDetails.setEncryptedPassword(encoder.encode(userDetails.getPassword()));
-		String msg = "The following is your user name and temporary password. \nUsername is : "+userDetails.getEmail()+"\nPassword is:"+userDetails.getPassword();
-		sendSimpleMessage(userDetails.getEmail(),"PICK UP administration portal account",msg);
+		String msg = "The following is your user name and temporary password. \nUsername is : " + userDetails.getEmail()
+				+ "\nPassword is:" + userDetails.getPassword();
+		sendSimpleMessage(userDetails.getEmail(), "PICK UP administration portal account", msg);
 		ModelMapper modelMapper = new ModelMapper();
 		modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
 
@@ -109,12 +111,32 @@ public class UserAccountService implements IUserAccount {
 		return this.userRepos.findAll();
 	}
 
-	private  void sendSimpleMessage(String to, String subject, String text) {
+	private void sendSimpleMessage(String to, String subject, String text) {
 		SimpleMailMessage message = new SimpleMailMessage();
 		message.setFrom("noreply@baeldung.com");
 		message.setTo(to);
 		message.setSubject(subject);
 		message.setText(text);
 		emailSender.send(message);
+	}
+
+	@Override
+	public SysOwnerUser changePassword(String email, String oldpassword, String newpassword) {
+
+		SysOwnerUser user = userRepos.findByEmail(email);
+		if (user == null) {
+			return null;
+		}
+		if (!checkIsvalidOldPassword(user, oldpassword)) {
+			throw new InvalidOldPasswordException("Invalid Old Password");
+		}
+
+		user.setEncryptedPassword(encoder.encode(newpassword));
+		this.userRepos.save(user);
+		return user;
+	}
+
+	private boolean checkIsvalidOldPassword(final SysOwnerUser user, String oldPassword) {
+		return encoder.matches(oldPassword, user.getEncryptedPassword());
 	}
 }
