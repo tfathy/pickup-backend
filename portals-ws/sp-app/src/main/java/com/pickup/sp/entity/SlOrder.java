@@ -3,15 +3,19 @@ package com.pickup.sp.entity;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.pickup.sp.entity.shared.GnCustomer;
@@ -28,6 +32,10 @@ public class SlOrder implements Serializable{
 	@Column(name = "id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
+	
+	@OneToMany(fetch=FetchType.EAGER,cascade=CascadeType.ALL)
+	@JoinColumn(name="order_id")
+	private List<SlOrderItem> slOrderItem;
 	
 	@ManyToOne()
 	@JoinColumn(name="customer_id")
@@ -112,13 +120,18 @@ public class SlOrder implements Serializable{
 	
 	public SlOrder() {}
 
-	public SlOrder(GnCustomer gnCustomer, GnLocationType sourceLocationType, GnLocationType destLocationType,
-			GnVehicleSize gnVehicleSize, SlTeam slTeam, Date requestDate, Date reservationDate, Date ordExecDate,
-			String ordStatus, String sourceElvFlag, Integer sourceFloorNum, Integer sourceLong, Integer sourceLat,
-			String sourceFormattedAddress, String destElvFlag, Integer destFloorNum, String destFormatedAddress,
-			Integer destLong, Integer destLat, BigDecimal estimateCost, BigDecimal actualCost, String customerNotes,
-			String teamNotes, WhoColumn whoColumn) {
+	
+
+	
+	public SlOrder(List<SlOrderItem> slOrderItem, GnCustomer gnCustomer, GnLocationType sourceLocationType,
+			GnLocationType destLocationType, GnVehicleSize gnVehicleSize, SlTeam slTeam, Date requestDate,
+			Date reservationDate, Date ordExecDate, String ordStatus, String sourceElvFlag, Integer sourceFloorNum,
+			Integer sourceLong, Integer sourceLat, String sourceFormattedAddress, String destElvFlag,
+			Integer destFloorNum, String destFormatedAddress, Integer destLong, Integer destLat,
+			BigDecimal estimateCost, BigDecimal actualCost, String customerNotes, String teamNotes,
+			WhoColumn whoColumn) {
 		super();
+		this.slOrderItem = slOrderItem;
 		this.gnCustomer = gnCustomer;
 		this.sourceLocationType = sourceLocationType;
 		this.destLocationType = destLocationType;
@@ -145,17 +158,21 @@ public class SlOrder implements Serializable{
 		this.whoColumn = whoColumn;
 	}
 
+
+
+
 	@Override
 	public String toString() {
-		return "SlOrder [id=" + id + ", gnCustomer=" + gnCustomer + ", sourceLocationType=" + sourceLocationType
-				+ ", destLocationType=" + destLocationType + ", gnVehicleSize=" + gnVehicleSize + ", slTeam=" + slTeam
-				+ ", requestDate=" + requestDate + ", reservationDate=" + reservationDate + ", ordExecDate="
-				+ ordExecDate + ", ordStatus=" + ordStatus + ", sourceElvFlag=" + sourceElvFlag + ", sourceFloorNum="
-				+ sourceFloorNum + ", sourceLong=" + sourceLong + ", sourceLat=" + sourceLat
-				+ ", sourceFormattedAddress=" + sourceFormattedAddress + ", destElvFlag=" + destElvFlag
-				+ ", destFloorNum=" + destFloorNum + ", destFormatedAddress=" + destFormatedAddress + ", destLong="
-				+ destLong + ", destLat=" + destLat + ", estimateCost=" + estimateCost + ", actualCost=" + actualCost
-				+ ", customerNotes=" + customerNotes + ", teamNotes=" + teamNotes + ", whoColumn=" + whoColumn + "]";
+		return "SlOrder [id=" + id + ", slOrderItem=" + slOrderItem + ", gnCustomer=" + gnCustomer
+				+ ", sourceLocationType=" + sourceLocationType + ", destLocationType=" + destLocationType
+				+ ", gnVehicleSize=" + gnVehicleSize + ", slTeam=" + slTeam + ", requestDate=" + requestDate
+				+ ", reservationDate=" + reservationDate + ", ordExecDate=" + ordExecDate + ", ordStatus=" + ordStatus
+				+ ", sourceElvFlag=" + sourceElvFlag + ", sourceFloorNum=" + sourceFloorNum + ", sourceLong="
+				+ sourceLong + ", sourceLat=" + sourceLat + ", sourceFormattedAddress=" + sourceFormattedAddress
+				+ ", destElvFlag=" + destElvFlag + ", destFloorNum=" + destFloorNum + ", destFormatedAddress="
+				+ destFormatedAddress + ", destLong=" + destLong + ", destLat=" + destLat + ", estimateCost="
+				+ estimateCost + ", actualCost=" + actualCost + ", customerNotes=" + customerNotes + ", teamNotes="
+				+ teamNotes + ", whoColumn=" + whoColumn + "]";
 	}
 
 	public int getId() {
@@ -356,6 +373,14 @@ public class SlOrder implements Serializable{
 
 	public void setWhoColumn(WhoColumn whoColumn) {
 		this.whoColumn = whoColumn;
+	}
+
+	public List<SlOrderItem> getSlOrderItem() {
+		return slOrderItem;
+	}
+
+	public void setSlOrderItem(List<SlOrderItem> slOrderItem) {
+		this.slOrderItem = slOrderItem;
 	}
 	
 	

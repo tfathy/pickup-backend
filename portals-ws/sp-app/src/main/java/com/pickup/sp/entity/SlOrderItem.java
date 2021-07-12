@@ -29,9 +29,8 @@ public class SlOrderItem implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
-	@ManyToOne()
-	@JoinColumn(name="order_id")
-	private SlOrder slOrder;
+	@Column(name="order_id")
+	private Integer orderId;
 	
 	@ManyToOne()
 	@JoinColumn(name="service_id")
@@ -54,36 +53,14 @@ public class SlOrderItem implements Serializable{
 	private BigDecimal discount;
 	@Embedded
 	private WhoColumn whoColumn;
-	@Override
-	public String toString() {
-		return "SlOrderItem [id=" + id + ", slOrder=" + slOrder + ", gnService=" + gnService + ", gnItem=" + gnItem
-				+ ", qty=" + qty + ", unitPrice=" + unitPrice + ", avgCost=" + avgCost + ", discount=" + discount
-				+ ", whoColumn=" + whoColumn + "]";
-	}
-	public SlOrderItem(SlOrder slOrder, GnService gnService, GnItem gnItem, Integer qty, Integer unitPrice,
-			BigDecimal avgCost, BigDecimal discount, WhoColumn whoColumn) {
-		super();
-		this.slOrder = slOrder;
-		this.gnService = gnService;
-		this.gnItem = gnItem;
-		this.qty = qty;
-		this.unitPrice = unitPrice;
-		this.avgCost = avgCost;
-		this.discount = discount;
-		this.whoColumn = whoColumn;
-	}
+	
 	public int getId() {
 		return id;
 	}
 	public void setId(int id) {
 		this.id = id;
 	}
-	public SlOrder getSlOrder() {
-		return slOrder;
-	}
-	public void setSlOrder(SlOrder slOrder) {
-		this.slOrder = slOrder;
-	}
+	
 	public GnService getGnService() {
 		return gnService;
 	}
@@ -126,6 +103,31 @@ public class SlOrderItem implements Serializable{
 	public void setWhoColumn(WhoColumn whoColumn) {
 		this.whoColumn = whoColumn;
 	}
+	public Integer getOrderId() {
+		return orderId;
+	}
+	public void setOrderId(Integer orderId) {
+		this.orderId = orderId;
+	}
+	public SlOrderItem(Integer orderId, GnService gnService, GnItem gnItem, Integer qty, Integer unitPrice,
+			BigDecimal avgCost, BigDecimal discount, WhoColumn whoColumn) {
+		super();
+		this.orderId = orderId;
+		this.gnService = gnService;
+		this.gnItem = gnItem;
+		this.qty = qty;
+		this.unitPrice = unitPrice;
+		this.avgCost = avgCost;
+		this.discount = discount;
+		this.whoColumn = whoColumn;
+	}
+	@Override
+	public String toString() {
+		return "SlOrderItem [id=" + id + ", orderId=" + orderId + ", gnService=" + gnService + ", gnItem=" + gnItem
+				+ ", qty=" + qty + ", unitPrice=" + unitPrice + ", avgCost=" + avgCost + ", discount=" + discount
+				+ ", whoColumn=" + whoColumn + "]";
+	}
+	
 
 	
 }

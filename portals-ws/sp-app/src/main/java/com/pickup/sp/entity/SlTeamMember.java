@@ -23,9 +23,8 @@ public class SlTeamMember implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
-	@ManyToOne
-	@JoinColumn(name = "team_id")
-	private SlTeam slTeam;
+	@Column(name = "team_id")
+	private Integer teamId;
 
 	@ManyToOne
 	@JoinColumn(name = "member_id")
@@ -41,19 +40,47 @@ public class SlTeamMember implements Serializable {
 
 	}
 
-	public SlTeamMember(SlTeam slTeam, SpMember spMember, String notes, WhoColumn whoColumn) {
+	
+
+	
+
+	public SlTeamMember(Integer teamId, SpMember spMember, String notes, WhoColumn whoColumn) {
 		super();
-		this.slTeam = slTeam;
+		this.teamId = teamId;
 		this.spMember = spMember;
 		this.notes = notes;
 		this.whoColumn = whoColumn;
 	}
 
+
+
+
+
 	@Override
 	public String toString() {
-		return "SlTeamMember [id=" + id + ", slTeam=" + slTeam + ", spMember=" + spMember + ", notes=" + notes
+		return "SlTeamMember [id=" + id + ", teamId=" + teamId + ", spMember=" + spMember + ", notes=" + notes
 				+ ", whoColumn=" + whoColumn + "]";
 	}
+
+
+
+
+
+	public Integer getTeamId() {
+		return teamId;
+	}
+
+
+
+
+
+	public void setTeamId(Integer teamId) {
+		this.teamId = teamId;
+	}
+
+
+
+
 
 	public int getId() {
 		return id;
@@ -63,13 +90,7 @@ public class SlTeamMember implements Serializable {
 		this.id = id;
 	}
 
-	public SlTeam getSlTeam() {
-		return slTeam;
-	}
-
-	public void setSlTeam(SlTeam slTeam) {
-		this.slTeam = slTeam;
-	}
+	
 
 	public SpMember getSpMember() {
 		return spMember;
