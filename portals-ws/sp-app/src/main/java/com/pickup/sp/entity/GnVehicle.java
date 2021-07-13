@@ -11,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 import com.pickup.sp.entity.shared.GnVehicleSize;
@@ -18,6 +19,7 @@ import com.pickup.sp.entity.shared.WhoColumn;
 
 @Entity
 @Table(name = "gn_vehicle")
+@NamedQuery(name="findVclBySpId",query="SELECT e FROM GnVehicle e WHERE e.sp.id=?1 ")
 public class GnVehicle implements Serializable {
 	private static final long serialVersionUID = -9050098081872615036L;
 	@Id

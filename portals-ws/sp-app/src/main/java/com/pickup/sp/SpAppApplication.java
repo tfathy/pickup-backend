@@ -21,13 +21,13 @@ public class SpAppApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(SpAppApplication.class, args);
 	}
-	/*@Bean
+	@Bean
     public Docket api() {
         return new Docket(DocumentationType.SWAGGER_2)  
           .select()                                  
           .apis(RequestHandlerSelectors.basePackage("com.pickup.sp.controller"))              
           .paths(PathSelectors.any())                          
           .build();                                           
-    }*/
+    }
 
 }
