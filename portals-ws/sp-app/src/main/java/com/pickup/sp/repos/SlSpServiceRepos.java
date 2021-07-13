@@ -2,6 +2,8 @@ package com.pickup.sp.repos;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface SlSpServiceRepos extends JpaRepository<SlSpServiceRepos, Integer> {
+import com.pickup.sp.entity.SlSpService;
+
+public interface SlSpServiceRepos extends JpaRepository<SlSpService, Integer> {
 
 }

@@ -33,7 +33,7 @@ public class SlOrder implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
-	@OneToMany(fetch=FetchType.EAGER,cascade=CascadeType.ALL)
+	@OneToMany(fetch=FetchType.LAZY,cascade=CascadeType.ALL)
 	@JoinColumn(name="order_id")
 	private List<SlOrderItem> slOrderItem;
 	

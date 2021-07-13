@@ -16,8 +16,12 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
 import com.pickup.sp.entity.GnVehicle;
+import com.pickup.sp.entity.SpMember;
 import com.pickup.sp.service.GnVehicleService;
+import com.pickup.sp.service.SpMemberService;
+
 import io.swagger.annotations.ApiOperation;
 
 @RestController
@@ -27,6 +31,9 @@ public class SpAppController {
 
 	@Autowired
 	private GnVehicleService gnVclService;
+	
+	@Autowired 
+	private SpMemberService spMemberService;
 
 	/***********************************************
 	 * GnVehicleService API
@@ -74,10 +81,60 @@ public class SpAppController {
 		GnVehicle entity = this.gnVclService.findById(id);
 		if (entity == null) {
 			logger.warn("Cannot delete.Record Not Found");
-			return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Country Not Found");
+			return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Vehcile Not Found");
 		}
 		String result = this.gnVclService.delete(id);
 		return ResponseEntity.status(HttpStatus.OK).body(result);
 	}
 	
+	/***********************************************
+	 * SpMember API
+	 ******************************************************************/	
+	@GetMapping(value = "/sp-member/{spId}", produces = { MediaType.APPLICATION_JSON_VALUE })
+	@ApiOperation(value = "List of Employees", notes = "The Api Returns List of Employees for a service provider", response = GnVehicle.class)
+	public ResponseEntity<List<SpMember>> findAllSpMember(@PathVariable Integer spId) {
+		List<SpMember> lst = this.spMemberService.findBySpId(spId);
+		if (lst == null) {
+			logger.warn("No Data Found");
+			return ResponseEntity.status(HttpStatus.NO_CONTENT).body(lst);
+		}
+		return ResponseEntity.status(HttpStatus.OK).body(lst);
+	}
+	
+	@GetMapping(value = "/member/{id}", produces = { MediaType.APPLICATION_JSON_VALUE })
+	@ApiOperation(value = "return one Employee", notes = "The Api Returns an employee for a service provider", response = GnVehicle.class)
+	public ResponseEntity<SpMember> findSpMemberById(@PathVariable Integer id) {
+		SpMember entity = this.spMemberService.findById(id);
+		if (entity == null) {
+			logger.warn("No Data Found");
+			return ResponseEntity.status(HttpStatus.NO_CONTENT).body(entity);
+		}
+		return ResponseEntity.status(HttpStatus.OK).body(entity);
+	}
+	
+	@PostMapping(value = "/member", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
+			MediaType.APPLICATION_JSON_VALUE })
+	public ResponseEntity<SpMember> createSpMember(@RequestBody SpMember entity) {
+		SpMember body = this.spMemberService.create(entity);
+		return ResponseEntity.status(HttpStatus.CREATED).body(body);
+	}
+
+	@PutMapping(value = "/member/{id}", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
+			MediaType.APPLICATION_JSON_VALUE })
+	public ResponseEntity<SpMember> updateSpMember(@RequestBody SpMember body, @PathVariable Integer id) {
+		body.setId(id);
+		this.spMemberService.update(body, id);
+		return ResponseEntity.status(HttpStatus.OK).body(body);
+	}
+
+	@DeleteMapping(value = "/member/{id}")
+	public ResponseEntity<String> deleteSpMember(@PathVariable Integer id) {
+		SpMember entity = this.spMemberService.findById(id);
+		if (entity == null) {
+			logger.warn("Cannot delete.Record Not Found");
+			return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Member Not Found");
+		}
+		String result = this.spMemberService.delete(id);
+		return ResponseEntity.status(HttpStatus.OK).body(result);
+	}
 }

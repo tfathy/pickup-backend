@@ -11,12 +11,14 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 import com.pickup.sp.entity.shared.WhoColumn;
 
 @Entity
 @Table(name = "sp_member")
+@NamedQuery(name="findMemberBySpId",query="SELECT e FROM SpMember e WHERE e.sp.id=?1")
 public class SpMember implements Serializable {
 	private static final long serialVersionUID = 5726502710516005739L;
 
@@ -28,6 +30,10 @@ public class SpMember implements Serializable {
 	@ManyToOne()
 	@JoinColumn(name = "job_id")
 	private SpJob spJob;
+	
+	@ManyToOne()
+	@JoinColumn(name="sp_id")
+	private SpServiceProvider sp;
 
 	@Column(name = "full_name_ar")
 	private String fullNameAr;
@@ -194,6 +200,14 @@ public class SpMember implements Serializable {
 
 	public void setWhoColumn(WhoColumn whoColumn) {
 		this.whoColumn = whoColumn;
+	}
+
+	public SpServiceProvider getSp() {
+		return sp;
+	}
+
+	public void setSp(SpServiceProvider sp) {
+		this.sp = sp;
 	}
 
 }
