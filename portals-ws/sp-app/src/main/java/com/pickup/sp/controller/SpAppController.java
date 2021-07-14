@@ -18,8 +18,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.pickup.sp.entity.GnVehicle;
+import com.pickup.sp.entity.SpJob;
 import com.pickup.sp.entity.SpMember;
 import com.pickup.sp.service.GnVehicleService;
+import com.pickup.sp.service.SpJobService;
 import com.pickup.sp.service.SpMemberService;
 
 import io.swagger.annotations.ApiOperation;
@@ -31,9 +33,12 @@ public class SpAppController {
 
 	@Autowired
 	private GnVehicleService gnVclService;
-	
-	@Autowired 
+
+	@Autowired
 	private SpMemberService spMemberService;
+
+	@Autowired
+	private SpJobService spJobService;
 
 	/***********************************************
 	 * GnVehicleService API
@@ -49,7 +54,7 @@ public class SpAppController {
 		}
 		return ResponseEntity.status(HttpStatus.OK).body(lst);
 	}
-	
+
 	@GetMapping(value = "/vcl/{id}", produces = { MediaType.APPLICATION_JSON_VALUE })
 	@ApiOperation(value = "return one Vehicle", notes = "The Api Returns a vehcils for a service provider", response = GnVehicle.class)
 	public ResponseEntity<GnVehicle> findVehicleById(@PathVariable Integer id) {
@@ -60,7 +65,7 @@ public class SpAppController {
 		}
 		return ResponseEntity.status(HttpStatus.OK).body(entity);
 	}
-	
+
 	@PostMapping(value = "/vcl", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
 			MediaType.APPLICATION_JSON_VALUE })
 	public ResponseEntity<GnVehicle> createVcl(@RequestBody GnVehicle entity) {
@@ -86,10 +91,10 @@ public class SpAppController {
 		String result = this.gnVclService.delete(id);
 		return ResponseEntity.status(HttpStatus.OK).body(result);
 	}
-	
+
 	/***********************************************
 	 * SpMember API
-	 ******************************************************************/	
+	 ******************************************************************/
 	@GetMapping(value = "/sp-member/{spId}", produces = { MediaType.APPLICATION_JSON_VALUE })
 	@ApiOperation(value = "List of Employees", notes = "The Api Returns List of Employees for a service provider", response = GnVehicle.class)
 	public ResponseEntity<List<SpMember>> findAllSpMember(@PathVariable Integer spId) {
@@ -100,7 +105,7 @@ public class SpAppController {
 		}
 		return ResponseEntity.status(HttpStatus.OK).body(lst);
 	}
-	
+
 	@GetMapping(value = "/member/{id}", produces = { MediaType.APPLICATION_JSON_VALUE })
 	@ApiOperation(value = "return one Employee", notes = "The Api Returns an employee for a service provider", response = GnVehicle.class)
 	public ResponseEntity<SpMember> findSpMemberById(@PathVariable Integer id) {
@@ -111,7 +116,7 @@ public class SpAppController {
 		}
 		return ResponseEntity.status(HttpStatus.OK).body(entity);
 	}
-	
+
 	@PostMapping(value = "/member", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
 			MediaType.APPLICATION_JSON_VALUE })
 	public ResponseEntity<SpMember> createSpMember(@RequestBody SpMember entity) {
@@ -135,6 +140,58 @@ public class SpAppController {
 			return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Member Not Found");
 		}
 		String result = this.spMemberService.delete(id);
+		return ResponseEntity.status(HttpStatus.OK).body(result);
+	}
+
+	/***********************************************
+	 * SpJob API
+	 ******************************************************************/
+
+	@GetMapping(value = "/sp-job/{spId}", produces = { MediaType.APPLICATION_JSON_VALUE })
+	@ApiOperation(value = "List of Jobs", notes = "The Api Returns List of Jobs for a service provider", response = GnVehicle.class)
+	public ResponseEntity<List<SpJob>> findAllSpJobs(@PathVariable Integer spId) {
+		List<SpJob> lst = this.spJobService.findBySpId(spId);
+		if (lst == null) {
+			logger.warn("No Data Found");
+			return ResponseEntity.status(HttpStatus.NO_CONTENT).body(lst);
+		}
+		return ResponseEntity.status(HttpStatus.OK).body(lst);
+	}
+
+	@GetMapping(value = "/job/{id}", produces = { MediaType.APPLICATION_JSON_VALUE })
+	@ApiOperation(value = "return one Job", notes = "The Api Returns a job for a service provider", response = GnVehicle.class)
+	public ResponseEntity<SpJob> findSpJobById(@PathVariable Integer id) {
+		SpJob entity = this.spJobService.findById(id);
+		if (entity == null) {
+			logger.warn("No Data Found");
+			return ResponseEntity.status(HttpStatus.NO_CONTENT).body(entity);
+		}
+		return ResponseEntity.status(HttpStatus.OK).body(entity);
+	}
+
+	@PostMapping(value = "/job", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
+			MediaType.APPLICATION_JSON_VALUE })
+	public ResponseEntity<SpJob> createSpJob(@RequestBody SpJob entity) {
+		SpJob body = this.spJobService.create(entity);
+		return ResponseEntity.status(HttpStatus.CREATED).body(body);
+	}
+
+	@PutMapping(value = "/job/{id}", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
+			MediaType.APPLICATION_JSON_VALUE })
+	public ResponseEntity<SpJob> updateSpJob(@RequestBody SpJob body, @PathVariable Integer id) {
+		body.setId(id);
+		this.spJobService.update(body, id);
+		return ResponseEntity.status(HttpStatus.OK).body(body);
+	}
+
+	@DeleteMapping(value = "/job/{id}")
+	public ResponseEntity<String> deleteSpJob(@PathVariable Integer id) {
+		SpJob entity = this.spJobService.findById(id);
+		if (entity == null) {
+			logger.warn("Cannot delete.Record Not Found");
+			return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Member Not Found");
+		}
+		String result = this.spJobService.delete(id);
 		return ResponseEntity.status(HttpStatus.OK).body(result);
 	}
 }

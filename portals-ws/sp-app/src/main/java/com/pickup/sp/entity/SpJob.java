@@ -8,12 +8,16 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 import com.pickup.sp.entity.shared.WhoColumn;
 
 @Entity
 @Table(name="sp_job")
+@NamedQuery(name="findJobBySpId",query="SELECT e FROM SpJob e WHERE e.sp.id=?1")
 public class SpJob implements Serializable{
 
 	private static final long serialVersionUID = -4912415306937486907L;
@@ -21,6 +25,10 @@ public class SpJob implements Serializable{
 	@Column(name="id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
+	
+	@ManyToOne()
+	@JoinColumn(name="sp_id")
+	private SpServiceProvider sp;
 	
 	@Column(name="desc_ar")
 	private String descAr;
