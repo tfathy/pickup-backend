@@ -2,10 +2,10 @@ package com.pickup.security.sysowner.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.UUID;
 
 import javax.persistence.EntityManager;
-import javax.persistence.Query;
 
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
@@ -23,6 +23,7 @@ import org.springframework.stereotype.Service;
 
 import com.pickup.security.sysowner.entity.SysOwnerUser;
 import com.pickup.security.sysowner.entity.shared.UserDto;
+import com.pickup.security.sysowner.model.UserExistsModel;
 import com.pickup.security.sysowner.repos.UserRepos;
 
 import error.InvalidOldPasswordException;
@@ -138,5 +139,39 @@ public class UserAccountService implements IUserAccount {
 
 	private boolean checkIsvalidOldPassword(final SysOwnerUser user, String oldPassword) {
 		return encoder.matches(oldPassword, user.getEncryptedPassword());
+	}
+
+
+	@Override
+	public UserExistsModel RestPassword(String email) {
+		UserExistsModel entity = null;
+		SysOwnerUser user = userRepos.findByEmail(email);
+		if (user == null) {
+			return null;
+		}
+// generate random password
+		String newpassword = generateRandomText(5);
+		// send it to user email
+		sendSimpleMessage(user.getEmail(), "Pickup Application : Password rest",
+				"Your password has been rest.\nYour new password is " + newpassword);
+		// encrypt the password and update the entity
+		user.setEncryptedPassword(encoder.encode(newpassword));
+		this.userRepos.save(user);
+		// return an object of type UserExistsModel
+		entity = new UserExistsModel(user.getEmail());
+		return entity;
+	}
+
+	private String generateRandomText(int length) {
+		String SALTCHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+		StringBuilder salt = new StringBuilder();
+		Random rnd = new Random();
+		while (salt.length() <= length) { // length of the random string.
+			int index = (int) (rnd.nextFloat() * SALTCHARS.length());
+			salt.append(SALTCHARS.charAt(index));
+		}
+		String saltStr = salt.toString();
+		return saltStr;
+
 	}
 }

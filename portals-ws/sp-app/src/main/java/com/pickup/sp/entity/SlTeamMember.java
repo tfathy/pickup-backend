@@ -2,9 +2,11 @@ package com.pickup.sp.entity;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -12,6 +14,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.pickup.sp.entity.shared.WhoColumn;
 
 @Entity
@@ -23,7 +26,14 @@ public class SlTeamMember implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
-	@Column(name = "team_id")
+	/*
+	@ManyToOne(fetch=FetchType.EAGER,cascade=CascadeType.PERSIST)
+	@JoinColumn(name = "team_id",nullable=false)
+	@JsonIgnore
+	private SlTeam slTeam;
+	*/
+	
+	@Column(name="team_id",nullable = false)
 	private Integer teamId;
 
 	@ManyToOne
@@ -40,47 +50,6 @@ public class SlTeamMember implements Serializable {
 
 	}
 
-	
-
-	
-
-	public SlTeamMember(Integer teamId, SpMember spMember, String notes, WhoColumn whoColumn) {
-		super();
-		this.teamId = teamId;
-		this.spMember = spMember;
-		this.notes = notes;
-		this.whoColumn = whoColumn;
-	}
-
-
-
-
-
-	@Override
-	public String toString() {
-		return "SlTeamMember [id=" + id + ", teamId=" + teamId + ", spMember=" + spMember + ", notes=" + notes
-				+ ", whoColumn=" + whoColumn + "]";
-	}
-
-
-
-
-
-	public Integer getTeamId() {
-		return teamId;
-	}
-
-
-
-
-
-	public void setTeamId(Integer teamId) {
-		this.teamId = teamId;
-	}
-
-
-
-
 
 	public int getId() {
 		return id;
@@ -89,8 +58,6 @@ public class SlTeamMember implements Serializable {
 	public void setId(int id) {
 		this.id = id;
 	}
-
-	
 
 	public SpMember getSpMember() {
 		return spMember;
@@ -115,5 +82,36 @@ public class SlTeamMember implements Serializable {
 	public void setWhoColumn(WhoColumn whoColumn) {
 		this.whoColumn = whoColumn;
 	}
+
+
+	public Integer getTeamId() {
+		return teamId;
+	}
+
+
+	public void setTeamId(Integer teamId) {
+		this.teamId = teamId;
+	}
+
+
+	public SlTeamMember(Integer teamId, SpMember spMember, String notes, WhoColumn whoColumn) {
+		super();
+		this.teamId = teamId;
+		this.spMember = spMember;
+		this.notes = notes;
+		this.whoColumn = whoColumn;
+	}
+
+
+	@Override
+	public String toString() {
+		return "SlTeamMember [id=" + id + ", teamId=" + teamId + ", spMember=" + spMember + ", notes=" + notes
+				+ ", whoColumn=" + whoColumn + "]";
+	}
+
+
+	
+
+	
 
 }

@@ -20,6 +20,7 @@ import com.pickup.security.sysowner.entity.SysOwnerUser;
 import com.pickup.security.sysowner.entity.shared.UserDto;
 import com.pickup.security.sysowner.model.CreateUserRequestModel;
 import com.pickup.security.sysowner.model.CreateUserResponseModel;
+import com.pickup.security.sysowner.model.UserExistsModel;
 import com.pickup.security.sysowner.model.UserResponseModel;
 import com.pickup.security.sysowner.service.IUserAccount;
 
@@ -29,6 +30,15 @@ public class OwnerSecurityController {
 
 	@Autowired
 	private IUserAccount userAccountServices;
+	
+	@PostMapping(value="/check/user",consumes = { MediaType.TEXT_PLAIN_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE })
+	public ResponseEntity<UserExistsModel> checkUserNameFound(@RequestBody String email){
+		UserExistsModel result = userAccountServices.RestPassword(email);
+		if(result==null) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(result);
+		}
+		return ResponseEntity.status(HttpStatus.OK).body(result);
+	}
 
 	@PostMapping(consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE })
 	public ResponseEntity<CreateUserResponseModel> createUser(@RequestBody CreateUserRequestModel userDetails) {

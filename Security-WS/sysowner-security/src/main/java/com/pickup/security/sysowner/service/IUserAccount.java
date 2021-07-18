@@ -6,6 +6,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 
 import com.pickup.security.sysowner.entity.SysOwnerUser;
 import com.pickup.security.sysowner.entity.shared.UserDto;
+import com.pickup.security.sysowner.model.UserExistsModel;
 
 public interface IUserAccount extends UserDetailsService {
 	public UserDto createUser(UserDto userDetails);	
@@ -13,4 +14,6 @@ public interface IUserAccount extends UserDetailsService {
 	public UserDto getUserByUserId(String userId);
 	public List<SysOwnerUser> findAll();
 	public SysOwnerUser changePassword(String email,String oldpassword,String newpassword);
+	public UserExistsModel RestPassword(String email);
+	
 }

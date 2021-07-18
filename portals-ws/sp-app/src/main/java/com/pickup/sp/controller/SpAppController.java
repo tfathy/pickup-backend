@@ -18,9 +18,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.pickup.sp.entity.GnVehicle;
+import com.pickup.sp.entity.SlTeam;
 import com.pickup.sp.entity.SpJob;
 import com.pickup.sp.entity.SpMember;
 import com.pickup.sp.service.GnVehicleService;
+import com.pickup.sp.service.SlTeamService;
 import com.pickup.sp.service.SpJobService;
 import com.pickup.sp.service.SpMemberService;
 
@@ -39,6 +41,9 @@ public class SpAppController {
 
 	@Autowired
 	private SpJobService spJobService;
+
+	@Autowired
+	private SlTeamService slTeamService;
 
 	/***********************************************
 	 * GnVehicleService API
@@ -187,6 +192,57 @@ public class SpAppController {
 	@DeleteMapping(value = "/job/{id}")
 	public ResponseEntity<String> deleteSpJob(@PathVariable Integer id) {
 		SpJob entity = this.spJobService.findById(id);
+		if (entity == null) {
+			logger.warn("Cannot delete.Record Not Found");
+			return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Member Not Found");
+		}
+		String result = this.spJobService.delete(id);
+		return ResponseEntity.status(HttpStatus.OK).body(result);
+	}
+
+	/***********************************************
+	 * SlTeam API
+	 ******************************************************************/
+	@GetMapping(value = "/sl-team/{spId}", produces = { MediaType.APPLICATION_JSON_VALUE })
+	@ApiOperation(value = "List of Teams", notes = "The Api Returns List of Teams for a service provider", response = GnVehicle.class)
+	public ResponseEntity<List<SlTeam>> findAllSlTeam(@PathVariable Integer spId) {
+		List<SlTeam> lst = this.slTeamService.findBySpId(spId);
+		if (lst == null) {
+			logger.warn("No Data Found");
+			return ResponseEntity.status(HttpStatus.NO_CONTENT).body(lst);
+		}
+		return ResponseEntity.status(HttpStatus.OK).body(lst);
+	}
+
+	@GetMapping(value = "/team/{id}", produces = { MediaType.APPLICATION_JSON_VALUE })
+	@ApiOperation(value = "return one Team", notes = "The Api Returns a Team for a service provider", response = GnVehicle.class)
+	public ResponseEntity<SlTeam> findSlTeamById(@PathVariable Integer id) {
+		SlTeam entity = this.slTeamService.findById(id);
+		if (entity == null) {
+			logger.warn("No Data Found");
+			return ResponseEntity.status(HttpStatus.NO_CONTENT).body(entity);
+		}
+		return ResponseEntity.status(HttpStatus.OK).body(entity);
+	}
+
+	@PostMapping(value = "/team", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
+			MediaType.APPLICATION_JSON_VALUE })
+	public ResponseEntity<SlTeam> createSlTeam(@RequestBody SlTeam entity) {
+		SlTeam body = this.slTeamService.create(entity);
+		return ResponseEntity.status(HttpStatus.CREATED).body(body);
+	}
+
+	@PutMapping(value = "/team/{id}", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
+			MediaType.APPLICATION_JSON_VALUE })
+	public ResponseEntity<SlTeam> updateSlTeam(@RequestBody SlTeam body, @PathVariable Integer id) {
+		body.setId(id);
+		this.slTeamService.update(body, id);
+		return ResponseEntity.status(HttpStatus.OK).body(body);
+	}
+
+	@DeleteMapping(value = "/team/{id}")
+	public ResponseEntity<String> deleteSlTeam(@PathVariable Integer id) {
+		SlTeam entity = this.slTeamService.findById(id);
 		if (entity == null) {
 			logger.warn("Cannot delete.Record Not Found");
 			return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Member Not Found");

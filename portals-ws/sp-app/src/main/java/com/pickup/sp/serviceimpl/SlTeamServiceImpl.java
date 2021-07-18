@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.pickup.sp.entity.SlTeam;
+import com.pickup.sp.entity.SlTeamMember;
 import com.pickup.sp.repos.SlTeamRepos;
 import com.pickup.sp.service.SlTeamService;
 
@@ -41,8 +42,7 @@ public class SlTeamServiceImpl implements SlTeamService {
 	}
 
 	@Override
-	public SlTeam create(SlTeam entity) {
-
+	public SlTeam create(SlTeam entity) {		
 		return repos.save(entity);
 	}
 

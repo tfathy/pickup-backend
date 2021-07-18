@@ -12,4 +12,5 @@ public interface UserRepos extends JpaRepository<SysOwnerUser, Integer> {
 	SysOwnerUser findByUserId(String userId);
 	
 	SysOwnerUser findById(int id);
+	
 }

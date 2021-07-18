@@ -2,6 +2,7 @@ package com.pickup.sp.service;
 import java.util.List;
 
 import com.pickup.sp.entity.SlTeam;
+import com.pickup.sp.entity.SlTeamMember;
 public interface SlTeamService {
 		public List<SlTeam> findBySpId(Integer spId);
 		public SlTeam findById(Integer id);

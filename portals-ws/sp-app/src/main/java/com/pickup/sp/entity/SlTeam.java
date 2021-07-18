@@ -1,6 +1,7 @@
 package com.pickup.sp.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -22,51 +23,52 @@ import javax.persistence.Table;
 import com.pickup.sp.entity.shared.WhoColumn;
 
 @Entity
-@Table(name="sl_team")
-@NamedQuery(name="findTeamBySpId" , query="SELECT e from SlTeam e WHERE e.sp.id=?1")
-public class SlTeam implements Serializable{
+@Table(name = "sl_team")
+@NamedQuery(name = "findTeamBySpId", query = "SELECT e from SlTeam e WHERE e.sp.id=?1")
+public class SlTeam implements Serializable {
 
 	private static final long serialVersionUID = -3267830260768668075L;
 	@Id
-	@Column(name="id")
+	@Column(name = "id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	
+
 	@ManyToOne()
-	@JoinColumn(name="manager_id")
+	@JoinColumn(name = "manager_id")
 	private SpMember manager;
-	
+
 	@ManyToOne
-	@JoinColumn(name="sp_id")
+	@JoinColumn(name = "sp_id")
 	private SpServiceProvider sp;
-	
+
 	@OneToOne()
-	@JoinColumn(name="vehicle_id")
+	@JoinColumn(name = "vehicle_id")
 	private GnVehicle gnVehicle;
-	
-	@OneToMany(cascade=CascadeType.ALL,fetch=FetchType.EAGER)
+
+	@OneToMany(cascade=CascadeType.ALL,fetch=FetchType.LAZY)
 	@JoinColumn(name="team_id")
 	private List<SlTeamMember> slTeamMember;
-	
-	@Column(name="desc_ar")
+
+	@Column(name = "desc_ar")
 	private String descAr;
-	
-	@Column(name="desc_en")
+
+	@Column(name = "desc_en")
 	private String descEn;
-	
-	@Column(name="start_date")
+
+	@Column(name = "start_date")
 	private Date startDate;
-	
-	@Column(name="end_date")
+
+	@Column(name = "end_date")
 	private Date endDate;
-	
-	@Column(name="active_flag")
+
+	@Column(name = "active_flag")
 	private String activeFlag;
-	
+
 	@Embedded
 	private WhoColumn whoColumn;
+
 	public SlTeam() {
-		
+
 	}
 
 	public SlTeam(SpMember manager, SpServiceProvider sp, GnVehicle gnVehicle, String descAr, String descEn,
@@ -169,7 +171,21 @@ public class SlTeam implements Serializable{
 	public void setWhoColumn(WhoColumn whoColumn) {
 		this.whoColumn = whoColumn;
 	}
+
 	
-	
-	
+	public List<SlTeamMember> getSlTeamMember() {
+		return slTeamMember;
+	}
+
+	public void setSlTeamMember(List<SlTeamMember> slTeamMember) {
+		this.slTeamMember = slTeamMember;
+	}
+
+	public void addChild(SlTeamMember entity) {
+		if(slTeamMember==null) {
+			slTeamMember = new ArrayList<>();
+		}
+		slTeamMember.add(entity);
+	}
+
 }
