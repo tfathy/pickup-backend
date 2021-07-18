@@ -15,6 +15,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -25,7 +26,12 @@ import com.pickup.sp.entity.shared.WhoColumn;
 
 @Entity()
 @Table(name="sl_order")
+@NamedQuery(name="findBySpId",query="Select e from SlOrder e where e.slTeam.sp.id=?1")
+@NamedQuery(name="findByTeamId",query="Select e from SlOrder e Where e.slTeam.id=?1")
+@NamedQuery(name = "findByOrdStatus",query=" Select e From SlOrder e where e.slTeam.sp.id=?1 and e.ordStatus=?2")
+@NamedQuery (name="findByCustomerId",query="Select e From SlOrder e where e.gnCustomer.id=?1")
 public class SlOrder implements Serializable{
+	
 	private static final long serialVersionUID = -6974371190349853351L;
 	
 	@Id

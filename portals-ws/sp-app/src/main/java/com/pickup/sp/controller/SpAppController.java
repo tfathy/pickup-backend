@@ -18,10 +18,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.pickup.sp.entity.GnVehicle;
+import com.pickup.sp.entity.SlOrder;
 import com.pickup.sp.entity.SlTeam;
 import com.pickup.sp.entity.SpJob;
 import com.pickup.sp.entity.SpMember;
 import com.pickup.sp.service.GnVehicleService;
+import com.pickup.sp.service.SlOrderService;
 import com.pickup.sp.service.SlTeamService;
 import com.pickup.sp.service.SpJobService;
 import com.pickup.sp.service.SpMemberService;
@@ -44,6 +46,9 @@ public class SpAppController {
 
 	@Autowired
 	private SlTeamService slTeamService;
+
+	@Autowired
+	private SlOrderService slOrderService;
 
 	/***********************************************
 	 * GnVehicleService API
@@ -101,7 +106,7 @@ public class SpAppController {
 	 * SpMember API
 	 ******************************************************************/
 	@GetMapping(value = "/sp-member/{spId}", produces = { MediaType.APPLICATION_JSON_VALUE })
-	@ApiOperation(value = "List of Employees", notes = "The Api Returns List of Employees for a service provider", response = GnVehicle.class)
+	@ApiOperation(value = "List of Employees", notes = "The Api Returns List of Employees for a service provider", response = SpMember.class)
 	public ResponseEntity<List<SpMember>> findAllSpMember(@PathVariable Integer spId) {
 		List<SpMember> lst = this.spMemberService.findBySpId(spId);
 		if (lst == null) {
@@ -112,7 +117,7 @@ public class SpAppController {
 	}
 
 	@GetMapping(value = "/member/{id}", produces = { MediaType.APPLICATION_JSON_VALUE })
-	@ApiOperation(value = "return one Employee", notes = "The Api Returns an employee for a service provider", response = GnVehicle.class)
+	@ApiOperation(value = "return one Employee", notes = "The Api Returns an employee for a service provider", response = SpMember.class)
 	public ResponseEntity<SpMember> findSpMemberById(@PathVariable Integer id) {
 		SpMember entity = this.spMemberService.findById(id);
 		if (entity == null) {
@@ -153,7 +158,7 @@ public class SpAppController {
 	 ******************************************************************/
 
 	@GetMapping(value = "/sp-job/{spId}", produces = { MediaType.APPLICATION_JSON_VALUE })
-	@ApiOperation(value = "List of Jobs", notes = "The Api Returns List of Jobs for a service provider", response = GnVehicle.class)
+	@ApiOperation(value = "List of Jobs", notes = "The Api Returns List of Jobs for a service provider", response = SpJob.class)
 	public ResponseEntity<List<SpJob>> findAllSpJobs(@PathVariable Integer spId) {
 		List<SpJob> lst = this.spJobService.findBySpId(spId);
 		if (lst == null) {
@@ -164,7 +169,7 @@ public class SpAppController {
 	}
 
 	@GetMapping(value = "/job/{id}", produces = { MediaType.APPLICATION_JSON_VALUE })
-	@ApiOperation(value = "return one Job", notes = "The Api Returns a job for a service provider", response = GnVehicle.class)
+	@ApiOperation(value = "return one Job", notes = "The Api Returns a job for a service provider", response = SpJob.class)
 	public ResponseEntity<SpJob> findSpJobById(@PathVariable Integer id) {
 		SpJob entity = this.spJobService.findById(id);
 		if (entity == null) {
@@ -204,7 +209,7 @@ public class SpAppController {
 	 * SlTeam API
 	 ******************************************************************/
 	@GetMapping(value = "/sl-team/{spId}", produces = { MediaType.APPLICATION_JSON_VALUE })
-	@ApiOperation(value = "List of Teams", notes = "The Api Returns List of Teams for a service provider", response = GnVehicle.class)
+	@ApiOperation(value = "List of Teams", notes = "The Api Returns List of Teams for a service provider", response = SlTeam.class)
 	public ResponseEntity<List<SlTeam>> findAllSlTeam(@PathVariable Integer spId) {
 		List<SlTeam> lst = this.slTeamService.findBySpId(spId);
 		if (lst == null) {
@@ -215,7 +220,7 @@ public class SpAppController {
 	}
 
 	@GetMapping(value = "/team/{id}", produces = { MediaType.APPLICATION_JSON_VALUE })
-	@ApiOperation(value = "return one Team", notes = "The Api Returns a Team for a service provider", response = GnVehicle.class)
+	@ApiOperation(value = "return one Team", notes = "The Api Returns a Team for a service provider", response = SlTeam.class)
 	public ResponseEntity<SlTeam> findSlTeamById(@PathVariable Integer id) {
 		SlTeam entity = this.slTeamService.findById(id);
 		if (entity == null) {
@@ -247,7 +252,96 @@ public class SpAppController {
 			logger.warn("Cannot delete.Record Not Found");
 			return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Member Not Found");
 		}
-		String result = this.spJobService.delete(id);
+		String result = this.slTeamService.delete(id);
 		return ResponseEntity.status(HttpStatus.OK).body(result);
 	}
+
+	/***********************************************
+	 * SL Order API
+	 ******************************************************************/
+	// get list of orders by sp id
+	@GetMapping(value = "/sl-order/sp/{spId}", produces = { MediaType.APPLICATION_JSON_VALUE })
+	@ApiOperation(value = "List of Orders", notes = "The Api Returns List of Orders for a service provider", response = SlOrder.class)
+	public ResponseEntity<List<SlOrder>> findSlOrderForSp(@PathVariable Integer spId) {
+		List<SlOrder> lst = this.slOrderService.findBySpId(spId);
+		if (lst == null) {
+			logger.warn("No Data Found");
+			return ResponseEntity.status(HttpStatus.NO_CONTENT).body(lst);
+		}
+		return ResponseEntity.status(HttpStatus.OK).body(lst);
+	}
+
+	// get list of orders by Customer id
+	@GetMapping(value = "/sl-order/customer/{customerId}", produces = { MediaType.APPLICATION_JSON_VALUE })
+	@ApiOperation(value = "List of Orders for a customer", notes = "The Api Returns List of Orders for a Customer", response = SlOrder.class)
+	public ResponseEntity<List<SlOrder>> findSlOrderForCustomer(@PathVariable Integer customerId) {
+		List<SlOrder> lst = this.slOrderService.findByCustomerId(customerId);
+		if (lst == null) {
+			logger.warn("No Data Found");
+			return ResponseEntity.status(HttpStatus.NO_CONTENT).body(lst);
+		}
+		return ResponseEntity.status(HttpStatus.OK).body(lst);
+	}
+
+	// get list of orders by Team id
+	@GetMapping(value = "/sl-order/team/{teamId}", produces = { MediaType.APPLICATION_JSON_VALUE })
+	@ApiOperation(value = "List of Orders for a team", notes = "The Api Returns List of Orders for a team", response = SlOrder.class)
+	public ResponseEntity<List<SlOrder>> findSlOrderForTeam(@PathVariable Integer teamId) {
+		List<SlOrder> lst = this.slOrderService.findByTeamId(teamId);
+		if (lst == null) {
+			logger.warn("No Data Found");
+			return ResponseEntity.status(HttpStatus.NO_CONTENT).body(lst);
+		}
+		return ResponseEntity.status(HttpStatus.OK).body(lst);
+	}
+
+	// get list of orders by spId and order status
+	@GetMapping(value = "/sl-order/sp/{spId}/{ordStatus}", produces = { MediaType.APPLICATION_JSON_VALUE })
+	@ApiOperation(value = "List of Orders for a SP", notes = "The Api Returns List of Orders for a Service provider with passed status", response = SlOrder.class)
+	public ResponseEntity<List<SlOrder>> findSlOrderByStatusForSp(@PathVariable Integer spId,
+			@PathVariable String ordStatus) {
+		List<SlOrder> lst = this.slOrderService.findByOrdStatus(spId, ordStatus);
+		if (lst == null) {
+			logger.warn("No Data Found");
+			return ResponseEntity.status(HttpStatus.NO_CONTENT).body(lst);
+		}
+		return ResponseEntity.status(HttpStatus.OK).body(lst);
+	}
+
+	@GetMapping(value = "/sl-order/{id}", produces = { MediaType.APPLICATION_JSON_VALUE })
+	@ApiOperation(value = "List of Orders for a SP", notes = "The Api Returns List of Orders for a Service provider with passed status", response = SlOrder.class)
+	public ResponseEntity<SlOrder> findOrderById(@PathVariable Integer id) {
+		SlOrder body = slOrderService.findById(id);
+		if (body == null) {
+			return ResponseEntity.status(HttpStatus.NO_CONTENT).body(body);
+		}
+		return ResponseEntity.status(HttpStatus.OK).body(body);
+	}
+	
+	@PostMapping(value = "/sl-order", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
+			MediaType.APPLICATION_JSON_VALUE })
+	public ResponseEntity<SlOrder> createSlOrder(@RequestBody SlOrder entity) {
+		SlOrder body = this.slOrderService.create(entity);
+		return ResponseEntity.status(HttpStatus.CREATED).body(body);
+	}
+
+	@PutMapping(value = "/sl-order/{id}", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
+			MediaType.APPLICATION_JSON_VALUE })
+	public ResponseEntity<SlOrder> updateSlOrder(@RequestBody SlOrder body, @PathVariable Integer id) {
+		body.setId(id);
+		this.slOrderService.update(body, id);
+		return ResponseEntity.status(HttpStatus.OK).body(body);
+	}
+
+	@DeleteMapping(value = "/sl-order/{id}")
+	public ResponseEntity<String> deleteSlOrder(@PathVariable Integer id) {
+		SlOrder entity = this.slOrderService.findById(id);
+		if (entity == null) {
+			logger.warn("Cannot delete.Record Not Found");
+			return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Member Not Found");
+		}
+		String result = this.slOrderService.delete(id);
+		return ResponseEntity.status(HttpStatus.OK).body(result);
+	}
+
 }
