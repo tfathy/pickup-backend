@@ -7,6 +7,7 @@ import com.pickup.sysowner.entity.GnCountry;
 public interface GnCountryService {
 	
 	public List<GnCountry> findAll();
+	public List<GnCountry> findByActiveFlag(String activeFlag);
 	public GnCountry findById(Integer id);
 	
 	public GnCountry create(GnCountry gnCountry);

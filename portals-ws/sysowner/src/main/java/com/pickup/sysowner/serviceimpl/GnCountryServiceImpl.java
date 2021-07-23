@@ -62,4 +62,9 @@ public class GnCountryServiceImpl implements GnCountryService {
 		return "Deleted Country of id " + id;
 	}
 
+	@Override
+	public List<GnCountry> findByActiveFlag(String activeFlag) {
+		return repos.findByActiveFlag(activeFlag);
+	}
+
 }
