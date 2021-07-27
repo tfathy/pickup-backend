@@ -42,7 +42,7 @@ public class SysOwnerPublicController {
 	 * Country API
 	 ******************************************************************/
 
-	@GetMapping(value = "/country/${activeFlag}", produces = { MediaType.APPLICATION_JSON_VALUE })
+	@GetMapping(value = "/country/{activeFlag}", produces = { MediaType.APPLICATION_JSON_VALUE })
 	@ApiOperation(value = "List of countries", notes = "The Api Returns List of Countries", response = GnCountry.class)
 	public ResponseEntity<List<GnCountry>> findAllCountry(@PathVariable String activeFlag) {
 		List<GnCountry> lst = this.countryService.findByActiveFlag(activeFlag);
