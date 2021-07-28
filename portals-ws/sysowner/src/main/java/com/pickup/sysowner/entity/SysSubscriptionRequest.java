@@ -11,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 import com.pickup.sysowner.entity.shared.WhoColumn;
@@ -21,6 +22,7 @@ import io.swagger.annotations.ApiModelProperty;
 @Entity()
 @Table(name = "sys_subscription_request")
 @ApiModel(description = "The Subscribtion request Object. The Service provider has to ,firstly, send a subscribtion request to subscribe for the service")
+@NamedQuery(name="findNew", query="SELECT e FROM SysSubscriptionRequest e WHERE e.status in ('E','R')")
 public class SysSubscriptionRequest implements Serializable {
 
 	private static final long serialVersionUID = -619721346466722043L;

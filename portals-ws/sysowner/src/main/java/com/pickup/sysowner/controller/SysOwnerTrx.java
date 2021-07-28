@@ -43,6 +43,12 @@ public class SysOwnerTrx {
 		List<SysSubscriptionRequest> lst = sysSubscribtionRequestService.findAll();
 		return ResponseEntity.status(HttpStatus.OK).body(lst);
 	}
+	@GetMapping(value = "/sub-request/new", produces = { MediaType.APPLICATION_JSON_VALUE })
+	@ApiOperation(value = "List all new subscription requests")
+	public ResponseEntity<List<SysSubscriptionRequest>> findNewSubRequest() {
+		List<SysSubscriptionRequest> lst = sysSubscribtionRequestService.FindNew();
+		return ResponseEntity.status(HttpStatus.OK).body(lst);
+	}
 
 	@GetMapping(value = "/sub-request/{id}", produces = { MediaType.APPLICATION_JSON_VALUE })
 	@ApiOperation(value = "return an object of subscribtion requests")

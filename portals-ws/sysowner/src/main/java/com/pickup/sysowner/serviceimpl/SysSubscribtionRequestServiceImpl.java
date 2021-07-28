@@ -3,6 +3,9 @@ package com.pickup.sysowner.serviceimpl;
 import java.util.List;
 import java.util.Optional;
 
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,10 +18,12 @@ import com.pickup.sysowner.service.SysSubscribtionRequestService;
 public class SysSubscribtionRequestServiceImpl implements SysSubscribtionRequestService {
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 	private SysSubscribtionRequestRepos repos;
+	private EntityManager em;
 	
 	@Autowired
-	public SysSubscribtionRequestServiceImpl(SysSubscribtionRequestRepos repos) {
+	public SysSubscribtionRequestServiceImpl(SysSubscribtionRequestRepos repos, EntityManager em) {
 		this.repos = repos;
+		this.em= em;
 	}
 	
 	@Override
@@ -62,5 +67,12 @@ public class SysSubscribtionRequestServiceImpl implements SysSubscribtionRequest
 	public SysSubscriptionRequest update(SysSubscriptionRequest body, Integer id) {
 		body.setId(id);
 		return this.repos.save(body);
+	}
+
+	@Override
+	public List<SysSubscriptionRequest> FindNew() {
+		Query query = em.createNamedQuery("findNew");
+		List<SysSubscriptionRequest> entityList = query.getResultList();
+		return entityList;
 	}
 }
