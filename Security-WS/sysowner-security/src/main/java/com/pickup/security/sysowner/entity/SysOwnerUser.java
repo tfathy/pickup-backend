@@ -15,6 +15,8 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 import com.pickup.security.sysowner.entity.lookup.HrEmployee;
+import com.pickup.security.sysowner.entity.lookup.Sp;
+import com.pickup.security.sysowner.entity.lookup.SpMember;
 import com.pickup.security.sysowner.entity.shared.WhoColumn;
 
 import io.swagger.annotations.ApiModel;
@@ -50,6 +52,15 @@ public class SysOwnerUser implements Serializable {
 	private String userType;
 	@Column(name = "account_status")
 	private String accountStatus;
+	
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "sp_id")
+	private Sp sp;
+	
+	@ManyToOne(fetch= FetchType.EAGER)
+	@JoinColumn(name="member_id")
+	private SpMember member;
+	
 	@Embedded
 	private WhoColumn whoColumn;
 
@@ -118,6 +129,23 @@ public class SysOwnerUser implements Serializable {
 
 	public void setWhoColumn(WhoColumn whoColumn) {
 		this.whoColumn = whoColumn;
+	}
+	
+
+	public Sp getSp() {
+		return sp;
+	}
+
+	public void setSp(Sp sp) {
+		this.sp = sp;
+	}
+
+	public SpMember getMember() {
+		return member;
+	}
+
+	public void setMember(SpMember member) {
+		this.member = member;
 	}
 
 	@Override

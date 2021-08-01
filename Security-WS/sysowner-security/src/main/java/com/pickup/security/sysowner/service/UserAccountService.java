@@ -70,6 +70,9 @@ public class UserAccountService implements IUserAccount {
 
 	@Override
 	public UserDto createUser(UserDto userDetails) {
+		System.out.println("******createUser begin****** createUser returns UserDto ");
+		System.out.println("****createUser accepts object of type userDetails:");
+		System.out.println(userDetails);
 		userDetails.setUserId(UUID.randomUUID().toString());
 		userDetails.setEncryptedPassword(encoder.encode(userDetails.getPassword()));
 		String msg = "The following is your user name and temporary password. \nUsername is : " + userDetails.getEmail()
@@ -79,8 +82,10 @@ public class UserAccountService implements IUserAccount {
 		modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
 
 		SysOwnerUser userEntity = modelMapper.map(userDetails, SysOwnerUser.class);
-
+		System.out.println(userEntity.getSp());
 		userRepos.save(userEntity);
+		System.out.println("**************OBJECT SAVED IS userEntity:");
+		System.out.println(userEntity);
 
 		UserDto returnValue = modelMapper.map(userEntity, UserDto.class);
 
@@ -100,8 +105,8 @@ public class UserAccountService implements IUserAccount {
 	@Override
 	public UserDto getUserByUserId(String userId) {
 		SysOwnerUser userEntity = userRepos.findByUserId(userId);
-		if (userEntity == null)
-			throw new UsernameNotFoundException("User not found");
+		if (userEntity == null)			throw new UsernameNotFoundException("User not found");
+		
 		UserDto userDto = new ModelMapper().map(userEntity, UserDto.class);
 		return userDto;
 	}

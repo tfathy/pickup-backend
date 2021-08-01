@@ -30,11 +30,12 @@ public class OwnerSecurityController {
 
 	@Autowired
 	private IUserAccount userAccountServices;
-	
-	@PostMapping(value="/check/user",consumes = { MediaType.TEXT_PLAIN_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE })
-	public ResponseEntity<UserExistsModel> checkUserNameFound(@RequestBody String email){
+
+	@PostMapping(value = "/check/user", consumes = { MediaType.TEXT_PLAIN_VALUE }, produces = {
+			MediaType.APPLICATION_JSON_VALUE })
+	public ResponseEntity<UserExistsModel> checkUserNameFound(@RequestBody String email) {
 		UserExistsModel result = userAccountServices.RestPassword(email);
-		if(result==null) {
+		if (result == null) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(result);
 		}
 		return ResponseEntity.status(HttpStatus.OK).body(result);
@@ -42,10 +43,16 @@ public class OwnerSecurityController {
 
 	@PostMapping(consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE })
 	public ResponseEntity<CreateUserResponseModel> createUser(@RequestBody CreateUserRequestModel userDetails) {
+		System.out.println("Request commig from the client is: userDetails=");
+		System.out.println(userDetails);
+		System.out.println("***********************1****************");
 		ModelMapper modelMapper = new ModelMapper();
 		modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
 
 		UserDto userDto = modelMapper.map(userDetails, UserDto.class);
+		System.out.println("userDto is :");
+		System.out.println(userDto);
+		System.out.println("***********************2****************");
 
 		UserDto createdUser = userAccountServices.createUser(userDto);
 
@@ -71,14 +78,14 @@ public class OwnerSecurityController {
 		}
 		return ResponseEntity.status(HttpStatus.OK).body(list);
 	}
-	
-	@PutMapping(value="/change-pw/{email}/{oldpassword}/{newpassword}",consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE })
-	public ResponseEntity<SysOwnerUser> changePassword(@RequestBody SysOwnerUser entity,@PathVariable String email
-			,@PathVariable String oldpassword
-			,@PathVariable String newpassword){
-		SysOwnerUser e =this.userAccountServices.changePassword(email, oldpassword, newpassword);
-		if(e== null) {
-			return  ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e);
+
+	@PutMapping(value = "/change-pw/{email}/{oldpassword}/{newpassword}", consumes = {
+			MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE })
+	public ResponseEntity<SysOwnerUser> changePassword(@RequestBody SysOwnerUser entity, @PathVariable String email,
+			@PathVariable String oldpassword, @PathVariable String newpassword) {
+		SysOwnerUser e = this.userAccountServices.changePassword(email, oldpassword, newpassword);
+		if (e == null) {
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e);
 		}
 		return ResponseEntity.status(HttpStatus.OK).body(e);
 	}

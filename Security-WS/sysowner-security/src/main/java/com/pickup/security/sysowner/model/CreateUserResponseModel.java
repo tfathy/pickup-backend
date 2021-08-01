@@ -1,6 +1,8 @@
 package com.pickup.security.sysowner.model;
 
 import com.pickup.security.sysowner.entity.lookup.HrEmployee;
+import com.pickup.security.sysowner.entity.lookup.Sp;
+import com.pickup.security.sysowner.entity.lookup.SpMember;
 import com.pickup.security.sysowner.entity.shared.WhoColumn;
 
 public class CreateUserResponseModel {
@@ -11,6 +13,8 @@ public class CreateUserResponseModel {
 	private HrEmployee hrEmployee;
 	private String userType;
 	private String accountStatus;
+	private Sp sp;
+	private SpMember member;
 	private WhoColumn whoColumns;
 	public String getFullNameAr() {
 		return fullNameAr;
@@ -60,12 +64,26 @@ public class CreateUserResponseModel {
 	public void setWhoColumns(WhoColumn whoColumns) {
 		this.whoColumns = whoColumns;
 	}
+	
+	public Sp getSp() {
+		return sp;
+	}
+	public void setSp(Sp sp) {
+		this.sp = sp;
+	}
+	public SpMember getMember() {
+		return member;
+	}
+	public void setMember(SpMember member) {
+		this.member = member;
+	}
 	@Override
 	public String toString() {
 		return "CreateUserResponseModel [fullNameAr=" + fullNameAr + ", fullNameEn=" + fullNameEn + ", email=" + email
 				+ ", userId=" + userId + ", hrEmployee=" + hrEmployee + ", userType=" + userType + ", accountStatus="
-				+ accountStatus + ", whoColumns=" + whoColumns + "]";
+				+ accountStatus + ", sp=" + sp + ", member=" + member + ", whoColumns=" + whoColumns + "]";
 	}
+	
 	
 	
 }
