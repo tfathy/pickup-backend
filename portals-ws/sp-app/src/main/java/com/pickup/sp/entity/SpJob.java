@@ -76,6 +76,14 @@ public class SpJob implements Serializable{
 		return descAr;
 	}
 
+	public SpServiceProvider getSp() {
+		return sp;
+	}
+
+	public void setSp(SpServiceProvider sp) {
+		this.sp = sp;
+	}
+
 	public void setDescAr(String descAr) {
 		this.descAr = descAr;
 	}

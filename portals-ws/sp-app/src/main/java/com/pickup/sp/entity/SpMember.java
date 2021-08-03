@@ -51,7 +51,7 @@ public class SpMember implements Serializable {
 	private String imageFileName;
 
 	@Column(name = "driving_licn_exp_date")
-	private String drivingLicnExpDate;
+	private Date drivingLicnExpDate;
 
 	@Column(name = "phone_num")
 	private String phoneNum;
@@ -73,7 +73,7 @@ public class SpMember implements Serializable {
 	}
 
 	public SpMember(SpJob spJob, String fullNameAr, String fullNameEn, String gender, Date birthDate,
-			String imageFileName, String drivingLicnExpDate, String phoneNum, String email, Date hireDate,
+			String imageFileName, Date drivingLicnExpDate, String phoneNum, String email, Date hireDate,
 			String terminatedFlag, WhoColumn whoColumn) {
 		super();
 		this.spJob = spJob;
@@ -154,11 +154,11 @@ public class SpMember implements Serializable {
 		this.imageFileName = imageFileName;
 	}
 
-	public String getDrivingLicnExpDate() {
+	public Date getDrivingLicnExpDate() {
 		return drivingLicnExpDate;
 	}
 
-	public void setDrivingLicnExpDate(String drivingLicnExpDate) {
+	public void setDrivingLicnExpDate(Date drivingLicnExpDate) {
 		this.drivingLicnExpDate = drivingLicnExpDate;
 	}
 
