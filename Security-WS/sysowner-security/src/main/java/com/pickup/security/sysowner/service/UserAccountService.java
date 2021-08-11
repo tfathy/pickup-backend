@@ -6,6 +6,7 @@ import java.util.Random;
 import java.util.UUID;
 
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
@@ -105,8 +106,9 @@ public class UserAccountService implements IUserAccount {
 	@Override
 	public UserDto getUserByUserId(String userId) {
 		SysOwnerUser userEntity = userRepos.findByUserId(userId);
-		if (userEntity == null)			throw new UsernameNotFoundException("User not found");
-		
+		if (userEntity == null)
+			throw new UsernameNotFoundException("User not found");
+
 		UserDto userDto = new ModelMapper().map(userEntity, UserDto.class);
 		return userDto;
 	}
@@ -146,7 +148,6 @@ public class UserAccountService implements IUserAccount {
 		return encoder.matches(oldPassword, user.getEncryptedPassword());
 	}
 
-
 	@Override
 	public UserExistsModel RestPassword(String email) {
 		UserExistsModel entity = null;
@@ -178,5 +179,14 @@ public class UserAccountService implements IUserAccount {
 		String saltStr = salt.toString();
 		return saltStr;
 
+	}
+
+	@Override
+	public List<SysOwnerUser> findSpMembersUsers(Integer spId) {
+		List<SysOwnerUser> resultList;
+		Query query = em.createNamedQuery("FindMembersBySpId");
+		query.setParameter(1, spId);
+		resultList = query.getResultList();
+		return resultList;
 	}
 }

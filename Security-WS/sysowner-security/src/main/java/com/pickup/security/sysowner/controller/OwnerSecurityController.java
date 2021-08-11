@@ -90,4 +90,12 @@ public class OwnerSecurityController {
 		return ResponseEntity.status(HttpStatus.OK).body(e);
 	}
 
+	@GetMapping(value = "/members-account/{spId}", produces = { MediaType.APPLICATION_JSON_VALUE })
+	public ResponseEntity<List<SysOwnerUser>> findAllSpMembersUsers(@PathVariable Integer spId) {
+		List<SysOwnerUser> list = this.userAccountServices.findSpMembersUsers(spId);
+		if (list == null) {
+			return ResponseEntity.status(HttpStatus.NO_CONTENT).body(list);
+		}
+		return ResponseEntity.status(HttpStatus.OK).body(list);
+	}
 }

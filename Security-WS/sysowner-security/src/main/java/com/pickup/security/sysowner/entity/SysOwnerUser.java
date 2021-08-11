@@ -24,7 +24,8 @@ import io.swagger.annotations.ApiModelProperty;
 
 @Entity()
 @Table(name = "sys_user")
-@NamedQuery(name="QueryByUsernamePw",query=" Select e From SysOwnerUser e where e.email=?1 and e.encryptedPassword=?2")
+// @NamedQuery(name="QueryByUsernamePw",query=" Select e From SysOwnerUser e where e.email=?1 and e.encryptedPassword=?2")
+@NamedQuery(name="FindMembersBySpId",query="Select e From SysOwnerUser e Where e.sp.id=?1 and userType = 'SP_MEMBER'")
 @ApiModel(value = "This object stores data for System Owner user account- It is based on sys-user table with only attributes related to sys-owner")
 public class SysOwnerUser implements Serializable {
 
