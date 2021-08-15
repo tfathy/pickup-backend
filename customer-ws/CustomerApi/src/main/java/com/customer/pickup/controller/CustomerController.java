@@ -18,7 +18,7 @@ import com.customer.pickup.entity.Customer;
 import com.customer.pickup.services.CustomerService;
 
 @RestController
-@RequestMapping("/")
+@RequestMapping("/customer")
 public class CustomerController {
 
 	@Autowired

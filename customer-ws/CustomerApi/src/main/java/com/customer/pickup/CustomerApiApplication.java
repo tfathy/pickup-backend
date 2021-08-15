@@ -12,4 +12,12 @@ public class CustomerApiApplication {
 		SpringApplication.run(CustomerApiApplication.class, args);
 	}
 
+	@Bean
+    public Docket api() {
+        return new Docket(DocumentationType.SWAGGER_2)  
+          .select()                                  
+          .apis(RequestHandlerSelectors.basePackage("com.customer.pickup.controller"))              
+          .paths(PathSelectors.any())                          
+          .build();                                           
+    }
 }
