@@ -1,5 +1,6 @@
 package com.pickup.security.sysowner.model;
 
+import com.pickup.security.sysowner.entity.lookup.Customer;
 import com.pickup.security.sysowner.entity.lookup.HrEmployee;
 import com.pickup.security.sysowner.entity.lookup.Sp;
 import com.pickup.security.sysowner.entity.lookup.SpMember;
@@ -14,6 +15,7 @@ public class UserResponseModel {
 	private String userType;	
 	private Sp sp;
 	private SpMember member;	
+	private Customer customer;
 	private String accountStatus;
 	private WhoColumn whoColumns;
 	
@@ -77,6 +79,13 @@ public class UserResponseModel {
 	}
 	public void setMember(SpMember member) {
 		this.member = member;
+	}
+	
+	public Customer getCustomer() {
+		return customer;
+	}
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
 	}
 	@Override
 	public String toString() {

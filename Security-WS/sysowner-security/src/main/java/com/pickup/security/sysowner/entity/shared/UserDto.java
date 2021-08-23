@@ -2,7 +2,7 @@ package com.pickup.security.sysowner.entity.shared;
 
 import java.io.Serializable;
 
-
+import com.pickup.security.sysowner.entity.lookup.Customer;
 import com.pickup.security.sysowner.entity.lookup.HrEmployee;
 import com.pickup.security.sysowner.entity.lookup.Sp;
 import com.pickup.security.sysowner.entity.lookup.SpMember;
@@ -13,6 +13,7 @@ public class UserDto implements Serializable{
 	private HrEmployee hrEmployee;
 	private Sp sp;
 	private SpMember member;
+	private Customer customer;
 	private String userId;
 	private String email;
 	private String password;
@@ -72,6 +73,13 @@ public class UserDto implements Serializable{
 	}
 	public SpMember getMember() {
 		return member;
+	}
+	
+	public Customer getCustomer() {
+		return customer;
+	}
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
 	}
 	public void setMember(SpMember member) {
 		this.member = member;

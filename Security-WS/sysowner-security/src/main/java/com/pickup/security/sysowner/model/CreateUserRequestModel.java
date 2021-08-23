@@ -3,6 +3,7 @@ package com.pickup.security.sysowner.model;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import com.pickup.security.sysowner.entity.lookup.Customer;
 import com.pickup.security.sysowner.entity.lookup.HrEmployee;
 import com.pickup.security.sysowner.entity.lookup.Sp;
 import com.pickup.security.sysowner.entity.lookup.SpMember;
@@ -21,6 +22,7 @@ public class CreateUserRequestModel {
 	private String accountStatus;
 	private Sp sp;
 	private SpMember member;
+	private Customer customer;
 	private WhoColumn whoColumns;
 	public String getPassword() {
 		return password;
@@ -88,13 +90,21 @@ public class CreateUserRequestModel {
 	public void setMember(SpMember member) {
 		this.member = member;
 	}
+	
+	public Customer getCustomer() {
+		return customer;
+	}
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
+	}
 	@Override
 	public String toString() {
 		return "CreateUserRequestModel [password=" + password + ", fullNameAr=" + fullNameAr + ", fullNameEn="
 				+ fullNameEn + ", email=" + email + ", userId=" + userId + ", hrEmployee=" + hrEmployee + ", userType="
-				+ userType + ", accountStatus=" + accountStatus + ", sp=" + sp + ", member=" + member + ", whoColumns="
-				+ whoColumns + "]";
+				+ userType + ", accountStatus=" + accountStatus + ", sp=" + sp + ", member=" + member + ", customer="
+				+ customer + ", whoColumns=" + whoColumns + "]";
 	}
+
 	
 	
 	

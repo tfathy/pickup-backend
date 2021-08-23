@@ -1,5 +1,6 @@
 package com.pickup.security.sysowner.model;
 
+import com.pickup.security.sysowner.entity.lookup.Customer;
 import com.pickup.security.sysowner.entity.lookup.HrEmployee;
 import com.pickup.security.sysowner.entity.lookup.Sp;
 import com.pickup.security.sysowner.entity.lookup.SpMember;
@@ -15,6 +16,7 @@ public class CreateUserResponseModel {
 	private String accountStatus;
 	private Sp sp;
 	private SpMember member;
+	private Customer customer;
 	private WhoColumn whoColumns;
 	public String getFullNameAr() {
 		return fullNameAr;
@@ -76,6 +78,14 @@ public class CreateUserResponseModel {
 	}
 	public void setMember(SpMember member) {
 		this.member = member;
+	}
+	
+	
+	public Customer getCustomer() {
+		return customer;
+	}
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
 	}
 	@Override
 	public String toString() {

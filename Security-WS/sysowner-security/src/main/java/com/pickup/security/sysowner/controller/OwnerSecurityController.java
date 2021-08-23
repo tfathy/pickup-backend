@@ -60,6 +60,27 @@ public class OwnerSecurityController {
 
 		return ResponseEntity.status(HttpStatus.CREATED).body(returnValue);
 	}
+	
+	@PostMapping(value="/customer",consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE })
+	public ResponseEntity<CreateUserResponseModel> createcUSTOMERuSER(@RequestBody CreateUserRequestModel userDetails) {
+		System.out.println("Request commig from the client is: userDetails=");
+		System.out.println(userDetails);
+		System.out.println("***********************1****************");
+		ModelMapper modelMapper = new ModelMapper();
+		modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
+
+		UserDto userDto = modelMapper.map(userDetails, UserDto.class);
+		System.out.println("userDto is :");
+		System.out.println(userDto);
+		System.out.println("***********************2****************");
+
+		UserDto createdUser = userAccountServices.createUser(userDto);
+
+		CreateUserResponseModel returnValue = modelMapper.map(createdUser, CreateUserResponseModel.class);
+
+		return ResponseEntity.status(HttpStatus.CREATED).body(returnValue);
+	}
+
 
 	@GetMapping(value = "/{userId}", produces = { MediaType.APPLICATION_JSON_VALUE })
 	public ResponseEntity<UserResponseModel> getUser(@PathVariable("userId") String userId) {

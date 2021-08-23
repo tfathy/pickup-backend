@@ -14,6 +14,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
+import com.pickup.security.sysowner.entity.lookup.Customer;
 import com.pickup.security.sysowner.entity.lookup.HrEmployee;
 import com.pickup.security.sysowner.entity.lookup.Sp;
 import com.pickup.security.sysowner.entity.lookup.SpMember;
@@ -61,6 +62,10 @@ public class SysOwnerUser implements Serializable {
 	@ManyToOne(fetch= FetchType.EAGER)
 	@JoinColumn(name="member_id")
 	private SpMember member;
+	
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "customer_id")
+	private Customer customer;
 	
 	@Embedded
 	private WhoColumn whoColumn;
@@ -148,16 +153,18 @@ public class SysOwnerUser implements Serializable {
 	public void setMember(SpMember member) {
 		this.member = member;
 	}
+	
 
-	@Override
-	public String toString() {
-		return "SysOwnerUser [Id=" + Id + ", hrEmployee=" + hrEmployee + ", userId=" + userId + ", email=" + email
-				+ ", encryptedPassword=" + encryptedPassword + ", userType=" + userType + ", accountStatus="
-				+ accountStatus + ", whoColumn=" + whoColumn + "]";
+	public Customer getCustomer() {
+		return customer;
+	}
+
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
 	}
 
 	public SysOwnerUser(HrEmployee hrEmployee, String userId, String email, String encryptedPassword, String userType,
-			String accountStatus, WhoColumn whoColumn) {
+			String accountStatus, Sp sp, SpMember member, Customer customer, WhoColumn whoColumn) {
 		super();
 		this.hrEmployee = hrEmployee;
 		this.userId = userId;
@@ -165,8 +172,21 @@ public class SysOwnerUser implements Serializable {
 		this.encryptedPassword = encryptedPassword;
 		this.userType = userType;
 		this.accountStatus = accountStatus;
+		this.sp = sp;
+		this.member = member;
+		this.customer = customer;
 		this.whoColumn = whoColumn;
 	}
+
+	@Override
+	public String toString() {
+		return "SysOwnerUser [Id=" + Id + ", hrEmployee=" + hrEmployee + ", userId=" + userId + ", email=" + email
+				+ ", encryptedPassword=" + encryptedPassword + ", userType=" + userType + ", accountStatus="
+				+ accountStatus + ", sp=" + sp + ", member=" + member + ", customer=" + customer + ", whoColumn="
+				+ whoColumn + "]";
+	}
+
+	
 
 	
 }

@@ -12,10 +12,11 @@ public class CorsConfig {
 	@Bean
 	public CorsWebFilter corsFilter() {
 		CorsConfiguration config = new CorsConfiguration();
+		config.addAllowedOrigin("http://localhost");
 		config.addAllowedOrigin("http://161.97.164.43");
 		config.addAllowedOrigin("http://161.97.164.43:8080");
-		config.addAllowedOrigin("http://localhost:8100");
-		config.addAllowedOrigin("http://localhost");
+		config.addAllowedOrigin("http://localhost:8100");		
+		config.addAllowedOrigin("http://localhost:80");
 		config.addAllowedOrigin("http://localhost:8080");
 		config.addAllowedHeader("*");
 		config.addAllowedMethod("OPTIONS");
