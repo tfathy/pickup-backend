@@ -23,6 +23,7 @@ import com.customer.pickup.entity.shared.WhoColumn;
 @Entity()
 @Table(name="sl_order")
 @NamedQuery(name="findOrdByCustomerId", query="SELECT e FROM SlOrder e WHERE e.customer.id=?1")
+@NamedQuery(name="findOrdByCustmerAndStatus", query="SELECT e FROM SlOrder e WHERE e.customer.id=?1 and e.ordStatus=?2")
 public class SlOrder implements Serializable {
 
 	private static final long serialVersionUID = 3217554080824009386L;

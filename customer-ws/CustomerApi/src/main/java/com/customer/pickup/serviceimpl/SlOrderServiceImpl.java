@@ -56,4 +56,13 @@ public class SlOrderServiceImpl implements SlOrderService {
 		return repos.save(body);
 	}
 
+	@Override
+	public List<SlOrder> findByStatusAndCustomer(int customerId, String status) {
+		Query query = em.createNamedQuery("findOrdByCustmerAndStatus");
+		query.setParameter(1, customerId);
+		query.setParameter(2, status);
+		List<SlOrder> entityList = query.getResultList();
+		return entityList;
+	}
+
 }

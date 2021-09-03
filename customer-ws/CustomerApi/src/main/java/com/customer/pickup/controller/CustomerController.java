@@ -71,10 +71,20 @@ public class CustomerController {
 	 * ********************
 	 */
 
-	@GetMapping(value = "/order/{customerId}", produces = { MediaType.APPLICATION_JSON_VALUE })
+	@GetMapping(value = "/order/customer/{customerId}", produces = { MediaType.APPLICATION_JSON_VALUE })
 	@ApiOperation(value = "This api return a list if orders for a given customer id")
 	public ResponseEntity<List<SlOrder>> findOrderByCustomerId(@PathVariable int customerId) {
 		List<SlOrder> entityList = orderService.findByCustomerId(customerId);
+		if (entityList == null) {
+			return ResponseEntity.status(HttpStatus.NO_CONTENT).body(entityList);
+		}
+		return ResponseEntity.status(HttpStatus.OK).body(entityList);
+	}
+	
+	@GetMapping(value = "/order/status/{customerId}/{ordStatus}", produces = { MediaType.APPLICATION_JSON_VALUE })
+	@ApiOperation(value = "This api return a list if orders for a given customer id and a givien order status")
+	public ResponseEntity<List<SlOrder>> findOrderByCustomerAndStatus(@PathVariable int customerId, @PathVariable String ordStatus) {
+		List<SlOrder> entityList = orderService.findByStatusAndCustomer(customerId,ordStatus);
 		if (entityList == null) {
 			return ResponseEntity.status(HttpStatus.NO_CONTENT).body(entityList);
 		}
