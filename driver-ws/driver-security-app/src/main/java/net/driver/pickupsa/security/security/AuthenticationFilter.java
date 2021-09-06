@@ -75,6 +75,10 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 			response.addHeader("spNameEn", String.valueOf(userDetails.getMember().getSp().getCompanyNameEn()));
 			response.addHeader("spContactPersonEmail",
 					String.valueOf(userDetails.getMember().getSp().getContactPersonEmail()));
+			response.addHeader("teamDescEn", String.valueOf(userDetails.getMember().getTeam().getDescEn()));
+			response.addHeader("vclSizeDescEn", String.valueOf(userDetails.getMember().getTeam().getGnVehicle().getVehicleSize().getDescEn()));
+			response.addHeader("vclSizeId", String.valueOf(userDetails.getMember().getTeam().getGnVehicle().getVehicleSize().getId()));
+			
 		}
 
 	}

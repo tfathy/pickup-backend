@@ -11,7 +11,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity()
 @Table(name="sp_member")
@@ -46,6 +50,9 @@ public class SpMember implements Serializable{
 	
 	@Column(name="job_id")
 	private Integer jobId;
+	
+	@OneToOne(mappedBy="spMember",fetch = FetchType.LAZY)
+	private Team team;
 	
 	public SpMember() {}
 
@@ -125,12 +132,22 @@ public class SpMember implements Serializable{
 		this.jobId = jobId;
 	}
 
+	
+	public Team getTeam() {
+		return team;
+	}
+
+	public void setTeam(Team team) {
+		this.team = team;
+	}
+
 	@Override
 	public String toString() {
 		return "SpMember [id=" + id + ", fullNameAr=" + fullNameAr + ", fullNameEn=" + fullNameEn + ", sp=" + sp
 				+ ", email=" + email + ", hireDate=" + hireDate + ", terminatedFlag=" + terminatedFlag + ", jobId="
-				+ jobId + "]";
+				+ jobId + ", team=" + team + "]";
 	}
+
 	
 
 }

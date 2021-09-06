@@ -15,6 +15,7 @@ import javax.persistence.Table;
 
 import io.swagger.annotations.ApiModelProperty;
 import net.driver.pickupsa.app.entity.lookup.SysUser;
+import net.driver.pickupsa.app.entity.lookup.Vehicle;
 
 @Entity
 @Table(name="sys_user_login")
@@ -46,6 +47,10 @@ public class UserLogin implements Serializable{
 	@Column(name="latitude")
 	private Integer latitude;
 
+	@ManyToOne
+	@JoinColumn(name="vcl_id")
+	private Vehicle vehicle;
+	
 	public int getId() {
 		return Id;
 	}
@@ -101,20 +106,25 @@ public class UserLogin implements Serializable{
 	public void setLatitude(Integer latitude) {
 		this.latitude = latitude;
 	}
+	
+
+	public Vehicle getVehicle() {
+		return vehicle;
+	}
+
+	public void setVehicle(Vehicle vehicle) {
+		this.vehicle = vehicle;
+	}
 
 	@Override
 	public String toString() {
 		return "UserLogin [Id=" + Id + ", sysUser=" + sysUser + ", loginDate=" + loginDate + ", logoutDate="
-				+ logoutDate + ", status=" + status + ", longitude=" + longitude + ", latitude=" + latitude + "]";
-	}
-
-	public UserLogin() {
-		super();
-		// TODO Auto-generated constructor stub
+				+ logoutDate + ", status=" + status + ", longitude=" + longitude + ", latitude=" + latitude
+				+ ", vehicle=" + vehicle + "]";
 	}
 
 	public UserLogin(SysUser sysUser, Date loginDate, Date logoutDate, String status, Integer longitude,
-			Integer latitude) {
+			Integer latitude, Vehicle vehicle) {
 		super();
 		this.sysUser = sysUser;
 		this.loginDate = loginDate;
@@ -122,8 +132,14 @@ public class UserLogin implements Serializable{
 		this.status = status;
 		this.longitude = longitude;
 		this.latitude = latitude;
+		this.vehicle = vehicle;
 	}
-	
+
+	public UserLogin() {
+		super();		
+	}
+
+
 	
 	
 

@@ -19,6 +19,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import net.driver.pickupsa.security.entity.DriverUser;
+import net.driver.pickupsa.security.entity.lookup.SpMember;
 import net.driver.pickupsa.security.error.InvalidOldPasswordException;
 import net.driver.pickupsa.security.model.UserDto;
 import net.driver.pickupsa.security.model.UserExistsModel;
@@ -70,6 +71,14 @@ public class UserAccountService implements IUserAccount {
 		DriverUser userEntity = userRepos.findByEmail(email);
 
 		if (userEntity == null ||  !userEntity.getUserType().equals("SP_MEMBER"))
+			throw new UsernameNotFoundException(email);
+		
+		// check if the user is a manager for a team
+		if(userEntity.getMember() == null)
+			throw new UsernameNotFoundException(email);
+		
+		SpMember member = userEntity.getMember();
+		if(member.getTerminatedFlag().equals("Y"))
 			throw new UsernameNotFoundException(email);
 
 		return new ModelMapper().map(userEntity, UserDto.class);
