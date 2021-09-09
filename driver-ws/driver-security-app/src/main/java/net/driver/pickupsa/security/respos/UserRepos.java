@@ -9,5 +9,6 @@ public interface UserRepos extends JpaRepository<DriverUser, Integer> {
 	DriverUser findByEmail(String email);
 	DriverUser findByUserId(String userId);
 	DriverUser findById(int id);
+	
 
 }

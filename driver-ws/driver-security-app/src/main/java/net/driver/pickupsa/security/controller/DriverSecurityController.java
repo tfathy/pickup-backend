@@ -44,4 +44,20 @@ public class DriverSecurityController {
 		return ResponseEntity.status(HttpStatus.OK).body(e);
 	}
 
+	@GetMapping(value = "/user-info/{userId}", produces = { MediaType.APPLICATION_JSON_VALUE })
+	public ResponseEntity<DriverUser> findByUserId(@PathVariable("userId") String userId) {
+		DriverUser user = null;
+		try {
+			user = userAccountServices.findByUserId(userId);
+			if (user == null) {
+				return ResponseEntity.status(HttpStatus.NO_CONTENT).body(user);
+			}
+
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR) .body(user);
+		}
+		return ResponseEntity.status(HttpStatus.OK).body(user);
+
+	}
+
 }

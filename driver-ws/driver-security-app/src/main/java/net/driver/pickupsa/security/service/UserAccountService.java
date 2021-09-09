@@ -1,6 +1,7 @@
 package net.driver.pickupsa.security.service;
 
 import java.util.ArrayList;
+import java.util.Optional;
 import java.util.Random;
 
 import javax.persistence.EntityManager;
@@ -154,6 +155,21 @@ public class UserAccountService implements IUserAccount {
 		String saltStr = salt.toString();
 		return saltStr;
 
+	}
+
+	@Override
+	public DriverUser findByUserId(String userid) {
+		Optional<DriverUser> result = Optional.of(userRepos.findByUserId(userid));
+		DriverUser entity = null;
+		if(result.isPresent()) {
+			entity = result.get();
+		}
+		return entity;
+	}
+
+	@Override
+	public DriverUser findByEmail(String email) {
+		return userRepos.findByEmail(email);
 	}
 
 }

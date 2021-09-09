@@ -1,6 +1,5 @@
 package net.driver.pickupsa.security.service;
 
-import java.util.List;
 
 import org.springframework.security.core.userdetails.UserDetailsService;
 
@@ -14,7 +13,6 @@ public interface IUserAccount extends UserDetailsService{
 	public UserDto getUserByUserId(String userId);
 	public DriverUser changePassword(String email,String oldpassword,String newpassword);
 	public UserExistsModel RestPassword(String email);
-	
-	
-	
+	public DriverUser findByUserId(String userid);
+	public DriverUser findByEmail(String email);
 }

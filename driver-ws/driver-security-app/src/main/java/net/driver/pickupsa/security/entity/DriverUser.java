@@ -12,6 +12,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import net.driver.pickupsa.security.entity.lookup.Sp;
@@ -26,28 +28,37 @@ public class DriverUser implements Serializable {
 
 	@Id
 	@Column(name = "id")
+	@JsonIgnore
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int Id;
 	
 	@ApiModelProperty(value = "This is system generated random string.It is used for composing jwt.We use it instead of Id column because the ID column is a sensitive information.")
 	@Column(name = "user_id")
+	@JsonIgnore
 	private String userId;
+	
+	@JsonIgnore
 	@Column(name = "email")
 	private String email;
+	
 	@ApiModelProperty(value = "This an ecrypted")
 	@Column(name = "user_password")
+	@JsonIgnore
 	private String encryptedPassword;
 	@Column(name = "user_type")
+	@JsonIgnore
 	private String userType;
 	@Column(name = "account_status")
 	private String accountStatus;
 	
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "sp_id")
+	@JsonIgnore
 	private Sp sp;
 	
 	@ManyToOne(fetch= FetchType.EAGER)
 	@JoinColumn(name="member_id")
+	@JsonIgnore
 	private SpMember member;
 	
 	

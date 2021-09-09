@@ -11,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 import net.driver.pickupsa.app.entity.lookup.Customer;
@@ -20,7 +21,7 @@ import net.driver.pickupsa.app.entity.lookup.VehicleSize;
 
 @Entity
 @Table(name="sl_order")
-
+@NamedQuery(name="avaliableOrdersByVclSize",query="SELECT e FROM SlOrder e WHERE e.ordStatus='REQUEST' AND e.vehicleSize.id=?1")
 public class SlOrder implements Serializable{
 
 	private static final long serialVersionUID = -7103711968539518335L;

@@ -1,5 +1,6 @@
 package net.driver.pickupsa.security.model;
 
+
 import net.driver.pickupsa.security.entity.lookup.Sp;
 import net.driver.pickupsa.security.entity.lookup.SpMember;
 
@@ -7,11 +8,13 @@ public class UserResponseModel {
 	private String fullNameAr;
 	private String fullNameEn;
 	private String email;
-	private String userId;	
+	private String userId;
 	private String userType;	
 	private Sp sp;
 	private SpMember member;
+	
 	private String accountStatus;
+	
 	public String getFullNameAr() {
 		return fullNameAr;
 	}
@@ -60,11 +63,8 @@ public class UserResponseModel {
 	public void setAccountStatus(String accountStatus) {
 		this.accountStatus = accountStatus;
 	}
-	@Override
-	public String toString() {
-		return "UserResponseModel [fullNameAr=" + fullNameAr + ", fullNameEn=" + fullNameEn + ", email=" + email
-				+ ", userId=" + userId + ", userType=" + userType + ", sp=" + sp + ", member=" + member
-				+ ", accountStatus=" + accountStatus + "]";
-	}
+	
+
+	
 	
 }

@@ -71,14 +71,19 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 			response.addHeader("driverNameAr", String.valueOf(userDetails.getMember().getFullNameAr()));
 			response.addHeader("terminatedFlag", String.valueOf(userDetails.getMember().getTerminatedFlag()));
 			response.addHeader("driverId", String.valueOf(userDetails.getMember().getId()));
+			response.addHeader("spId", String.valueOf(userDetails.getMember().getSp().getId()));
 			response.addHeader("spNameAr", String.valueOf(userDetails.getMember().getSp().getCompanyNameAr()));
 			response.addHeader("spNameEn", String.valueOf(userDetails.getMember().getSp().getCompanyNameEn()));
 			response.addHeader("spContactPersonEmail",
 					String.valueOf(userDetails.getMember().getSp().getContactPersonEmail()));
 			response.addHeader("teamDescEn", String.valueOf(userDetails.getMember().getTeam().getDescEn()));
+			response.addHeader("teamId", String.valueOf(userDetails.getMember().getTeam().getId()));
+			response.addHeader("vclId", String.valueOf(userDetails.getMember().getTeam().getGnVehicle().getId()));
+			response.addHeader("vclDescEn", String.valueOf(userDetails.getMember().getTeam().getGnVehicle().getDescEn()));
+			response.addHeader("vclCode", String.valueOf(userDetails.getMember().getTeam().getGnVehicle().getCode()));
 			response.addHeader("vclSizeDescEn", String.valueOf(userDetails.getMember().getTeam().getGnVehicle().getVehicleSize().getDescEn()));
+			response.addHeader("vclSizeDescAr", String.valueOf(userDetails.getMember().getTeam().getGnVehicle().getVehicleSize().getDescAr()));
 			response.addHeader("vclSizeId", String.valueOf(userDetails.getMember().getTeam().getGnVehicle().getVehicleSize().getId()));
-			
 		}
 
 	}

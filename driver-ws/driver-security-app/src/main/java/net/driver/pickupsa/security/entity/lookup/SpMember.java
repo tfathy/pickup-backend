@@ -12,10 +12,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
-import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity()
 @Table(name="sp_member")
@@ -37,6 +36,7 @@ public class SpMember implements Serializable{
 	
 	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="sp_id")
+	@JsonIgnore
 	private Sp sp;
 
 	@Column(name="email")
@@ -51,6 +51,7 @@ public class SpMember implements Serializable{
 	@Column(name="job_id")
 	private Integer jobId;
 	
+	@JsonIgnore
 	@OneToOne(mappedBy="spMember",fetch = FetchType.LAZY)
 	private Team team;
 	
@@ -141,12 +142,7 @@ public class SpMember implements Serializable{
 		this.team = team;
 	}
 
-	@Override
-	public String toString() {
-		return "SpMember [id=" + id + ", fullNameAr=" + fullNameAr + ", fullNameEn=" + fullNameEn + ", sp=" + sp
-				+ ", email=" + email + ", hireDate=" + hireDate + ", terminatedFlag=" + terminatedFlag + ", jobId="
-				+ jobId + ", team=" + team + "]";
-	}
+	
 
 	
 

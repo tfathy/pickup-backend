@@ -15,7 +15,6 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "gn_vehicle")
-@NamedQuery(name="findVclBySpId",query="SELECT e FROM GnVehicle e WHERE e.sp.id=?1 ")
 public class Vehicle implements Serializable {
 
 	/**
