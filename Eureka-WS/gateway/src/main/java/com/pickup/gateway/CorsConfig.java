@@ -14,11 +14,11 @@ public class CorsConfig {
 		CorsConfiguration config = new CorsConfiguration();
 		config.addAllowedOrigin("http://localhost");
 		config.addAllowedOrigin("capacitor://localhost");
-		config.addAllowedOrigin("http://localhost:8100");		
-		config.addAllowedOrigin("http://localhost:80");
-		config.addAllowedOrigin("http://localhost:8080");
 		config.addAllowedOrigin("https://sp.pickup-sa.net");
-		config.addAllowedOrigin("https://owner.pickup-sa.net");		
+		config.addAllowedOrigin("https://owner.pickup-sa.net");	
+		config.addAllowedOrigin("https://sp.pickup-sa.net");
+		config.addAllowedOrigin("https://owner.pickup-sa.net");	
+		config.addAllowedOrigin("http://localhost:8100");
 		config.addAllowedHeader("*");
 		config.addAllowedMethod("OPTIONS");
 		config.addAllowedMethod("HEAD");
