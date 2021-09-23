@@ -32,6 +32,18 @@ public class DriverSecurityController {
 
 		return ResponseEntity.status(HttpStatus.OK).body(returnValue);
 	}
+	@GetMapping(value = "/driver/{userId}", produces = { MediaType.APPLICATION_JSON_VALUE })
+	public ResponseEntity<DriverUser> getDriverByUserId(@PathVariable("userId") String userId) {
+		DriverUser entity = userAccountServices.findByUserId(userId);	
+		return ResponseEntity.status(HttpStatus.OK).body(entity);
+	}
+	@PutMapping(value = "/{userId}", produces = { MediaType.APPLICATION_JSON_VALUE })
+	public ResponseEntity<DriverUser> updateUser (@RequestBody DriverUser user, @PathVariable("userId") String userId) {
+
+		DriverUser entity = userAccountServices.update(user, userId);	
+
+		return ResponseEntity.status(HttpStatus.OK).body(entity);
+	}
 
 	@PutMapping(value = "/change-pw/{email}/{oldpassword}/{newpassword}", consumes = {
 			MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE })

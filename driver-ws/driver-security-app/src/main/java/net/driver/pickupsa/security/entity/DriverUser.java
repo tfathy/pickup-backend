@@ -28,25 +28,21 @@ public class DriverUser implements Serializable {
 
 	@Id
 	@Column(name = "id")
-	@JsonIgnore
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int Id;
 	
 	@ApiModelProperty(value = "This is system generated random string.It is used for composing jwt.We use it instead of Id column because the ID column is a sensitive information.")
 	@Column(name = "user_id")
-	@JsonIgnore
 	private String userId;
 	
-	@JsonIgnore
+	
 	@Column(name = "email")
 	private String email;
 	
 	@ApiModelProperty(value = "This an ecrypted")
 	@Column(name = "user_password")
-	@JsonIgnore
 	private String encryptedPassword;
 	@Column(name = "user_type")
-	@JsonIgnore
 	private String userType;
 	@Column(name = "account_status")
 	private String accountStatus;
@@ -61,7 +57,8 @@ public class DriverUser implements Serializable {
 	@JsonIgnore
 	private SpMember member;
 	
-	
+	@Column(name="fcm_token")
+	private String fcmToken;
 	
 	public DriverUser() {
 	}
@@ -158,21 +155,19 @@ public class DriverUser implements Serializable {
 
 
 
-	public void setMember(SpMember member) {
-		this.member = member;
+	public String getFcmToken() {
+		return fcmToken;
 	}
 
 
 
-	public DriverUser(String userId, String email, String encryptedPassword, String userType, String accountStatus,
-			Sp sp, SpMember member) {
-		super();
-		this.userId = userId;
-		this.email = email;
-		this.encryptedPassword = encryptedPassword;
-		this.userType = userType;
-		this.accountStatus = accountStatus;
-		this.sp = sp;
+	public void setFcmToken(String fcmToken) {
+		this.fcmToken = fcmToken;
+	}
+
+
+
+	public void setMember(SpMember member) {
 		this.member = member;
 	}
 
@@ -182,7 +177,26 @@ public class DriverUser implements Serializable {
 	public String toString() {
 		return "DriverUser [Id=" + Id + ", userId=" + userId + ", email=" + email + ", encryptedPassword="
 				+ encryptedPassword + ", userType=" + userType + ", accountStatus=" + accountStatus + ", sp=" + sp
-				+ ", member=" + member + "]";
+				+ ", member=" + member + ", fcmToken=" + fcmToken + "]";
 	}
+
+
+
+	public DriverUser(String userId, String email, String encryptedPassword, String userType, String accountStatus,
+			Sp sp, SpMember member, String fcmToken) {
+		super();
+		this.userId = userId;
+		this.email = email;
+		this.encryptedPassword = encryptedPassword;
+		this.userType = userType;
+		this.accountStatus = accountStatus;
+		this.sp = sp;
+		this.member = member;
+		this.fcmToken = fcmToken;
+	}
+
+
+
+	
 	
 }

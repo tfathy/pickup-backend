@@ -14,6 +14,7 @@ public class UserResponseModel {
 	private SpMember member;
 	
 	private String accountStatus;
+	private String fcmToken;
 	
 	public String getFullNameAr() {
 		return fullNameAr;
@@ -62,6 +63,12 @@ public class UserResponseModel {
 	}
 	public void setAccountStatus(String accountStatus) {
 		this.accountStatus = accountStatus;
+	}
+	public String getFcmToken() {
+		return fcmToken;
+	}
+	public void setFcmToken(String fcmToken) {
+		this.fcmToken = fcmToken;
 	}
 	
 

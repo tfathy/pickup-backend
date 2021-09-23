@@ -44,11 +44,11 @@ public class UserLogin implements Serializable{
 	
 	@ApiModelProperty(value = "GPS longitude location-last loation for the driver")
 	@Column(name="longitude")
-	private Integer longitude;
+	private String longitude;
 	
 	@ApiModelProperty(value = "GPS latitude location-last loation for the driver")
 	@Column(name="latitude")
-	private Integer latitude;
+	private String latitude;
 
 	@Column(name="vcl_id")
 	private Integer vclId;
@@ -133,25 +133,27 @@ public class UserLogin implements Serializable{
 		this.status = status;
 	}
 
-	public Integer getLongitude() {
+	
+	
+
+	
+
+
+	public String getLongitude() {
 		return longitude;
 	}
 
-	public void setLongitude(Integer longitude) {
+	public void setLongitude(String longitude) {
 		this.longitude = longitude;
 	}
 
-	public Integer getLatitude() {
+	public String getLatitude() {
 		return latitude;
 	}
 
-	public void setLatitude(Integer latitude) {
+	public void setLatitude(String latitude) {
 		this.latitude = latitude;
 	}
-	
-
-	
-
 
 	public String getVclDescEn() {
 		return vclDescEn;
@@ -263,10 +265,10 @@ public class UserLogin implements Serializable{
 
 	public void setVclCode(String vclCode) {
 		this.vclCode = vclCode;
-	}
+	}	
 
-	public UserLogin(SysUser sysUser, Date loginDate, Date logoutDate, String status, Integer longitude,
-			Integer latitude, Integer vclId, String vclCode, String vclDescEn, Integer vclSizeId, String vclSizeDescEn,
+	public UserLogin(SysUser sysUser, Date loginDate, Date logoutDate, String status, String longitude, String latitude,
+			Integer vclId, String vclCode, String vclDescEn, Integer vclSizeId, String vclSizeDescEn,
 			String vclSizeDescAr, String teamDescEn, Integer teamId, String driverNameAr, String driverNameEn,
 			Integer driverId, String spNameAr, String spNameEn, Integer spId) {
 		super();

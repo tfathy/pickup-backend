@@ -17,6 +17,7 @@ public class UserDto implements Serializable {
 	private String encryptedPassword;
 	private String userType;
 	private String accountStatus;
+	private String fcmToken;
 
 	public Sp getSp() {
 		return sp;
@@ -82,15 +83,19 @@ public class UserDto implements Serializable {
 		this.accountStatus = accountStatus;
 	}
 
-	@Override
-	public String toString() {
-		return "UserDto [sp=" + sp + ", member=" + member + ", userId=" + userId + ", email=" + email + ", password="
-				+ password + ", encryptedPassword=" + encryptedPassword + ", userType=" + userType + ", accountStatus="
-				+ accountStatus + "]";
+	
+	public String getFcmToken() {
+		return fcmToken;
 	}
 
+	public void setFcmToken(String fcmToken) {
+		this.fcmToken = fcmToken;
+	}
+
+	
+
 	public UserDto(Sp sp, SpMember member, String userId, String email, String password, String encryptedPassword,
-			String userType, String accountStatus) {
+			String userType, String accountStatus, String fcmToken) {
 		super();
 		this.sp = sp;
 		this.member = member;
@@ -100,6 +105,14 @@ public class UserDto implements Serializable {
 		this.encryptedPassword = encryptedPassword;
 		this.userType = userType;
 		this.accountStatus = accountStatus;
+		this.fcmToken = fcmToken;
+	}
+
+	@Override
+	public String toString() {
+		return "UserDto [sp=" + sp + ", member=" + member + ", userId=" + userId + ", email=" + email + ", password="
+				+ password + ", encryptedPassword=" + encryptedPassword + ", userType=" + userType + ", accountStatus="
+				+ accountStatus + ", fcmToken=" + fcmToken + "]";
 	}
 
 	public UserDto() {

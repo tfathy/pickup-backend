@@ -172,4 +172,12 @@ public class UserAccountService implements IUserAccount {
 		return userRepos.findByEmail(email);
 	}
 
+	@Override
+	public DriverUser update(DriverUser driverUser, String userId) {	
+		driverUser.setUserId(userId);
+		return this.userRepos.save(driverUser);
+	}
+
+	
+
 }
