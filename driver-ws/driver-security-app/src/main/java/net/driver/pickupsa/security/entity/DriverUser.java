@@ -49,12 +49,10 @@ public class DriverUser implements Serializable {
 	
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "sp_id")
-	@JsonIgnore
 	private Sp sp;
 	
 	@ManyToOne(fetch= FetchType.EAGER)
 	@JoinColumn(name="member_id")
-	@JsonIgnore
 	private SpMember member;
 	
 	@Column(name="fcm_token")
