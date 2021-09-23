@@ -20,7 +20,7 @@ public class UserDto implements Serializable{
 	private String encryptedPassword;
 	private String userType;
 	private String accountStatus;	
-
+	private String fcmToken;
 	private WhoColumn whoColumn;
 	
 	
@@ -88,31 +88,44 @@ public class UserDto implements Serializable{
 		this.whoColumn = whoColumn;
 	}
 	
-	@Override
-	public String toString() {
-		return "UserDto [hrEmployee=" + hrEmployee + ", userId=" + userId + ", email=" + email + ", password="
-				+ password + ", encryptedPassword=" + encryptedPassword + ", userType=" + userType + ", accountStatus="
-				+ accountStatus + ", sp=" + sp + ", member=" + member + ", whoColumn=" + whoColumn + "]";
+	
+	public String getFcmToken() {
+		return fcmToken;
 	}
+	public void setFcmToken(String fcmToken) {
+		this.fcmToken = fcmToken;
+	}
+
 	public String getPassword() {
 		return password;
 	}
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public UserDto(HrEmployee hrEmployee, Sp sp, SpMember member, String userId, String email, String password,
-			String encryptedPassword, String userType, String accountStatus, WhoColumn whoColumn) {
+
+	public UserDto(HrEmployee hrEmployee, Sp sp, SpMember member, Customer customer, String userId, String email,
+			String password, String encryptedPassword, String userType, String accountStatus, String fcmToken,
+			WhoColumn whoColumn) {
 		super();
 		this.hrEmployee = hrEmployee;
 		this.sp = sp;
 		this.member = member;
+		this.customer = customer;
 		this.userId = userId;
 		this.email = email;
 		this.password = password;
 		this.encryptedPassword = encryptedPassword;
 		this.userType = userType;
 		this.accountStatus = accountStatus;
+		this.fcmToken = fcmToken;
 		this.whoColumn = whoColumn;
+	}
+	@Override
+	public String toString() {
+		return "UserDto [hrEmployee=" + hrEmployee + ", sp=" + sp + ", member=" + member + ", customer=" + customer
+				+ ", userId=" + userId + ", email=" + email + ", password=" + password + ", encryptedPassword="
+				+ encryptedPassword + ", userType=" + userType + ", accountStatus=" + accountStatus + ", fcmToken="
+				+ fcmToken + ", whoColumn=" + whoColumn + "]";
 	}
 	public UserDto() {
 		super();

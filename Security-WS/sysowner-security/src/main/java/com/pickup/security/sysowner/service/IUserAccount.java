@@ -12,6 +12,7 @@ public interface IUserAccount extends UserDetailsService {
 	public UserDto createUser(UserDto userDetails);	
 	public UserDto getUserDetailsByEmail(String email);
 	public UserDto getUserByUserId(String userId);
+	public SysOwnerUser updateUserByUserId(UserDto userDto,String userId);
 	public List<SysOwnerUser> findAll();
 	public List<SysOwnerUser> findSpMembersUsers(Integer spId);
 	public SysOwnerUser changePassword(String email,String oldpassword,String newpassword);

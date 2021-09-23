@@ -194,4 +194,14 @@ public class UserAccountService implements IUserAccount {
 		resultList = query.getResultList();
 		return resultList;
 	}
+
+	@Override
+	public SysOwnerUser updateUserByUserId(UserDto userDto,String userId) {
+		ModelMapper modelMapper = new ModelMapper();
+		modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
+		SysOwnerUser userEntity = modelMapper.map(userDto, SysOwnerUser.class);	
+		userEntity.setUserId(userId);
+		
+		return userRepos.save(userEntity);
+	}
 }

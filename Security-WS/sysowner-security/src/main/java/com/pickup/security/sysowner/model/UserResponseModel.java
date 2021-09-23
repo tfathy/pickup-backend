@@ -17,6 +17,7 @@ public class UserResponseModel {
 	private SpMember member;	
 	private Customer customer;
 	private String accountStatus;
+	private String fcmToken;
 	private WhoColumn whoColumns;
 	
 	
@@ -87,12 +88,21 @@ public class UserResponseModel {
 	public void setCustomer(Customer customer) {
 		this.customer = customer;
 	}
+	
+	public String getFcmToken() {
+		return fcmToken;
+	}
+	public void setFcmToken(String fcmToken) {
+		this.fcmToken = fcmToken;
+	}
 	@Override
 	public String toString() {
 		return "UserResponseModel [fullNameAr=" + fullNameAr + ", fullNameEn=" + fullNameEn + ", email=" + email
 				+ ", userId=" + userId + ", hrEmployee=" + hrEmployee + ", userType=" + userType + ", sp=" + sp
-				+ ", member=" + member + ", accountStatus=" + accountStatus + ", whoColumns=" + whoColumns + "]";
+				+ ", member=" + member + ", customer=" + customer + ", accountStatus=" + accountStatus + ", fcmToken="
+				+ fcmToken + ", whoColumns=" + whoColumns + "]";
 	}
+	
 	
 	
 	

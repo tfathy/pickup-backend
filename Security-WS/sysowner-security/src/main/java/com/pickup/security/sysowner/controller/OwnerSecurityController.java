@@ -60,8 +60,9 @@ public class OwnerSecurityController {
 
 		return ResponseEntity.status(HttpStatus.CREATED).body(returnValue);
 	}
-	
-	@PostMapping(value="/customer",consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE })
+
+	@PostMapping(value = "/customer", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
+			MediaType.APPLICATION_JSON_VALUE })
 	public ResponseEntity<CreateUserResponseModel> createcUSTOMERuSER(@RequestBody CreateUserRequestModel userDetails) {
 		System.out.println("Request commig from the client is: userDetails=");
 		System.out.println(userDetails);
@@ -81,12 +82,21 @@ public class OwnerSecurityController {
 		return ResponseEntity.status(HttpStatus.CREATED).body(returnValue);
 	}
 
-
 	@GetMapping(value = "/{userId}", produces = { MediaType.APPLICATION_JSON_VALUE })
 	public ResponseEntity<UserResponseModel> getUser(@PathVariable("userId") String userId) {
 
 		UserDto userDto = userAccountServices.getUserByUserId(userId);
 		UserResponseModel returnValue = new ModelMapper().map(userDto, UserResponseModel.class);
+
+		return ResponseEntity.status(HttpStatus.OK).body(returnValue);
+	}
+	// to update user data
+	@PutMapping(value = "/update/{userId}", produces = { MediaType.APPLICATION_JSON_VALUE })
+	public ResponseEntity<UserResponseModel> updateUser(@RequestBody UserDto model,
+			@PathVariable("userId") String userId) {
+
+		SysOwnerUser sysuser = userAccountServices.updateUserByUserId(model, userId);
+		UserResponseModel returnValue = new ModelMapper().map(sysuser, UserResponseModel.class);
 
 		return ResponseEntity.status(HttpStatus.OK).body(returnValue);
 	}
