@@ -11,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 import io.swagger.annotations.ApiModelProperty;
@@ -19,6 +20,7 @@ import net.driver.pickupsa.app.entity.lookup.SysUser;
 
 @Entity
 @Table(name="sys_user_login")
+@NamedQuery(name="availableDrivers",query="SELECT e FROM UserLogin e WHERE e.status='AVALIABLE' AND e.vclSizeId=?1")
 public class UserLogin implements Serializable{
 
 	public UserLogin() {		

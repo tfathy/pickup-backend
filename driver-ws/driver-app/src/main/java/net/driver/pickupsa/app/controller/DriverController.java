@@ -26,7 +26,7 @@ public class DriverController {
 
 	@Autowired
 	private UserLoginService userLoginService;
-	
+
 	@Autowired
 	private SlOrderService slOrderService;
 
@@ -45,15 +45,28 @@ public class DriverController {
 		return ResponseEntity.status(HttpStatus.OK).body(entity);
 
 	}
-	
+
 	@ApiOperation(value = "return list of avaliable orders that suits the vehcile size.Avaliable orders are those  orders which ord_status=REQUEST")
-	@GetMapping(value="/avaliable-order/{vclSizeId}", produces= {MediaType.APPLICATION_JSON_VALUE})
-	public ResponseEntity<List<SlOrder>> findAvaliableOrders(@PathVariable Integer vclSizeId){
+	@GetMapping(value = "/avaliable-order/{vclSizeId}", produces = { MediaType.APPLICATION_JSON_VALUE })
+	public ResponseEntity<List<SlOrder>> findAvailableOrders(@PathVariable Integer vclSizeId) {
 		List<SlOrder> result = slOrderService.findAvaliableOrders(vclSizeId);
-		if(result==null) {
+		if (result == null) {
 			return ResponseEntity.status(HttpStatus.NO_CONTENT).body(result);
 		}
 		return ResponseEntity.status(HttpStatus.OK).body(result);
-		
+
+	}
+
+	// return list of available drivers - used by send notification from the
+	// customer app
+	@ApiOperation(value = "return list of avaliable drivers that suits the vehcile size of the order.Records are retrived from sys_user_login table for those drivers whose statys=AVALIABLE. oBJCT MUST RETURN A FCMTOKEN")
+	@GetMapping(value = "/avaliable/{vclSizeId}", produces = { MediaType.APPLICATION_JSON_VALUE })
+	public ResponseEntity<List<UserLogin>> findAvailabledrivers(@PathVariable Integer vclSizeId) {
+		List<UserLogin> result = null;
+		result = userLoginService.findAvailabe(vclSizeId);
+		if (result == null) {
+			return ResponseEntity.status(HttpStatus.NO_CONTENT).body(result);
+		}
+		return ResponseEntity.status(HttpStatus.OK).body(result);
 	}
 }

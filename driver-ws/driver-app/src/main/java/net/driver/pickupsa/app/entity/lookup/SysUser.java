@@ -43,6 +43,9 @@ public class SysUser implements Serializable {
 	@ManyToOne(fetch= FetchType.EAGER)
 	@JoinColumn(name="member_id")
 	private SpMember member;
+	
+	@Column(name="fcm_token")
+	private String fcmToken;
 
 	public int getId() {
 		return Id;
@@ -98,6 +101,14 @@ public class SysUser implements Serializable {
 
 	public void setMember(SpMember member) {
 		this.member = member;
+	}
+
+	public String getFcmToken() {
+		return fcmToken;
+	}
+
+	public void setFcmToken(String fcmToken) {
+		this.fcmToken = fcmToken;
 	}
 	
 	
