@@ -20,6 +20,7 @@ import com.pickup.security.sysowner.entity.SysOwnerUser;
 import com.pickup.security.sysowner.entity.shared.UserDto;
 import com.pickup.security.sysowner.model.CreateUserRequestModel;
 import com.pickup.security.sysowner.model.CreateUserResponseModel;
+import com.pickup.security.sysowner.model.CustomerUserResponseModel;
 import com.pickup.security.sysowner.model.UserExistsModel;
 import com.pickup.security.sysowner.model.UserResponseModel;
 import com.pickup.security.sysowner.service.IUserAccount;
@@ -87,6 +88,14 @@ public class OwnerSecurityController {
 
 		UserDto userDto = userAccountServices.getUserByUserId(userId);
 		UserResponseModel returnValue = new ModelMapper().map(userDto, UserResponseModel.class);
+
+		return ResponseEntity.status(HttpStatus.OK).body(returnValue);
+	}
+	@GetMapping(value = "/customer/{userId}", produces = { MediaType.APPLICATION_JSON_VALUE })
+	public ResponseEntity<CustomerUserResponseModel> getCustomerUser(@PathVariable("userId") String userId) {
+
+		UserDto userDto = userAccountServices.getUserByUserId(userId);
+		CustomerUserResponseModel returnValue = new ModelMapper().map(userDto, CustomerUserResponseModel.class);
 
 		return ResponseEntity.status(HttpStatus.OK).body(returnValue);
 	}

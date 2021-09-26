@@ -1,6 +1,12 @@
 package com.pickup.security.sysowner.model;
 
-public class LoginRequestModel {
+import java.io.Serializable;
+
+public class LoginRequestModel  implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8192666912585853052L;
 	private String email;
 	private String password;
 

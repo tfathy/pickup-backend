@@ -21,6 +21,7 @@ public class UserDto implements Serializable{
 	private String userType;
 	private String accountStatus;	
 	private String fcmToken;
+	  private Integer id;
 	private WhoColumn whoColumn;
 	
 	
@@ -102,7 +103,15 @@ public class UserDto implements Serializable{
 	public void setPassword(String password) {
 		this.password = password;
 	}
+	
+	
 
+	public Integer getId() {
+		return id;
+	}
+	public void setId(Integer id) {
+		this.id = id;
+	}
 	public UserDto(HrEmployee hrEmployee, Sp sp, SpMember member, Customer customer, String userId, String email,
 			String password, String encryptedPassword, String userType, String accountStatus, String fcmToken,
 			WhoColumn whoColumn) {

@@ -67,6 +67,9 @@ public class SysOwnerUser implements Serializable {
 	@JoinColumn(name = "customer_id")
 	private Customer customer;
 	
+	@Column(name="fcm_token")
+	private String fcmToken;
+	
 	@Embedded
 	private WhoColumn whoColumn;
 
@@ -163,8 +166,24 @@ public class SysOwnerUser implements Serializable {
 		this.customer = customer;
 	}
 
+	public String getFcmToken() {
+		return fcmToken;
+	}
+
+	public void setFcmToken(String fcmToken) {
+		this.fcmToken = fcmToken;
+	}
+
+	@Override
+	public String toString() {
+		return "SysOwnerUser [Id=" + Id + ", hrEmployee=" + hrEmployee + ", userId=" + userId + ", email=" + email
+				+ ", encryptedPassword=" + encryptedPassword + ", userType=" + userType + ", accountStatus="
+				+ accountStatus + ", sp=" + sp + ", member=" + member + ", customer=" + customer + ", fcmToken="
+				+ fcmToken + ", whoColumn=" + whoColumn + "]";
+	}
+
 	public SysOwnerUser(HrEmployee hrEmployee, String userId, String email, String encryptedPassword, String userType,
-			String accountStatus, Sp sp, SpMember member, Customer customer, WhoColumn whoColumn) {
+			String accountStatus, Sp sp, SpMember member, Customer customer, String fcmToken, WhoColumn whoColumn) {
 		super();
 		this.hrEmployee = hrEmployee;
 		this.userId = userId;
@@ -175,17 +194,11 @@ public class SysOwnerUser implements Serializable {
 		this.sp = sp;
 		this.member = member;
 		this.customer = customer;
+		this.fcmToken = fcmToken;
 		this.whoColumn = whoColumn;
 	}
 
-	@Override
-	public String toString() {
-		return "SysOwnerUser [Id=" + Id + ", hrEmployee=" + hrEmployee + ", userId=" + userId + ", email=" + email
-				+ ", encryptedPassword=" + encryptedPassword + ", userType=" + userType + ", accountStatus="
-				+ accountStatus + ", sp=" + sp + ", member=" + member + ", customer=" + customer + ", whoColumn="
-				+ whoColumn + "]";
-	}
-
+	
 	
 
 	
