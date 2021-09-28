@@ -15,6 +15,7 @@ public interface IUserAccount extends UserDetailsService {
 	public SysOwnerUser updateUserByUserId(UserDto userDto,String userId);
 	public List<SysOwnerUser> findAll();
 	public List<SysOwnerUser> findSpMembersUsers(Integer spId);
+	public SysOwnerUser loadUserByCustomerId(Integer customerId);
 	public SysOwnerUser changePassword(String email,String oldpassword,String newpassword);
 	public UserExistsModel RestPassword(String email);
 	

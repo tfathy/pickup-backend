@@ -6,6 +6,7 @@ import java.util.Random;
 import java.util.UUID;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.Query;
 
 import org.modelmapper.ModelMapper;
@@ -32,15 +33,15 @@ import error.InvalidOldPasswordException;
 @Service
 public class UserAccountService implements IUserAccount {
 	Logger logger = LoggerFactory.getLogger(this.getClass());
-	
+
 	BCryptPasswordEncoder encoder;
-	
+
 	UserRepos userRepos;
-	
+
 	private JavaMailSender emailSender;
-	
+
 	private Environment env;
-	
+
 	private EntityManager em;
 
 	public UserAccountService() {
@@ -196,12 +197,27 @@ public class UserAccountService implements IUserAccount {
 	}
 
 	@Override
-	public SysOwnerUser updateUserByUserId(UserDto userDto,String userId) {
+	public SysOwnerUser updateUserByUserId(UserDto userDto, String userId) {
 		ModelMapper modelMapper = new ModelMapper();
 		modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
-		SysOwnerUser userEntity = modelMapper.map(userDto, SysOwnerUser.class);	
+		SysOwnerUser userEntity = modelMapper.map(userDto, SysOwnerUser.class);
 		userEntity.setUserId(userId);
-		
+
 		return userRepos.save(userEntity);
+	}
+
+	@Override
+	public SysOwnerUser loadUserByCustomerId(Integer customerId) {
+		SysOwnerUser entity = null;
+		try {
+			Query query = em.createNamedQuery("FindUserByCustomerId");
+			query.setParameter(1, customerId);
+			entity = (SysOwnerUser) query.getSingleResult();
+		} catch (NoResultException nef) {
+			System.out.println("*****************");
+			System.out.println("Cannot load user info of cusotmer " + customerId);
+			System.out.println("*****************");
+		}
+		return entity;
 	}
 }

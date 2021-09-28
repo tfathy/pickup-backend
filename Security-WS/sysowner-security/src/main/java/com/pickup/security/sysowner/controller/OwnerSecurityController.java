@@ -99,6 +99,16 @@ public class OwnerSecurityController {
 
 		return ResponseEntity.status(HttpStatus.OK).body(returnValue);
 	}
+	
+	// to return the user information by customer id-- this method is used in the driver app to return the fcmtoken of the customer
+	@GetMapping(value="/user/{customerId}", produces = { MediaType.APPLICATION_JSON_VALUE })
+	public ResponseEntity<SysOwnerUser> getUserByCustomerId(@PathVariable("customerId") Integer customerId){
+		SysOwnerUser entity = userAccountServices.loadUserByCustomerId(customerId);
+		if(entity==null) {
+			return ResponseEntity.status(HttpStatus.NO_CONTENT).body(entity);
+		}
+		return ResponseEntity.status(HttpStatus.OK).body(entity);
+	}
 	// to update user data
 	@PutMapping(value = "/update/{userId}", produces = { MediaType.APPLICATION_JSON_VALUE })
 	public ResponseEntity<UserResponseModel> updateUser(@RequestBody UserDto model,
