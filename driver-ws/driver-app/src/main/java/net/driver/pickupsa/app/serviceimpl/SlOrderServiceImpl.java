@@ -14,10 +14,10 @@ import net.driver.pickupsa.app.service.SlOrderService;
 
 @Service
 public class SlOrderServiceImpl implements SlOrderService {
-	
+
 	@Autowired
 	private EntityManager em;
-	
+
 	@Autowired
 	private SlOrderRepos repos;
 
@@ -28,6 +28,12 @@ public class SlOrderServiceImpl implements SlOrderService {
 		query.setParameter(1, vclSizeId);
 		result = query.getResultList();
 		return result;
+	}
+
+	@Override
+	public SlOrder update(SlOrder entity, Integer id) {
+		entity.setId(id);
+		return repos.save(entity);
 	}
 
 }

@@ -6,5 +6,6 @@ import net.driver.pickupsa.app.entity.SlOrder;
 
 public interface SlOrderService {
 	List<SlOrder> findAvaliableOrders(Integer vclSizeId);
+	SlOrder update(SlOrder entity ,Integer id);
 
 }

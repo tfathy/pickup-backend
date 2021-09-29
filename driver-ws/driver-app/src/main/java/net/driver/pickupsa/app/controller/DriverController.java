@@ -69,4 +69,16 @@ public class DriverController {
 		}
 		return ResponseEntity.status(HttpStatus.OK).body(result);
 	}
+	
+	/*****************************************orders************************************************************/
+	@ApiOperation(value = "update order object")
+	@PutMapping(value="/order/{id}", produces= {MediaType.APPLICATION_JSON_VALUE})
+	public ResponseEntity<SlOrder> update(@RequestBody SlOrder entity,@PathVariable Integer id){
+		SlOrder order = slOrderService.update(entity, id);
+		if(order == null) {
+			return ResponseEntity.status(HttpStatus.NO_CONTENT).body(order);
+		}
+		return ResponseEntity.status(HttpStatus.OK).body(order);
+	}
+	
 }
