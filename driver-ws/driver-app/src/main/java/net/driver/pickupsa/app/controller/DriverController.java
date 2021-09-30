@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import io.swagger.annotations.ApiOperation;
 import net.driver.pickupsa.app.entity.SlOrder;
 import net.driver.pickupsa.app.entity.UserLogin;
+import net.driver.pickupsa.app.entity.lookup.Team;
 import net.driver.pickupsa.app.service.SlOrderService;
 import net.driver.pickupsa.app.service.UserLoginService;
 
@@ -68,6 +69,17 @@ public class DriverController {
 			return ResponseEntity.status(HttpStatus.NO_CONTENT).body(result);
 		}
 		return ResponseEntity.status(HttpStatus.OK).body(result);
+	}
+	@ApiOperation(value = "return the team that the manager manage.parameter is managerid which is SpMember.id attribute")
+	@GetMapping(value="/team/{managerId}",produces = { MediaType.APPLICATION_JSON_VALUE })
+	public ResponseEntity<Team> findTeamByManagerId(@PathVariable Integer managerId){
+		Team result = null;
+		result = slOrderService.findTeamByManagerId(managerId);
+		if(result ==null) {
+			return ResponseEntity.status(HttpStatus.NO_CONTENT).body(result);
+		}
+		return ResponseEntity.status(HttpStatus.OK).body(result);
+		
 	}
 	
 	/*****************************************orders************************************************************/

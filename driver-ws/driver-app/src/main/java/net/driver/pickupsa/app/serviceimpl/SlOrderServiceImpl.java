@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import net.driver.pickupsa.app.entity.SlOrder;
+import net.driver.pickupsa.app.entity.lookup.Team;
 import net.driver.pickupsa.app.repos.SlOrderRepos;
 import net.driver.pickupsa.app.service.SlOrderService;
 
@@ -34,6 +35,20 @@ public class SlOrderServiceImpl implements SlOrderService {
 	public SlOrder update(SlOrder entity, Integer id) {
 		entity.setId(id);
 		return repos.save(entity);
+	}
+
+	@Override
+	public Team findTeamByManagerId(Integer managerId) {
+		Team team = null;
+		Query query = em.createNamedQuery("findTeamByManagerId");
+		query.setParameter(1, managerId);
+		try {
+			team = (Team) query.getSingleResult();
+		}catch(Exception ex) {
+			ex.printStackTrace();
+		}
+		
+		return team;
 	}
 
 }

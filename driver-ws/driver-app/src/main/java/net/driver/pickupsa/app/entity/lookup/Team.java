@@ -10,11 +10,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 
 @Entity
 @Table(name="sl_team")
+@NamedQuery(name = "findTeamByManagerId", query = "SELECT e from SlTeam e WHERE e.spMember.id=?1")
 public class Team implements Serializable{
 
 
