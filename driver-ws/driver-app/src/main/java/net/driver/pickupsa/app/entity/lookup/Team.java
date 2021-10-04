@@ -16,7 +16,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="sl_team")
-@NamedQuery(name = "findTeamByManagerId", query = "SELECT e from SlTeam e WHERE e.spMember.id=?1")
+@NamedQuery(name = "findTeamByManagerId", query = "SELECT e from Team e WHERE e.spMember.id=?1")
 public class Team implements Serializable{
 
 

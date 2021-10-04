@@ -15,6 +15,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
+import com.customer.pickup.entity.lookup.ItemCategory;
 import com.customer.pickup.entity.lookup.LocationType;
 import com.customer.pickup.entity.lookup.Team;
 import com.customer.pickup.entity.lookup.VehicleSize;
@@ -51,6 +52,10 @@ public class SlOrder implements Serializable {
 	@ManyToOne()
 	@JoinColumn(name="vehicle_size_id")
 	private VehicleSize vehicleSize;
+	
+	@ManyToOne()
+	@JoinColumn(name="cat_id")
+	private ItemCategory itemCategory;
 	
 	@Column(name="request_date")
 	private Date requestDate;
@@ -336,19 +341,42 @@ public class SlOrder implements Serializable {
 		// TODO Auto-generated constructor stub
 	}
 
+	public ItemCategory getItemCategory() {
+		return itemCategory;
+	}
+
+	public void setItemCategory(ItemCategory itemCategory) {
+		this.itemCategory = itemCategory;
+	}
+
+	@Override
+	public String toString() {
+		return "SlOrder [id=" + id + ", customer=" + customer + ", sourceLocationType=" + sourceLocationType
+				+ ", destLocationType=" + destLocationType + ", team=" + team + ", vehicleSize=" + vehicleSize
+				+ ", itemCategory=" + itemCategory + ", requestDate=" + requestDate + ", reservationDate="
+				+ reservationDate + ", ordExecDate=" + ordExecDate + ", ordStatus=" + ordStatus + ", sourceElvFlag="
+				+ sourceElvFlag + ", sourceFloorNum=" + sourceFloorNum + ", sourceLong=" + sourceLong + ", sourceLat="
+				+ sourceLat + ", sourceImageMap=" + sourceImageMap + ", sourceFormattedAddress="
+				+ sourceFormattedAddress + ", destElvFlag=" + destElvFlag + ", destFloorNum=" + destFloorNum
+				+ ", destFormattedAddress=" + destFormattedAddress + ", destLong=" + destLong + ", destLat=" + destLat
+				+ ", destImageMap=" + destImageMap + ", estimatedCost=" + estimatedCost + ", actualCost=" + actualCost
+				+ ", customerNotes=" + customerNotes + ", teamNotes=" + teamNotes + ", whoColumn=" + whoColumn + "]";
+	}
+
 	public SlOrder(Customer customer, LocationType sourceLocationType, LocationType destLocationType, Team team,
-			VehicleSize vehicleSize, Date requestDate, Date reservationDate, Date ordExecDate, String ordStatus,
-			String sourceElvFlag, Integer sourceFloorNum, BigDecimal sourceLong, BigDecimal sourceLat,
-			String sourceImageMap, String sourceFormattedAddress, String destElvFlag, String destFloorNum,
-			String destFormattedAddress, BigDecimal destLong, BigDecimal destLat, String destImageMap,
-			BigDecimal estimatedCost, BigDecimal actualCost, String customerNotes, String teamNotes,
-			WhoColumn whoColumn) {
+			VehicleSize vehicleSize, ItemCategory itemCategory, Date requestDate, Date reservationDate,
+			Date ordExecDate, String ordStatus, String sourceElvFlag, Integer sourceFloorNum, BigDecimal sourceLong,
+			BigDecimal sourceLat, String sourceImageMap, String sourceFormattedAddress, String destElvFlag,
+			String destFloorNum, String destFormattedAddress, BigDecimal destLong, BigDecimal destLat,
+			String destImageMap, BigDecimal estimatedCost, BigDecimal actualCost, String customerNotes,
+			String teamNotes, WhoColumn whoColumn) {
 		super();
 		this.customer = customer;
 		this.sourceLocationType = sourceLocationType;
 		this.destLocationType = destLocationType;
 		this.team = team;
 		this.vehicleSize = vehicleSize;
+		this.itemCategory = itemCategory;
 		this.requestDate = requestDate;
 		this.reservationDate = reservationDate;
 		this.ordExecDate = ordExecDate;
@@ -372,19 +400,7 @@ public class SlOrder implements Serializable {
 		this.whoColumn = whoColumn;
 	}
 
-	@Override
-	public String toString() {
-		return "SlOrder [id=" + id + ", customer=" + customer + ", sourceLocationType=" + sourceLocationType
-				+ ", destLocationType=" + destLocationType + ", team=" + team + ", vehicleSize=" + vehicleSize
-				+ ", requestDate=" + requestDate + ", reservationDate=" + reservationDate + ", ordExecDate="
-				+ ordExecDate + ", ordStatus=" + ordStatus + ", sourceElvFlag=" + sourceElvFlag + ", sourceFloorNum="
-				+ sourceFloorNum + ", sourceLong=" + sourceLong + ", sourceLat=" + sourceLat + ", sourceImageMap="
-				+ sourceImageMap + ", sourceFormattedAddress=" + sourceFormattedAddress + ", destElvFlag=" + destElvFlag
-				+ ", destFloorNum=" + destFloorNum + ", destFormattedAddress=" + destFormattedAddress + ", destLong="
-				+ destLong + ", destLat=" + destLat + ", destImageMap=" + destImageMap + ", estimatedCost="
-				+ estimatedCost + ", actualCost=" + actualCost + ", customerNotes=" + customerNotes + ", teamNotes="
-				+ teamNotes + ", whoColumn=" + whoColumn + "]";
-	}
+	
 	
 	
 	
