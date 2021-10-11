@@ -16,8 +16,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.pickup.sysowner.entity.GnCountry;
+import com.pickup.sysowner.entity.SysSubRequestAttachments;
 import com.pickup.sysowner.entity.SysSubscriptionRequest;
 import com.pickup.sysowner.service.GnCountryService;
+import com.pickup.sysowner.service.SysSubRequestAttachmentService;
 import com.pickup.sysowner.service.SysSubscribtionRequestService;
 
 import io.swagger.annotations.ApiOperation;
@@ -28,16 +30,20 @@ public class SysOwnerPublicController {
 	final Logger logger = LoggerFactory.getLogger(SysOwnerPublicController.class);
 	@Autowired
 	private SysSubscribtionRequestService sysSubscribtionRequestService;
-	
+
+	@Autowired
+	private SysSubRequestAttachmentService sysSubRequestAttachmentService;
+
 	@Autowired
 	private GnCountryService countryService;
-	
+
 	@PostMapping(value = "/sub-request", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
 			MediaType.APPLICATION_JSON_VALUE })
 	public ResponseEntity<SysSubscriptionRequest> createSubRequest(@RequestBody SysSubscriptionRequest entity) {
 		SysSubscriptionRequest body = this.sysSubscribtionRequestService.create(entity);
 		return ResponseEntity.status(HttpStatus.CREATED).body(body);
 	}
+
 	/***********************************************
 	 * Country API
 	 ******************************************************************/
@@ -51,6 +57,16 @@ public class SysOwnerPublicController {
 			return ResponseEntity.status(HttpStatus.NO_CONTENT).body(lst);
 		}
 		return ResponseEntity.status(HttpStatus.OK).body(lst);
+	}
+
+	/***********************************************
+	 * create Attachment entity API
+	 ******************************************************************/
+	@PostMapping(value = "/sub-request-attach", produces = { MediaType.APPLICATION_JSON_VALUE })
+	@ApiOperation(value = "save attachement record", notes = "The Api Returns used to create record in the SysSubRequestAttachments entity", response = SysSubRequestAttachments.class)
+	public ResponseEntity<SysSubRequestAttachments> saveAttachmentEntity(@RequestBody SysSubRequestAttachments entity) {
+		SysSubRequestAttachments body = sysSubRequestAttachmentService.create(entity);
+		return ResponseEntity.status(HttpStatus.CREATED).body(body);
 	}
 
 }

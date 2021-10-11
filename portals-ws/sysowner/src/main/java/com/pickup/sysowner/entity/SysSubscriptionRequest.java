@@ -2,16 +2,19 @@ package com.pickup.sysowner.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.pickup.sysowner.entity.shared.WhoColumn;
@@ -80,6 +83,10 @@ public class SysSubscriptionRequest implements Serializable {
 
 	@Column(name = "status")
 	private String status;
+	
+	@OneToMany(fetch = FetchType.EAGER)
+	@JoinColumn(name="sub_request_id")
+	private List<SysSubRequestAttachments> sysSubRequestAttachments;
 
 	@Embedded
 	private WhoColumn whoColumn;
@@ -211,37 +218,26 @@ public class SysSubscriptionRequest implements Serializable {
 	public void setWhoColumn(WhoColumn whoColumn) {
 		this.whoColumn = whoColumn;
 	}
+	
 
+	public List<SysSubRequestAttachments> getSysSubRequestAttachments() {
+		return sysSubRequestAttachments;
+	}
+
+	public void setSysSubRequestAttachments(List<SysSubRequestAttachments> sysSubRequestAttachments) {
+		this.sysSubRequestAttachments = sysSubRequestAttachments;
+	}
+
+	
 	@Override
 	public String toString() {
-		return "SysSubscribtionRequest [id=" + id + ", sysOwner=" + sysOwner + ", gnCountry=" + gnCountry
+		return "SysSubscriptionRequest [id=" + id + ", sysOwner=" + sysOwner + ", gnCountry=" + gnCountry
 				+ ", reqSerial=" + reqSerial + ", reqYear=" + reqYear + ", reqDate=" + reqDate + ", requesterType="
 				+ requesterType + ", companyNameAr=" + companyNameAr + ", companyNameEn=" + companyNameEn
 				+ ", contactPersonName=" + contactPersonName + ", contactPersonPhone=" + contactPersonPhone
 				+ ", contactPersonEmail=" + contactPersonEmail + ", commNumber=" + commNumber + ", address=" + address
-				+ ", status=" + status + ", whoColumn=" + whoColumn + "]";
-	}
-
-	public SysSubscriptionRequest(SysOwner sysOwner, GnCountry gnCountry, Integer reqSerial, Integer reqYear,
-			Date reqDate, String requesterType, String companyNameAr, String companyNameEn, String contactPersonName,
-			String contactPersonPhone, String contactPersonEmail, String commNumber, String address, String status,
-			WhoColumn whoColumn) {
-		super();
-		this.sysOwner = sysOwner;
-		this.gnCountry = gnCountry;
-		this.reqSerial = reqSerial;
-		this.reqYear = reqYear;
-		this.reqDate = reqDate;
-		this.requesterType = requesterType;
-		this.companyNameAr = companyNameAr;
-		this.companyNameEn = companyNameEn;
-		this.contactPersonName = contactPersonName;
-		this.contactPersonPhone = contactPersonPhone;
-		this.contactPersonEmail = contactPersonEmail;
-		this.commNumber = commNumber;
-		this.address = address;
-		this.status = status;
-		this.whoColumn = whoColumn;
+				+ ", status=" + status + ", sysSubRequestAttachments=" + sysSubRequestAttachments + ", whoColumn="
+				+ whoColumn + "]";
 	}
 
 }
