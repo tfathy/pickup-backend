@@ -68,5 +68,25 @@ public class SysOwnerPublicController {
 		SysSubRequestAttachments body = sysSubRequestAttachmentService.create(entity);
 		return ResponseEntity.status(HttpStatus.CREATED).body(body);
 	}
+	
+	@ApiOperation(value = "return list of attchments record for a request", notes = "The Api reads from the attachments table for a passed request id", response = SysSubRequestAttachments.class)
+	@GetMapping(value = "/sub-request-attach/{requestId}", produces = { MediaType.APPLICATION_JSON_VALUE })
+	public ResponseEntity<List<SysSubRequestAttachments>> findAttachmentsByReqId(@PathVariable Integer requestId){
+		List<SysSubRequestAttachments> resultList = sysSubRequestAttachmentService.findBySubRequestId(requestId);
+		if(resultList == null) {
+			return ResponseEntity.status(HttpStatus.NO_CONTENT).body(resultList);
+		}
+		return ResponseEntity.status(HttpStatus.OK).body(resultList);
+	}
+	
+	@ApiOperation(value = "return single attchment record ", notes = "The Api reads from the attachments table for a passed  id", response = SysSubRequestAttachments.class)
+	@GetMapping(value = "/sub-request-attach/id/{id}", produces = { MediaType.APPLICATION_JSON_VALUE })
+	public ResponseEntity<SysSubRequestAttachments> findAttachmentsById(@PathVariable Integer id){
+		SysSubRequestAttachments result = sysSubRequestAttachmentService.findById(id);
+		if(result == null) {
+			return ResponseEntity.status(HttpStatus.NO_CONTENT).body(result);
+		}
+		return ResponseEntity.status(HttpStatus.OK).body(result);
+	}
 
 }
