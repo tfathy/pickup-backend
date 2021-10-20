@@ -13,6 +13,8 @@ public class CorsConfig {
 	public CorsWebFilter corsFilter() {
 		CorsConfiguration config = new CorsConfiguration();
 		config.addAllowedOrigin("http://localhost");
+		config.addAllowedOrigin("http://192.168.8.187:8100");
+		config.addAllowedOrigin("http://192.168.42.63:8100");
 		config.addAllowedOrigin("capacitor://localhost");
 		config.addAllowedOrigin("https://sp.pickup-sa.net");
 		config.addAllowedOrigin("https://owner.pickup-sa.net");	
