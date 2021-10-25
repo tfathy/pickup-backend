@@ -10,6 +10,7 @@ public interface UserLoginService {
 	UserLogin create(UserLogin entity);
 	UserLogin update (UserLogin entity, Integer id);
 	List<UserLogin> findAvailabe(Integer vclSizeId);
+	Boolean setUserStatusLogout(Integer userId);
 	
 
 }

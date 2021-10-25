@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
+import javax.persistence.ColumnResult;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -11,7 +12,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedNativeQueries;
+import javax.persistence.NamedNativeQuery;
 import javax.persistence.NamedQuery;
+import javax.persistence.SqlResultSetMapping;
 import javax.persistence.Table;
 
 import io.swagger.annotations.ApiModelProperty;
@@ -21,6 +25,14 @@ import net.driver.pickupsa.app.entity.lookup.SysUser;
 @Entity
 @Table(name="sys_user_login")
 @NamedQuery(name="availableDrivers",query="SELECT e FROM UserLogin e WHERE e.status='AVALIABLE' AND e.vclSizeId=?1")
+@SqlResultSetMapping(name="updateResult", columns = { @ColumnResult(name = "count")})
+@NamedNativeQueries({
+    @NamedNativeQuery(
+            name    =   "updateUserLogin",
+            query   =   "UPDATE sys_user_login  SET status = 'LOGOUT' WHERE user_id = ? and status='AVALIABLE'"
+            ,resultSetMapping = "updateResult"
+    )
+})
 public class UserLogin implements Serializable{
 
 	public UserLogin() {		
