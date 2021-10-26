@@ -44,4 +44,10 @@ public class OrderImagesServiceImpl implements OrderImagesService {
 		return repos.save(entity);
 	}
 
+	@Override
+	public List<OrderImages> findByOrdId(Integer ordId) {
+		// TODO Auto-generated method stub
+		return repos.findByOrdId(ordId);
+	}
+
 }

@@ -92,5 +92,15 @@ public class ImagesController {
 		return Arrays.asList(files).stream().map(file -> uploadFile(file)).collect(Collectors.toList());
 	}
 	
+	@GetMapping(value="/order-images/{ordId}", produces = { MediaType.APPLICATION_JSON_VALUE })
+	@ApiOperation(value = "Return list of records for images data", notes = "returns list of records stored in table sl_order_images. the table contains metadata info about sored images", response = OrderImages.class)
+	public ResponseEntity<List<OrderImages>> findByOrdId(@PathVariable Integer ordId){
+		List<OrderImages> body = this.orderImagesService.findByOrdId(ordId);
+		if(body == null) {
+			return ResponseEntity.status(HttpStatus.NO_CONTENT).body(body);
+		}
+		return ResponseEntity.status(HttpStatus.OK).body(body);
+	}
+	
 
 }
