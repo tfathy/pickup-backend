@@ -13,6 +13,7 @@ public interface IUserAccount extends UserDetailsService {
 	public UserDto getUserDetailsByEmail(String email);
 	public UserDto getUserByUserId(String userId);
 	public SysOwnerUser updateUserByUserId(UserDto userDto,String userId);
+	public SysOwnerUser findByMemberId(Integer memberId);
 	public List<SysOwnerUser> findAll();
 	public List<SysOwnerUser> findSpMembersUsers(Integer spId);
 	public SysOwnerUser loadUserByCustomerId(Integer customerId);

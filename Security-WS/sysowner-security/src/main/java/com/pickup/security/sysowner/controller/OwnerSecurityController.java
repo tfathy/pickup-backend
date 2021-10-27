@@ -109,6 +109,16 @@ public class OwnerSecurityController {
 		}
 		return ResponseEntity.status(HttpStatus.OK).body(entity);
 	}
+	
+	@GetMapping(value="/user/member/{memberId}", produces = { MediaType.APPLICATION_JSON_VALUE })
+	public ResponseEntity<SysOwnerUser> findUserByMemberId(@PathVariable("memberId") Integer memberId){
+		SysOwnerUser entity = userAccountServices.findByMemberId(memberId);
+		if(entity==null) {
+			return ResponseEntity.status(HttpStatus.NO_CONTENT).body(entity);
+		}
+		return ResponseEntity.status(HttpStatus.OK).body(entity);
+	}
+	
 	// to update user data
 	@PutMapping(value = "/update/{userId}", produces = { MediaType.APPLICATION_JSON_VALUE })
 	public ResponseEntity<UserResponseModel> updateUser(@RequestBody UserDto model,

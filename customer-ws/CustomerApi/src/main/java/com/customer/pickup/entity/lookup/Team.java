@@ -9,6 +9,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.customer.pickup.entity.shared.WhoColumn;
@@ -42,6 +44,10 @@ public class Team implements Serializable{
 
 	@Column(name = "active_flag")
 	private String activeFlag;
+	
+	@ManyToOne()
+	@JoinColumn(name="manager_id")
+	private SpMember manager;
 
 	@Embedded
 	private WhoColumn whoColumn;
@@ -101,11 +107,23 @@ public class Team implements Serializable{
 	public void setWhoColumn(WhoColumn whoColumn) {
 		this.whoColumn = whoColumn;
 	}
+	
+	
 
+	public SpMember getManager() {
+		return manager;
+	}
+
+	public void setManager(SpMember manager) {
+		this.manager = manager;
+	}
+
+	
 	@Override
 	public String toString() {
 		return "Team [id=" + id + ", descAr=" + descAr + ", descEn=" + descEn + ", startDate=" + startDate
-				+ ", endDate=" + endDate + ", activeFlag=" + activeFlag + ", whoColumn=" + whoColumn + "]";
+				+ ", endDate=" + endDate + ", activeFlag=" + activeFlag + ", manager=" + manager + ", whoColumn="
+				+ whoColumn + "]";
 	}
 
 	public Team(String descAr, String descEn, Date startDate, Date endDate, String activeFlag, WhoColumn whoColumn) {

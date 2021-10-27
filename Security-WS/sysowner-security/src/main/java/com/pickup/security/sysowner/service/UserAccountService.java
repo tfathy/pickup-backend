@@ -220,4 +220,22 @@ public class UserAccountService implements IUserAccount {
 		}
 		return entity;
 	}
+
+	@Override
+	public SysOwnerUser findByMemberId(Integer memberId) {
+		SysOwnerUser entity = null;
+		try {
+			Query query = em.createNamedQuery("FindUserByMemberId");
+			query.setParameter(1, memberId);
+			entity = (SysOwnerUser) query.getSingleResult();
+			
+		}catch(NoResultException nef) {
+			System.out.println("*****************");
+			System.out.println("Cannot load user info of driver " + memberId);
+			System.out.println("*****************");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return entity;
+	}
 }
