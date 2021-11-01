@@ -13,8 +13,10 @@ public class CorsConfig {
 	public CorsWebFilter corsFilter() {
 		CorsConfiguration config = new CorsConfiguration();
 		config.addAllowedOrigin("http://localhost");
-		config.addAllowedOrigin("http://192.168.8.187:8100");
+		config.addAllowedOrigin("http://192.168.8.187:8100"); // 192.168.42.21
+		config.addAllowedOrigin("http://192.168.42.21:8100");
 		config.addAllowedOrigin("http://192.168.42.63:8100");
+		config.addAllowedOrigin("http://192.168.43.100:8100"); //htc mobile for debug
 		config.addAllowedOrigin("capacitor://localhost");
 		config.addAllowedOrigin("https://sp.pickup-sa.net");
 		config.addAllowedOrigin("https://owner.pickup-sa.net");	

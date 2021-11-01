@@ -31,8 +31,18 @@ import net.driver.pickupsa.app.entity.lookup.SysUser;
             name    =   "updateUserLogin",
             query   =   "UPDATE sys_user_login  SET status = 'LOGOUT' WHERE user_id = ? and status='AVALIABLE'"
             ,resultSetMapping = "updateResult"
+    ),
+    @NamedNativeQuery(
+            name    =   "updateUsaerLoginStatus",
+            query   =   "UPDATE sys_user_login  SET status = ?1 WHERE user_id = ?2 and status='AVALIABLE'"
+            ,resultSetMapping = "updateResult"
     )
 })
+
+
+
+
+
 public class UserLogin implements Serializable{
 
 	public UserLogin() {		

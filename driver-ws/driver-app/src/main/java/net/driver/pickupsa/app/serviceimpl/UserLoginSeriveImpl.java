@@ -49,8 +49,7 @@ public class UserLoginSeriveImpl implements UserLoginService {
 	@Transactional
 	public Boolean setUserStatusLogout(Integer userId) {
 		boolean result = false;
-		try {
-			System.out.println("setUserStatusLogout for userId="+userId);
+		try {			
 			Query updateQuery = em.createNamedQuery("updateUserLogin");
 			updateQuery.setParameter(1, userId);
 			updateQuery.executeUpdate();
@@ -62,6 +61,18 @@ public class UserLoginSeriveImpl implements UserLoginService {
 		}
 		;
 		return result;
+	}
+
+	@Override
+	@Transactional
+	public List<UserLogin> updateUserLoginStatus(Integer userId, String status) {
+		List<UserLogin> updatedEntities = null;
+		Query updateQuery = em.createNamedQuery("updateUsaerLoginStatus");
+		updateQuery.setParameter(1, userId);
+		updateQuery.setParameter(1, status);
+		updateQuery.executeUpdate();
+		updatedEntities =updateQuery.getResultList();
+		return updatedEntities;
 	}
 
 }
