@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import net.driver.pickupsa.app.entity.UserLogin;
 import net.driver.pickupsa.app.repos.UserLoginRepos;
 import net.driver.pickupsa.app.service.UserLoginService;
+
 @Transactional
 @Service
 public class UserLoginSeriveImpl implements UserLoginService {
@@ -49,7 +50,7 @@ public class UserLoginSeriveImpl implements UserLoginService {
 	@Transactional
 	public Boolean setUserStatusLogout(Integer userId) {
 		boolean result = false;
-		try {			
+		try {
 			Query updateQuery = em.createNamedQuery("updateUserLogin");
 			updateQuery.setParameter(1, userId);
 			updateQuery.executeUpdate();
@@ -65,14 +66,18 @@ public class UserLoginSeriveImpl implements UserLoginService {
 
 	@Override
 	@Transactional
-	public List<UserLogin> updateUserLoginStatus(Integer userId, String status) {
-		List<UserLogin> updatedEntities = null;
-		Query updateQuery = em.createNamedQuery("updateUsaerLoginStatus");
-		updateQuery.setParameter(1, userId);
-		updateQuery.setParameter(1, status);
-		updateQuery.executeUpdate();
-		updatedEntities =updateQuery.getResultList();
-		return updatedEntities;
+	public Boolean updateUserLoginStatus(String userId, String status) {
+		try {
+			List<UserLogin> updatedEntities = null;
+			Query updateQuery = em.createNamedQuery("updateUsaerLoginStatus");
+			updateQuery.setParameter(1, userId);
+			updateQuery.setParameter(2, status);
+			updateQuery.executeUpdate();
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
 	}
 
 }

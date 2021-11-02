@@ -38,16 +38,16 @@ public class DriverController {
 		return ResponseEntity.status(HttpStatus.CREATED).body(entity);
 
 	}
-	
-	@PutMapping(value="/user-login-info/status/{userId}/{status}",produces = { MediaType.APPLICATION_JSON_VALUE })
+
+	@PutMapping(value = "/user-login-info/status/{userId}/{status}", produces = { MediaType.APPLICATION_JSON_VALUE })
 	@ApiOperation(value = "update the sysUserLogin table .it updates more than one record for a user . parameters are userID and status: the new status")
-	public ResponseEntity<List<UserLogin>> updateUserLoginStatus(@PathVariable Integer userId, @PathVariable String status){
-		List<UserLogin> body = userLoginService.updateUserLoginStatus(userId, status);
-		if(body ==null) {
+	public ResponseEntity<Boolean> updateUserLoginStatus(@PathVariable String userId, @PathVariable String status) {
+		Boolean body = userLoginService.updateUserLoginStatus(userId, status);
+		if (body == false) {
 			return ResponseEntity.status(HttpStatus.NO_CONTENT).body(body);
 		}
 		return ResponseEntity.status(HttpStatus.OK).body(body);
-		
+
 	}
 
 	@PutMapping(value = "/user-login-info/{id}", produces = { MediaType.APPLICATION_JSON_VALUE })
@@ -81,27 +81,30 @@ public class DriverController {
 		}
 		return ResponseEntity.status(HttpStatus.OK).body(result);
 	}
+
 	@ApiOperation(value = "return the team that the manager manage.parameter is managerid which is SpMember.id attribute")
-	@GetMapping(value="/team/{managerId}",produces = { MediaType.APPLICATION_JSON_VALUE })
-	public ResponseEntity<Team> findTeamByManagerId(@PathVariable Integer managerId){
+	@GetMapping(value = "/team/{managerId}", produces = { MediaType.APPLICATION_JSON_VALUE })
+	public ResponseEntity<Team> findTeamByManagerId(@PathVariable Integer managerId) {
 		Team result = null;
 		result = slOrderService.findTeamByManagerId(managerId);
-		if(result ==null) {
+		if (result == null) {
 			return ResponseEntity.status(HttpStatus.NO_CONTENT).body(result);
 		}
 		return ResponseEntity.status(HttpStatus.OK).body(result);
-		
+
 	}
-	
-	/*****************************************orders************************************************************/
+
+	/*****************************************
+	 * orders
+	 ************************************************************/
 	@ApiOperation(value = "update order object")
-	@PutMapping(value="/order/{id}", produces= {MediaType.APPLICATION_JSON_VALUE})
-	public ResponseEntity<SlOrder> update(@RequestBody SlOrder entity,@PathVariable Integer id){
+	@PutMapping(value = "/order/{id}", produces = { MediaType.APPLICATION_JSON_VALUE })
+	public ResponseEntity<SlOrder> update(@RequestBody SlOrder entity, @PathVariable Integer id) {
 		SlOrder order = slOrderService.update(entity, id);
-		if(order == null) {
+		if (order == null) {
 			return ResponseEntity.status(HttpStatus.NO_CONTENT).body(order);
 		}
 		return ResponseEntity.status(HttpStatus.OK).body(order);
 	}
-	
+
 }
