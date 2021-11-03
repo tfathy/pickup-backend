@@ -66,12 +66,13 @@ public class UserLoginSeriveImpl implements UserLoginService {
 
 	@Override
 	@Transactional
-	public Boolean updateUserLoginStatus(String userId, String status) {
+	public Boolean updateUserLoginStatus(String userId, String oldStatus, String newStatus) {
 		try {
 			List<UserLogin> updatedEntities = null;
 			Query updateQuery = em.createNamedQuery("updateUsaerLoginStatus");
 			updateQuery.setParameter(1, userId);
-			updateQuery.setParameter(2, status);
+			updateQuery.setParameter(2, oldStatus);
+			updateQuery.setParameter(3, newStatus);
 			updateQuery.executeUpdate();
 			return true;
 		} catch (Exception e) {

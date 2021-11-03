@@ -9,7 +9,7 @@ public interface UserLoginService {
 	
 	UserLogin create(UserLogin entity);
 	UserLogin update (UserLogin entity, Integer id);
-	Boolean updateUserLoginStatus(String userId,String status);
+	Boolean updateUserLoginStatus(String userId,String oldStatus, String newStatus);
 	List<UserLogin> findAvailabe(Integer vclSizeId);
 	Boolean setUserStatusLogout(Integer userId);
 	

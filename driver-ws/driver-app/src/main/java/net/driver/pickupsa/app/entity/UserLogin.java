@@ -34,7 +34,7 @@ import net.driver.pickupsa.app.entity.lookup.SysUser;
     ),
     @NamedNativeQuery(
             name    =   "updateUsaerLoginStatus",
-            query   =   "UPDATE sys_user_login  SET status = ?2 WHERE user_id = ?1 and status='AVALIABLE'"
+            query   =   "UPDATE sys_user_login  SET status = ?3 WHERE user_id = ?1 and status=?2"
             ,resultSetMapping = "updateResult"
     )
 })

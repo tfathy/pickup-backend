@@ -39,10 +39,10 @@ public class DriverController {
 
 	}
 
-	@PutMapping(value = "/user-login-info/status/{userId}/{status}", produces = { MediaType.APPLICATION_JSON_VALUE })
+	@PutMapping(value = "/user-login-info/status/{userId}/{oldStatus}/{newStatus}", produces = { MediaType.APPLICATION_JSON_VALUE })
 	@ApiOperation(value = "update the sysUserLogin table .it updates more than one record for a user . parameters are userID and status: the new status")
-	public ResponseEntity<Boolean> updateUserLoginStatus(@PathVariable String userId, @PathVariable String status) {
-		Boolean body = userLoginService.updateUserLoginStatus(userId, status);
+	public ResponseEntity<Boolean> updateUserLoginStatus(@PathVariable String userId, @PathVariable String oldStatus,@PathVariable String newStatus) {
+		Boolean body = userLoginService.updateUserLoginStatus(userId, oldStatus,newStatus);
 		if (body == false) {
 			return ResponseEntity.status(HttpStatus.NO_CONTENT).body(body);
 		}
