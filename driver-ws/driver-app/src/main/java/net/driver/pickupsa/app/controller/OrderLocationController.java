@@ -58,8 +58,25 @@ public class OrderLocationController {
 	}
 	
 	@GetMapping(value = "/order/{id}", produces = { MediaType.APPLICATION_JSON_VALUE })
+	public ResponseEntity<List<OrderLocation>> findRouteByOrderId(@PathVariable int id) {
+		List<OrderLocation> lst = service.findRouteByOrderId(id);
+		if (lst == null) {
+			return ResponseEntity.status(HttpStatus.NO_CONTENT).body(lst);
+		}
+		return ResponseEntity.status(HttpStatus.OK).body(lst);
+	}
+	@GetMapping(value = "/first/order/{id}", produces = { MediaType.APPLICATION_JSON_VALUE })
+	public ResponseEntity<OrderLocation> findFirstLocationForOrder(@PathVariable int id) {
+		OrderLocation body = service.findFirstLocationForOrder(id);
+		if (body == null) {
+			return ResponseEntity.status(HttpStatus.NO_CONTENT).body(body);
+		}
+		return ResponseEntity.status(HttpStatus.OK).body(body);
+	}
+	
+	@GetMapping(value = "/last/order/{id}", produces = { MediaType.APPLICATION_JSON_VALUE })
 	public ResponseEntity<OrderLocation> findByOrderId(@PathVariable int id) {
-		OrderLocation body = service.findByOrdId(id);
+		OrderLocation body = service.findLastLocationForOrder(id);
 		if (body == null) {
 			return ResponseEntity.status(HttpStatus.NO_CONTENT).body(body);
 		}

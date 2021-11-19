@@ -37,19 +37,48 @@ public class OrderLocationServiceImpl implements OrderLocationService {
 		}
 		return entity;
 	}
-
 	@Override
-	public OrderLocation findByOrdId(Integer ordId) {
+	public OrderLocation findFirstLocationForOrder(Integer ordId) {
+		List<OrderLocation> locationList = null;
 		OrderLocation entity = null;
 		try {
 			Query query = em.createNamedQuery("findOrdLocByOrderId");
 			query.setParameter(1, ordId);
-			entity = (OrderLocation) query.getSingleResult();
+			locationList = query.getResultList();
+			if (locationList.size() > 0) {
+				entity = locationList.get(0);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return entity;
 	}
+
+	@Override
+	public OrderLocation findLastLocationForOrder(Integer ordId) {
+		List<OrderLocation> locationList = null;
+		OrderLocation entity = null;
+		try {
+			Query query = em.createNamedQuery("findOrdLocByOrderId");
+			query.setParameter(1, ordId);
+			locationList = query.getResultList();
+			if (locationList.size() > 0) {
+				entity = locationList.get(locationList.size() - 1);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return entity;
+	}
+	@Override
+	public List<OrderLocation> findRouteByOrderId(Integer ordId) {
+		List<OrderLocation> locationList = null;
+		Query query = em.createNamedQuery("findOrdLocByOrderId");
+		query.setParameter(1, ordId);
+		locationList = query.getResultList();
+		return locationList;
+	}
+
 
 	@Override
 	public OrderLocation create(OrderLocation body) {
@@ -71,5 +100,7 @@ public class OrderLocationServiceImpl implements OrderLocationService {
 		repos.deleteById(id);
 		return "record " + id + " is deleted successfully";
 	}
+
+
 
 }

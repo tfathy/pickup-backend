@@ -8,7 +8,9 @@ public interface OrderLocationService {
 	
  	 List<OrderLocation> findAll();
 	 OrderLocation findById(int id);
-	 OrderLocation findByOrdId(Integer ordId);
+	 OrderLocation findFirstLocationForOrder(Integer ordId);
+	 OrderLocation findLastLocationForOrder(Integer ordId);
+	 List<OrderLocation> findRouteByOrderId(Integer ordId);
 	 OrderLocation create(OrderLocation body);
 	 OrderLocation update(OrderLocation body, int id);
 	 String delete(int id);
